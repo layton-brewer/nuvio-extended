@@ -1,6 +1,9 @@
 package com.nuvio.app.features.player
 
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import com.nuvio.app.core.ui.nuvioTap
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -74,6 +77,7 @@ internal fun PlayerToolbar(
                 description = stringResource(Res.string.cd_switch_player_engine),
                 icon = Icons.Rounded.SwapHoriz,
                 onClick = onSwitchEngineClick,
+                tapKey = "engine",
             )
         }
         if (onPartyClick != null) {
@@ -82,6 +86,7 @@ internal fun PlayerToolbar(
                 icon = Icons.Rounded.Groups,
                 onClick = onPartyClick,
                 tint = if (partyActive) MaterialTheme.colorScheme.primary else Color.White,
+                tapKey = "party",
             )
         }
         PlayerAction(
@@ -90,11 +95,14 @@ internal fun PlayerToolbar(
             ),
             icon = if (isLocked) Icons.Rounded.LockOpen else Icons.Rounded.Lock,
             onClick = onLockToggle,
+            tapKey = "lock",
         )
         PlayerAction(
             description = stringResource(Res.string.compose_player_close),
             icon = Icons.AutoMirrored.Rounded.ArrowBack,
             onClick = onBack,
+            tapKey = "back",
+            size = 56.dp,
         )
     }
 }
@@ -211,9 +219,25 @@ private fun PlayerAction(
     painter: Painter? = null,
     iconSize: Dp = 24.dp,
     tint: Color = Color.White,
+    tapKey: String? = null,
+    size: Dp = 48.dp,
 ) {
+    val rootTaps = LocalPlayerTopButtonTaps.current
+    val click = onClick
+    val tapModifier = if (tapKey != null && rootTaps != null) {
+        // Taps are delivered by the player's root (see PlayerTopButtonTaps); only the
+        // accessibility click is kept here so a tap is never run twice.
+        Modifier
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                onClick { click(); true }
+            }
+            .playerTopButtonTarget(tapKey, onClick)
+    } else {
+        Modifier.nuvioTap(onClick)
+    }
     Box(
-        modifier = Modifier.size(48.dp).nuvioTap(onClick),
+        modifier = Modifier.size(size).then(tapModifier),
         contentAlignment = Alignment.Center,
     ) {
         if (painter != null) {
