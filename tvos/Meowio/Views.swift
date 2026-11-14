@@ -234,6 +234,7 @@ struct ContinueShelf: View {
 
 /// The big header at the top of Home: the focused title's art, info and a one-press Play.
 struct HeroHeader: View {
+    @EnvironmentObject var profiles: ProfileStore
     let item: MetaItem
     let accent: Color
     let resumeLabel: String?
@@ -268,6 +269,14 @@ struct HeroHeader: View {
                 NavigationLink(value: item) {
                     Label("More Info", systemImage: "info.circle").padding(.horizontal, 12)
                 }
+                if let profile = profiles.active, profiles.profiles.count > 1 {
+                    Button { profiles.showPicker() } label: {
+                        HStack(spacing: 12) {
+                            ProfileAvatar(profile: profile, size: 36)
+                            Text(profile.name)
+                        }
+                    }
+                }
             }
             .padding(.top, 8)
         }
@@ -292,6 +301,7 @@ struct HomeView: View {
     @State private var loaded = false
     @State private var focusedItem: MetaItem?
     @State private var heroItem: MetaItem?
+    @StateObject private var updates = UpdateChecker()
 
     private var featured: MetaItem? { heroItem ?? library.continueWatching.first?.meta ?? movies.first ?? series.first }
     private var backdropItem: MetaItem? { focusedItem ?? featured }
@@ -313,6 +323,12 @@ struct HomeView: View {
                             Text("Add a stream add-on in Settings and Meowio will pick and play sources for you.")
                                 .padding(24).glass().padding(.horizontal, 60)
                         }
+                        if case .available(let tag) = updates.state {
+                            Label("Meowio \(tag) is out. Get Meowio-tvos.ipa from the Meowio releases page on GitHub and sideload it over this version.",
+                                  systemImage: "arrow.down.circle")
+                                .font(.callout)
+                                .padding(24).glass().padding(.horizontal, 60)
+                        }
                         ContinueShelf(onFocus: focus)
                         Shelf(title: "Popular Movies", items: movies, onFocus: focus)
                         Shelf(title: "Popular Series", items: series, onFocus: focus)
@@ -327,6 +343,9 @@ struct HomeView: View {
                 }
             }
             .meowioDestinations()
+        }
+        .task {
+            if case .idle = updates.state { await updates.check() }
         }
         .task {
             guard !loaded else { return }
@@ -491,6 +510,15 @@ struct DetailView: View {
                         Button { library.toggleSaved(meta) } label: {
                             Label(library.isSaved(meta) ? "Saved" : "My List", systemImage: library.isSaved(meta) ? "checkmark" : "plus")
                         }
+                        if meta.type == "movie" {
+                            Button {
+                                if library.isWatched(meta.id) { library.markUnwatched(meta: meta, videoId: nil) }
+                                else { library.markWatched(meta: meta, videoId: nil) }
+                            } label: {
+                                Label(library.isWatched(meta.id) ? "Watched" : "Mark watched",
+                                      systemImage: library.isWatched(meta.id) ? "eye.fill" : "eye")
+                            }
+                        }
                         if settings.streamMode == .smart, !settings.addons.isEmpty {
                             Button { Task { await chooseSource() } } label: {
                                 Label("Sources", systemImage: "list.bullet")
@@ -563,6 +591,17 @@ struct DetailView: View {
                         }
                         .buttonStyle(.card)
                         .disabled(resolving)
+                        .contextMenu {
+                            if watched(ep) {
+                                Button("Mark as unwatched") { library.markUnwatched(meta: meta, videoId: ep.id) }
+                            } else {
+                                Button("Mark as watched") { library.markWatched(meta: meta, videoId: ep.id) }
+                            }
+                            Button("Mark season \(season) as watched") {
+                                for e in episodes where !watched(e) { library.markWatched(meta: meta, videoId: e.id) }
+                            }
+                            Button("Choose source") { Task { await play(videoId: ep.id, title: ep.displayTitle, forcePicker: true) } }
+                        }
                         .id(ep.id)
                     }
                 }
@@ -585,9 +624,7 @@ struct DetailView: View {
         library.resumePoint(for: meta.id) > 0 ? "Resume" : "Play"
     }
 
-    private func watched(_ ep: Video) -> Bool {
-        library.records.contains { $0.id == ep.id && $0.completed }
-    }
+    private func watched(_ ep: Video) -> Bool { library.isWatched(ep.id) }
 
     /// The first episode not finished yet, or the last one watched when it is only partly seen.
     private var nextUp: Video? {

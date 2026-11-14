@@ -176,8 +176,9 @@ enum AddonClient {
         return names
     }
 
-    /// Queries every configured add-on in parallel. Torrent-only results are dropped because Apple
-    /// platforms play direct and debrid HTTP links only. The list is in add-on order, not ranked.
+    /// Queries every configured add-on in parallel. The list is in add-on order, not ranked. Results marked
+    /// "not web ready" (usually MKV debrid links) are kept because mpv plays them; torrent-only results are
+    /// kept too, and the stream store drops them unless a debrid service is set up.
     static func streams(type: String, id: String, addons: [String]) async -> [StreamItem] {
         let encoded = id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id
         var perAddon: [Int: [StreamItem]] = [:]
@@ -194,6 +195,30 @@ enum AddonClient {
         }
         var all: [StreamItem] = []
         for index in addons.indices { all.append(contentsOf: perAddon[index] ?? []) }
-        return all.filter { $0.playableURL != nil && $0.behaviorHints?.notWebReady != true }
+        return all.filter { $0.playableURL != nil || $0.isTorrentOnly }
+    }
+
+    /// Subtitles from every add-on that offers them, in add-on order.
+    static func subtitles(type: String, id: String, addons: [String]) async -> [SubtitleItem] {
+        let encoded = id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id
+        var perAddon: [Int: [SubtitleItem]] = [:]
+        await withTaskGroup(of: (Int, [SubtitleItem]).self) { group in
+            for (index, base) in addons.enumerated() {
+                group.addTask {
+                    guard let man = await manifest(for: base), man.has("subtitles") else { return (index, []) }
+                    let name = man.name ?? URL(string: base)?.host
+                    var list = await fetch(SubtitleResponse.self, from: "\(base)/subtitles/\(type)/\(encoded).json")?.subtitles ?? []
+                    for i in list.indices { list[i].addonName = name }
+                    return (index, list)
+                }
+            }
+            for await (index, list) in group { perAddon[index] = list }
+        }
+        var all: [SubtitleItem] = []
+        var seen = Set<String>()
+        for index in addons.indices {
+            for s in perAddon[index] ?? [] where seen.insert(s.url).inserted { all.append(s) }
+        }
+        return all
     }
 }
