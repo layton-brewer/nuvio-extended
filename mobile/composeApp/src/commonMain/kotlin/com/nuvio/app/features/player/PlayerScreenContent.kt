@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -100,10 +101,13 @@ internal fun PlayerScreenContent(args: PlayerScreenArgs) {
         }
     }
 
+    val topButtonTaps = remember { PlayerTopButtonTaps() }
+    CompositionLocalProvider(LocalPlayerTopButtonTaps provides topButtonTaps) {
     BoxWithConstraints(
         modifier = args.modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(Color.Black)
+            .playerTopButtonTapRoot(topButtonTaps),
     ) {
         val density = LocalDensity.current
         val horizontalSafePadding = playerHorizontalSafePadding()
@@ -198,5 +202,6 @@ internal fun PlayerScreenContent(args: PlayerScreenArgs) {
             partyPanelInset = partyPanelInset,
             dockPartyPanel = dockPartyPanel,
         )
+    }
     }
 }
