@@ -29,6 +29,17 @@ import androidx.compose.ui.unit.dp
  * button's bounds, runs that button and consumes the touch so nothing underneath reacts.
  */
 internal class PlayerTopButtonTaps {
+    companion object {
+        /**
+         * One registry for the whole app. On Android the activity checks it in
+         * dispatchTouchEvent, before any view (including the native video view) sees the
+         * touch, so a tap on a top button can never be taken by the video surface.
+         */
+        val shared = PlayerTopButtonTaps()
+    }
+
+    val hasTargets: Boolean get() = targets.isNotEmpty()
+
     private class Target(var bounds: Rect, var onClick: () -> Unit)
 
     private val targets = LinkedHashMap<String, Target>()
@@ -44,8 +55,11 @@ internal class PlayerTopButtonTaps {
         }
     }
 
-    fun unregister(key: String) {
-        targets.remove(key)
+    fun unregister(key: String, onClick: (() -> Unit)? = null) {
+        // Only drop the entry if it still belongs to the caller, so a newly composed
+        // button that re-registered under the same key is not removed by the old one.
+        val existing = targets[key] ?: return
+        if (onClick == null || existing.onClick === onClick) targets.remove(key)
     }
 
     fun hit(windowPosition: Offset, slopPx: Float): (() -> Unit)? =
@@ -100,7 +114,7 @@ internal fun Modifier.playerTopButtonTarget(key: String, onClick: () -> Unit): M
     val latestOnClick by rememberUpdatedState(onClick)
     val stableClick = remember { { latestOnClick() } }
     DisposableEffect(taps, key) {
-        onDispose { taps.unregister(key) }
+        onDispose { taps.unregister(key, stableClick) }
     }
     return onGloballyPositioned { coordinates ->
         if (coordinates.isAttached) taps.register(key, coordinates.boundsInWindow(), stableClick)

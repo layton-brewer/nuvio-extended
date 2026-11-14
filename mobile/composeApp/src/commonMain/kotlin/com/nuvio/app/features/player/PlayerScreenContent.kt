@@ -101,7 +101,7 @@ internal fun PlayerScreenContent(args: PlayerScreenArgs) {
         }
     }
 
-    val topButtonTaps = remember { PlayerTopButtonTaps() }
+    val topButtonTaps = PlayerTopButtonTaps.shared
     CompositionLocalProvider(LocalPlayerTopButtonTaps provides topButtonTaps) {
     BoxWithConstraints(
         modifier = args.modifier
