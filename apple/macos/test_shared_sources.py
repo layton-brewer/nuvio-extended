@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exercise the desktop overlay with temporary upstream files; no SDKs required."""
+import os
 import pathlib
 import shutil
 import subprocess
@@ -53,8 +54,13 @@ class SharedSourcesTest(unittest.TestCase):
         )
 
     def apply(self):
+        bash = "bash"
+        if os.name == "nt":
+            # Use Git Bash, not the Windows Subsystem for Linux launcher on PATH.
+            git_root = pathlib.Path(shutil.which("git")).resolve().parents[1]
+            bash = str(git_root / "bin/bash.exe")
         return subprocess.run(
-            ["bash", "apply-overlay.sh", "../../desktop"],
+            [bash, "apply-overlay.sh", "../../desktop"],
             cwd=self.here, capture_output=True, text=True,
         )
 
@@ -62,7 +68,7 @@ class SharedSourcesTest(unittest.TestCase):
         paths = shared_paths()
         self.assertEqual(len(paths), len(set(paths)), "Manifest contains duplicate paths")
         result = self.apply()
-        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         target = self.desktop / "composeApp/src"
         for path in paths:
             self.assertEqual((target / path).read_bytes(), (self.shared / path).read_bytes(), path)
