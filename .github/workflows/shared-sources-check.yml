@@ -1,0 +1,34 @@
+name: Shared desktop sources check
+
+on:
+  push:
+    branches: [main, "codex/**"]
+    paths:
+      - "apple/macos/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
+      - ".github/workflows/shared-sources-check.yml"
+  pull_request:
+    paths:
+      - "apple/macos/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
+      - ".github/workflows/shared-sources-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  overlay:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Check shared desktop sources
+        run: python apple/macos/test_shared_sources.py

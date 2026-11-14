@@ -7,20 +7,23 @@ root="$1"
 gradle="$root/composeApp/build.gradle.kts"
 icons="$root/composeApp/src/desktopMain/resources/icons"
 
-# Meowio features (Smart auto-play, Live TV, backup, insights, AI assistant, ...) merged into the
-# desktop sources. Files here replace the pinned desktop copies; new files are added.
+# Shared sources have one owner in mobile; platform-specific changes stay in the overlay.
+shared="$here/../../mobile/composeApp/src"
+manifest="$here/shared-sources.txt"
+while IFS= read -r path || [[ -n "$path" ]]; do
+  path="${path%$'\r'}"
+  [[ -z "$path" || "$path" == \#* ]] && continue
+  [[ -f "$shared/$path" ]] || { echo "Missing shared source: $path" >&2; exit 1; }
+  [[ ! -e "$here/overlay/$path" ]] || { echo "Shared source also exists in overlay: $path" >&2; exit 1; }
+done < "$manifest"
+
 cp -R "$here/overlay/." "$root/composeApp/src/"
-
-# One-tap downloads and the Downloads screen live in the phone app's sources and are shared as-is,
-# so the phone, Mac and Windows apps always behave the same.
-shared="$here/../../mobile/composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads"
-for f in AutoDownload.kt DownloadPrefsStorage.kt DownloadsScreen.kt DownloadLocation.kt DownloadLocationUi.kt; do
-  cp "$shared/$f" "$root/composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/$f"
-done
-
-# The Library > Downloads poster grid is shared too; the desktop Library screen is an overlay copy.
-cp "$here/../../mobile/composeApp/src/commonMain/kotlin/com/nuvio/app/features/library/LibraryDownloadsContent.kt" \
-  "$root/composeApp/src/commonMain/kotlin/com/nuvio/app/features/library/LibraryDownloadsContent.kt"
+while IFS= read -r path || [[ -n "$path" ]]; do
+  path="${path%$'\r'}"
+  [[ -z "$path" || "$path" == \#* ]] && continue
+  mkdir -p "$(dirname "$root/composeApp/src/$path")"
+  cp "$shared/$path" "$root/composeApp/src/$path"
+done < "$manifest"
 
 # New downloads follow the user's chosen download folder (Settings in the Downloads screen).
 dl="$root/composeApp/src/desktopMain/kotlin/com/nuvio/app/features/downloads/DownloadsPlatformDownloader.desktop.kt"

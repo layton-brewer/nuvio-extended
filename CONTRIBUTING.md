@@ -10,3 +10,20 @@ Thanks for helping! Bug reports, ideas and pull requests are welcome.
 - **License:** contributions are licensed under GPL v3, like the rest of the project.
 
 Build instructions are in the [README](README.md#build-from-source).
+
+## Shared desktop sources
+
+Mac and Windows builds apply `apple/macos/apply-overlay.sh` to the pinned desktop
+checkout. Files listed in `apple/macos/shared-sources.txt` are copied unchanged
+from `mobile/composeApp/src`; edit them there. Keep desktop-specific implementations
+in `apple/macos/overlay`. A file must not appear in both places.
+
+When a shared file needs desktop-specific behavior, remove its manifest entry and
+add the desktop implementation to the overlay. When adding a new shared file, list
+its path relative to `mobile/composeApp/src`.
+
+Run the overlay regression checks without an Android SDK or desktop checkout:
+
+```bash
+python3 apple/macos/test_shared_sources.py
+```
