@@ -79,6 +79,12 @@ class SharedSourcesTest(unittest.TestCase):
         self.assertIn("TargetFormat.Exe", gradle)
         self.assertEqual((target / "desktopMain/resources/icons/nuvio-app-icon-transparent.ico").read_bytes(), b"windows fixture")
 
+    def test_windows_line_endings_in_manifest(self):
+        manifest = self.here / "shared-sources.txt"
+        manifest.write_bytes(MANIFEST.read_text().replace("\n", "\r\n").encode())
+        result = self.apply()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_missing_shared_source_fails_before_overlay_is_applied(self):
         path = shared_paths()[-1]
         (self.shared / path).unlink()

@@ -11,6 +11,7 @@ icons="$root/composeApp/src/desktopMain/resources/icons"
 shared="$here/../../mobile/composeApp/src"
 manifest="$here/shared-sources.txt"
 while IFS= read -r path || [[ -n "$path" ]]; do
+  path="${path%$'\r'}"
   [[ -z "$path" || "$path" == \#* ]] && continue
   [[ -f "$shared/$path" ]] || { echo "Missing shared source: $path" >&2; exit 1; }
   [[ ! -e "$here/overlay/$path" ]] || { echo "Shared source also exists in overlay: $path" >&2; exit 1; }
@@ -18,6 +19,7 @@ done < "$manifest"
 
 cp -R "$here/overlay/." "$root/composeApp/src/"
 while IFS= read -r path || [[ -n "$path" ]]; do
+  path="${path%$'\r'}"
   [[ -z "$path" || "$path" == \#* ]] && continue
   mkdir -p "$(dirname "$root/composeApp/src/$path")"
   cp "$shared/$path" "$root/composeApp/src/$path"
