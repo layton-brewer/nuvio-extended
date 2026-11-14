@@ -35,9 +35,13 @@ class LiveTvLoader(
 ) {
 
     /** Channels for [source]. Throws [LiveTvException] with the reason when they cannot be loaded. */
-    suspend fun loadPlaylist(source: LiveSource): LivePlaylist = when (source.type) {
-        LiveSourceType.M3U -> loadM3u(source)
-        LiveSourceType.XTREAM -> loadXtream(source)
+    suspend fun loadPlaylist(source: LiveSource): LivePlaylist {
+        val playlist = when (source.type) {
+            LiveSourceType.M3U -> loadM3u(source)
+            LiveSourceType.XTREAM -> loadXtream(source)
+        }
+        val key = source.key
+        return playlist.copy(channels = playlist.channels.map { it.copy(sourceId = key) })
     }
 
     private suspend fun loadM3u(source: LiveSource): LivePlaylist {
@@ -66,7 +70,12 @@ class LiveTvLoader(
         val streams = fetchText(XtreamApi.streamsUrl(source)) ?: throw LiveTvException(LiveTvError.NETWORK)
         val channels = XtreamApi.parseStreams(streams, categories, source)
         if (channels.isEmpty()) throw LiveTvException(LiveTvError.NO_CHANNELS)
-        return LivePlaylist(channels = channels)
+        // Providers publish their whole guide as one XMLTV file.
+        return LivePlaylist(
+            channels = channels,
+            guideUrls = listOf(XtreamApi.guideFileUrl(source)),
+            account = XtreamApi.parseAccount(login),
+        )
     }
 
     /** True when [playlist] announces so many guide files that they are loaded one group at a time. */
@@ -117,12 +126,7 @@ class LiveTvLoader(
         if (source.type != LiveSourceType.XTREAM) return null
         val streamId = channel.xtreamStreamId ?: return null
         val body = fetchText(XtreamApi.shortGuideUrl(source, streamId)) ?: return null
-        val now = nowMs()
-        val upcoming = XtreamApi.parseShortGuide(body).filter { it.stopMs > now }
-        if (upcoming.isEmpty()) return null
-        val current = upcoming.firstOrNull { it.startMs <= now }
-        val next = upcoming.firstOrNull { it.startMs > now }
-        return LiveNowNext(now = current, next = next)
+        return LiveNowNext.of(XtreamApi.parseShortGuide(body), nowMs())
     }
 
     private companion object {

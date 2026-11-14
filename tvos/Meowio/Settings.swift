@@ -23,13 +23,49 @@ enum DebridService: String, Codable, CaseIterable, Identifiable {
     }
 }
 
-/// Where Live TV channels come from. Empty address means the built-in free channels.
-struct LiveSource: Codable, Hashable {
+/// A playlist or provider login the user added for Live TV. With none added, the built-in free channels show.
+struct LiveSource: Codable, Hashable, Identifiable {
     var type: LiveSourceType = .m3u
     var url: String = ""
     var username: String = ""
     var password: String = ""
     var guideUrl: String = ""
+    var name: String = ""
+    var enabled: Bool = true
+
+    init(type: LiveSourceType = .m3u, url: String = "", username: String = "", password: String = "",
+         guideUrl: String = "", name: String = "", enabled: Bool = true) {
+        self.type = type; self.url = url; self.username = username; self.password = password
+        self.guideUrl = guideUrl; self.name = name; self.enabled = enabled
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        type = (try? c.decode(LiveSourceType.self, forKey: .type)) ?? .m3u
+        url = (try? c.decode(String.self, forKey: .url)) ?? ""
+        username = (try? c.decode(String.self, forKey: .username)) ?? ""
+        password = (try? c.decode(String.self, forKey: .password)) ?? ""
+        guideUrl = (try? c.decode(String.self, forKey: .guideUrl)) ?? ""
+        name = (try? c.decode(String.self, forKey: .name)) ?? ""
+        enabled = (try? c.decode(Bool.self, forKey: .enabled)) ?? true
+    }
+
+    /// Stable id for this playlist, the same one the Android apps use.
+    var key: String {
+        let text = "\(type.rawValue)|\(url.trimmingCharacters(in: .whitespaces))|\(username.trimmingCharacters(in: .whitespaces))"
+        var h: Int32 = 0
+        for u in text.utf16 { h = h &* 31 &+ Int32(bitPattern: UInt32(u)) }
+        return String(UInt32(bitPattern: h), radix: 36)
+    }
+    var id: String { key }
+    var isEmpty: Bool { url.trimmingCharacters(in: .whitespaces).isEmpty }
+
+    var label: String {
+        let n = name.trimmingCharacters(in: .whitespaces)
+        if !n.isEmpty { return n }
+        let host = URLComponents(string: type == .xtream ? XtreamApi.normalizeServer(url) : url)?.host ?? url
+        return host.isEmpty ? (type == .xtream ? "Xtream login" : "Playlist") : host
+    }
 }
 
 /// Colour themes. The first five match the Android apps' base themes, the last three are Meowio's own.
@@ -79,7 +115,12 @@ final class SettingsStore: ObservableObject {
     @Published var startupTimeout: Int { didSet { save() } }
     @Published var pinnedSources: [String] { didSet { save() } }
     @Published var theme: MeowioTheme { didSet { save() } }
-    @Published var liveSource: LiveSource { didSet { save() } }
+    /// Live TV playlists and logins. Empty means the built-in free channels.
+    @Published var liveSources: [LiveSource] { didSet { save() } }
+    /// Live TV VPN: an HTTP proxy used only by Live TV playback, never by debrid or anything else.
+    /// It is used while a channel plays and dropped as soon as playback leaves Live TV.
+    @Published var liveVpnEnabled: Bool { didSet { save() } }
+    @Published var liveVpnProxy: String { didSet { save() } }
     @Published var liveTabVisible: Bool { didSet { save() } }
     @Published var aiKey: String { didSet { save() } }
     @Published var aiModel: String { didSet { save() } }
@@ -112,13 +153,17 @@ final class SettingsStore: ObservableObject {
         startupTimeout = d.object(forKey: "startupTimeout") as? Int ?? 20
         pinnedSources = d.stringArray(forKey: "pinnedSources") ?? []
         theme = MeowioTheme(rawValue: d.string(forKey: "theme") ?? "") ?? .meowio
-        if let data = d.data(forKey: "liveSource"), let s = try? JSONDecoder().decode(LiveSource.self, from: data) {
-            liveSource = s
+        if let data = d.data(forKey: "liveSources"), let list = try? JSONDecoder().decode([LiveSource].self, from: data) {
+            liveSources = list
+        } else if let data = d.data(forKey: "liveSource"), let s = try? JSONDecoder().decode(LiveSource.self, from: data) {
+            liveSources = s.isEmpty ? [] : [s]
         } else if let legacy = d.string(forKey: "playlistURL"), !legacy.isEmpty {
-            liveSource = LiveSource(type: .m3u, url: legacy)
+            liveSources = [LiveSource(type: .m3u, url: legacy)]
         } else {
-            liveSource = LiveSource()
+            liveSources = []
         }
+        liveVpnEnabled = d.object(forKey: "liveVpnEnabled") as? Bool ?? false
+        liveVpnProxy = d.string(forKey: "liveVpnProxy") ?? ""
         liveTabVisible = d.object(forKey: "liveTabVisible") as? Bool ?? true
         aiKey = d.string(forKey: "aiKey") ?? ""
         aiModel = d.string(forKey: "aiModel") ?? ""
@@ -143,7 +188,9 @@ final class SettingsStore: ObservableObject {
         d.set(startupTimeout, forKey: "startupTimeout")
         d.set(pinnedSources, forKey: "pinnedSources")
         d.set(theme.rawValue, forKey: "theme")
-        if let data = try? JSONEncoder().encode(liveSource) { d.set(data, forKey: "liveSource") }
+        if let data = try? JSONEncoder().encode(liveSources) { d.set(data, forKey: "liveSources") }
+        d.set(liveVpnEnabled, forKey: "liveVpnEnabled")
+        d.set(liveVpnProxy, forKey: "liveVpnProxy")
         d.set(liveTabVisible, forKey: "liveTabVisible")
         d.set(aiKey, forKey: "aiKey")
         d.set(aiModel, forKey: "aiModel")
@@ -163,6 +210,17 @@ final class SettingsStore: ObservableObject {
         while s.hasSuffix("/") { s.removeLast() }
         guard !s.isEmpty, URL(string: s) != nil, !addons.contains(s) else { return }
         addons.append(s)
+    }
+
+    /// The proxy Live TV playback should use now, or "" when the Live TV VPN is off or not set up.
+    var liveProxyForPlayback: String {
+        guard liveVpnEnabled, let proxy = LiveVpnGuard.parseProxy(liveVpnProxy) else { return "" }
+        return proxy.asUrl()
+    }
+
+    func addLiveSource(_ source: LiveSource) {
+        if let i = liveSources.firstIndex(where: { $0.key == source.key }) { liveSources[i] = source }
+        else { liveSources.append(source) }
     }
 
     func togglePinned(_ name: String) {
@@ -185,7 +243,8 @@ final class SettingsStore: ObservableObject {
         var startupTimeout: Int
         var pinnedSources: [String]
         var theme: MeowioTheme
-        var liveSource: LiveSource
+        /// Older backups hold one playlist here; newer ones use liveSources.
+        var liveSource: LiveSource?
         var liveTabVisible: Bool
         /// True when personal add-on links were left out; restoring keeps this device's own. Absent in older backups.
         var privateAddonLinksLeftOut: Bool?
@@ -195,6 +254,8 @@ final class SettingsStore: ObservableObject {
         var skipIntro: Bool?
         var upNextCard: Bool?
         var debridService: DebridService?
+        var liveSources: [LiveSource]?
+        var liveVpnEnabled: Bool?
     }
 
     /// True for an add-on link that carries anything beyond a host and /manifest.json (usually a debrid key).
@@ -213,7 +274,10 @@ final class SettingsStore: ObservableObject {
         var b = Backup(addons: backedUpAddons, streamMode: streamMode, autoNext: autoNext, sameRelease: sameRelease,
                        preloadNext: preloadNext, failoverEnabled: failoverEnabled, maxSwitches: maxSwitches,
                        startupTimeout: startupTimeout, pinnedSources: pinnedSources, theme: theme,
-                       liveSource: liveSource, liveTabVisible: liveTabVisible)
+                       liveSource: nil, liveTabVisible: liveTabVisible)
+        b.liveSources = liveSources
+        // The proxy address can hold a login, so only the on/off choice is backed up.
+        b.liveVpnEnabled = liveVpnEnabled
         if !includePrivateAddonLinks { b.privateAddonLinksLeftOut = true }
         b.audioLanguage = audioLanguage
         b.subtitleLanguage = subtitleLanguage
@@ -247,7 +311,9 @@ final class SettingsStore: ObservableObject {
         startupTimeout = b.startupTimeout
         pinnedSources = b.pinnedSources
         theme = b.theme
-        liveSource = b.liveSource
+        if let list = b.liveSources { liveSources = list }
+        else if let one = b.liveSource { liveSources = one.isEmpty ? [] : [one] }
+        if let v = b.liveVpnEnabled { liveVpnEnabled = v }
         liveTabVisible = b.liveTabVisible
         if let v = b.audioLanguage { audioLanguage = v }
         if let v = b.subtitleLanguage { subtitleLanguage = v }

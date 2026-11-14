@@ -339,4 +339,59 @@ class LiveTvParsersTest {
         assertEquals("Late Show", guide?.next?.title)
         assertNull(loader(pages, nowMs = 1_900_000_000_000L).loadChannelGuide(xtream, channel))
     }
+
+    @Test
+    fun `keeps the next hours of programmes with descriptions for the guide grid`() {
+        val base = 1_767_225_600_000L
+        val xml = """
+            <tv>
+              <programme start="20260101000000 +0000" stop="20260101010000 +0000" channel="a"><title>One</title><desc>About one</desc></programme>
+              <programme start="20260101010000 +0000" stop="20260101020000 +0000" channel="a"><title>Two</title></programme>
+              <programme start="20260101020000 +0000" stop="20260101030000 +0000" channel="a"><title>Three</title></programme>
+              <programme start="20260102020000 +0000" stop="20260102030000 +0000" channel="a"><title>Tomorrow</title></programme>
+            </tv>
+        """.trimIndent()
+        val entry = XmltvParser.parseNowNext(xml, nowMs = base + 60_000L)["a"]!!
+        assertEquals(listOf("One", "Two", "Three"), entry.upcoming.map { it.title })
+        assertEquals("About one", entry.now?.description)
+        assertEquals("Two", entry.next?.title)
+    }
+
+    @Test
+    fun `reads channel numbers and xtream account details`() {
+        val playlist = M3uParser.parse("#EXTM3U\n#EXTINF:-1 tvg-chno=\"12\",Twelve\nhttp://a/12.ts")
+        assertEquals(12, playlist.channels.single().number)
+        val account = XtreamApi.parseAccount("""{"user_info":{"auth":1,"exp_date":"1800000000","max_connections":"2"}}""")
+        assertEquals(1_800_000_000_000L, account?.expiresAtMs)
+        assertEquals(2, account?.maxConnections)
+        assertTrue(XtreamApi.guideFileUrl(xtream).contains("/xmltv.php?username="))
+    }
+
+    @Test
+    fun `groups copies of a channel and keeps debrid away from the vpn`() {
+        assertEquals("espn", LiveTvVariants.key("US: ESPN HD"))
+        assertEquals("espn", LiveTvVariants.key("[US] ESPN (FHD)"))
+        assertEquals("espn 2", LiveTvVariants.key("ESPN 2 4K"))
+        assertEquals("fox news", LiveTvVariants.key("Fox News"))
+        val one = LiveChannel(id = "1", name = "ESPN HD", url = "http://a/1", sourceId = "x")
+        val channels = listOf(
+            one,
+            LiveChannel(id = "2", name = "UK | ESPN SD", url = "http://b/2", sourceId = "y"),
+            LiveChannel(id = "3", name = "ESPN", url = "http://a/3", sourceId = "x"),
+            LiveChannel(id = "4", name = "ESPN 2", url = "http://a/4", sourceId = "x"),
+        )
+        assertEquals(listOf("3", "2"), LiveTvVariants.alternatesFor(one, channels).map { it.id })
+
+        assertTrue(LiveVpnGuard.isDebrid("https://abc.download.real-debrid.com/d/x"))
+        assertTrue(LiveVpnGuard.isDebrid("https://store-1.torbox.app/file"))
+        assertFalse(LiveVpnGuard.isDebrid("http://iptv.example:8080/live/u/p/1.m3u8"))
+        assertFalse(LiveVpnGuard.mayRoute("https://x.premiumize.me/f"))
+        assertTrue(LiveVpnGuard.mayRoute("http://iptv.example/live.ts"))
+
+        assertEquals(LiveProxy("10.0.0.1", 8080), LiveVpnGuard.parseProxy("10.0.0.1:8080"))
+        assertEquals(LiveProxy("p.example", 3128, "me", "p@ss"), LiveVpnGuard.parseProxy("http://me:p%40ss@p.example:3128"))
+        assertNull(LiveVpnGuard.parseProxy("socks5://p.example:1080"))
+        assertNull(LiveVpnGuard.parseProxy("p.example"))
+        assertEquals("http://me:p%40ss@p.example:3128", LiveProxy("p.example", 3128, "me", "p@ss").asUrl())
+    }
 }

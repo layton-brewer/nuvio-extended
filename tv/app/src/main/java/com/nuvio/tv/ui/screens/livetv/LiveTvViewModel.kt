@@ -11,4 +11,10 @@ class LiveTvViewModel @Inject constructor(
     repository: LiveTvRepository
 ) : ViewModel() {
     val controller: LiveTvController = repository.controller
+    private val repo = repository
+
+    val wireGuardAvailable: Boolean get() = repo.wireGuardAvailable
+
+    fun playbackTarget(channel: com.nuvio.tv.core.livetv.LiveChannel): Pair<String, Map<String, String>> =
+        repo.playbackTarget(channel)
 }

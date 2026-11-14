@@ -57,7 +57,9 @@ final class MPVEngine: NSObject {
     /// Starts mpv early so preferences can be set before the first file loads.
     func prepare() { start() }
 
-    func load(url: String, headers: [String: String], start startAt: Double = 0) {
+    /// [proxy] is the Live TV VPN for a Live TV channel. It is set on every load, so any other file
+    /// (debrid links included) always loads with no proxy.
+    func load(url: String, headers: [String: String], start startAt: Double = 0, proxy: String = "") {
         start()
         guard let mpv else { onFailed?(); return }
         loaded = false
@@ -69,6 +71,7 @@ final class MPVEngine: NSObject {
             let joined = headers.map { "\($0.key): \($0.value)" }.joined(separator: ",")
             mpv_set_property_string(mpv, "http-header-fields", joined)
         }
+        mpv_set_property_string(mpv, "http-proxy", proxy)
         mpv_set_property_string(mpv, "start", startAt > 0 ? String(format: "%.1f", startAt) : "none")
         command(["loadfile", url, "replace"])
     }

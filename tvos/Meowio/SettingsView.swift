@@ -119,17 +119,26 @@ struct SettingsView: View {
                     Toggle("Show Live TV", isOn: $settings.liveTabVisible)
                 }
 
-                Section("Live TV source (empty = free built-in channels)") {
-                    Picker("Type", selection: $settings.liveSource.type) {
-                        Text("M3U playlist").tag(LiveSourceType.m3u)
-                        Text("Xtream login").tag(LiveSourceType.xtream)
+                Section("Live TV playlists (none = free built-in channels)") {
+                    ForEach(settings.liveSources) { source in
+                        NavigationLink {
+                            LiveSourceEditor(original: source)
+                        } label: {
+                            HStack {
+                                Text(source.label)
+                                Spacer()
+                                Text(source.enabled ? (source.type == .xtream ? "Xtream" : "M3U") : "Off")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                     }
-                    TextField(settings.liveSource.type == .m3u ? "Playlist URL" : "Server address", text: $settings.liveSource.url)
-                    if settings.liveSource.type == .xtream {
-                        TextField("Username", text: $settings.liveSource.username)
-                        SecureField("Password", text: $settings.liveSource.password)
-                    }
-                    TextField("Guide (XMLTV) URL, optional", text: $settings.liveSource.guideUrl)
+                    NavigationLink("Add a playlist or login") { LiveSourceEditor(original: nil) }
+                }
+
+                Section("Live TV VPN (only Live TV uses it, never debrid)") {
+                    Toggle("Use for Live TV", isOn: $settings.liveVpnEnabled)
+                    TextField("Proxy, such as http://user:pass@host:8080", text: $settings.liveVpnProxy)
+                    Text(liveVpnStatus).font(.caption).foregroundStyle(.secondary)
                 }
 
                 Section("More") {
@@ -372,5 +381,13 @@ struct AiAssistantView: View {
         } else {
             error = "Could not find \(p.title)."
         }
+    }
+}
+
+private extension SettingsView {
+    var liveVpnStatus: String {
+        if !settings.liveVpnEnabled { return "Off. Live TV connects directly." }
+        if LiveVpnGuard.parseProxy(settings.liveVpnProxy) == nil { return "Enter an http:// proxy address with a port." }
+        return "Switches on by itself while a channel plays and off when you leave. Debrid and other playback never use it."
     }
 }

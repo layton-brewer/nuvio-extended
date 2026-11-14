@@ -29,3 +29,35 @@ internal actual fun liveTvCountryCode(): String? =
 internal actual suspend fun liveTvStreamText(url: String, onChunk: (String) -> Unit): Boolean = false
 
 internal actual suspend fun liveTvStreamAnswers(url: String, headers: Map<String, String>): Boolean? = null
+
+/**
+ * iOS plays Live TV straight from the channel. When the Live TV VPN (an HTTP proxy here) is on,
+ * the proxy is remembered for that address only and the player picks it up for that playback;
+ * every other playback, debrid included, is told to use no proxy.
+ */
+object LiveTvIosProxy {
+    private val proxies = HashMap<String, String>()
+
+    fun proxyFor(url: String): String? = proxies[url]
+
+    internal fun remember(url: String, proxy: String?) {
+        if (proxy == null) proxies.remove(url) else proxies[url] = proxy
+        while (proxies.size > 8) proxies.remove(proxies.keys.first())
+    }
+}
+
+internal actual fun liveTvPlaybackTarget(
+    channel: LiveChannel,
+    backups: List<LiveChannel>,
+    vpn: LiveVpnSettings,
+): LiveTvPlaybackTarget {
+    val proxy = if (vpn.ready && vpn.type == LiveVpnType.PROXY && LiveVpnGuard.mayRoute(channel.url)) {
+        LiveVpnGuard.parseProxy(vpn.proxyUrl)?.asUrl()
+    } else {
+        null
+    }
+    LiveTvIosProxy.remember(channel.url, proxy)
+    return LiveTvPlaybackTarget(channel.url, channel.headers)
+}
+
+internal actual fun liveTvWireGuardAvailable(): Boolean = false

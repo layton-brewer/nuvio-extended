@@ -1,14 +1,23 @@
 package com.nuvio.tv.core.livetv
 
 /**
- * Reads an XMLTV programme guide and keeps only what is on now and next for each channel, so
- * even a very large guide costs little memory once parsed.
+ * Reads an XMLTV programme guide and keeps only the next few hours for each channel, so even a
+ * very large guide costs little memory once parsed.
  */
 object XmltvParser {
 
     private val PROGRAMME = Regex("""<programme\b([^>]*)>(.*?)</programme>""", RegexOption.DOT_MATCHES_ALL)
     private val ATTRIBUTE = Regex("""([A-Za-z_-]+)\s*=\s*"([^"]*)"""")
     private val TITLE = Regex("""<title\b[^>]*>(.*?)</title>""", RegexOption.DOT_MATCHES_ALL)
+    private val DESCRIPTION = Regex("""<desc\b[^>]*>(.*?)</desc>""", RegexOption.DOT_MATCHES_ALL)
+
+    /** How far ahead the guide keeps programmes. */
+    const val WINDOW_MS = 6L * 60 * 60 * 1000
+    /** At most this many programmes per channel, so a guide with very short slots stays small. */
+    const val MAX_PER_CHANNEL = 12
+    const val MAX_DESCRIPTION = 240
+    /** Descriptions are kept only for programmes starting this soon, to save memory on big guides. */
+    private const val DESCRIPTION_AHEAD_MS = 90L * 60 * 1000
 
     /** Channel guide id (lower case) to what is on now and next at [nowMs]. */
     fun parseNowNext(xml: String, nowMs: Long): Map<String, LiveNowNext> =
@@ -20,7 +29,7 @@ object XmltvParser {
      */
     class Reader(private val nowMs: Long, private val wanted: Set<String>? = null) {
         private val pending = StringBuilder()
-        private val found = HashMap<String, LiveNowNext>()
+        private val found = HashMap<String, MutableList<LiveProgramme>>()
 
         fun feed(chunk: String) {
             pending.append(chunk)
@@ -45,7 +54,8 @@ object XmltvParser {
             if (pending.length > MAX_PENDING) pending.clear()
         }
 
-        fun result(): Map<String, LiveNowNext> = found
+        fun result(): Map<String, LiveNowNext> =
+            found.mapNotNull { (channel, programmes) -> LiveNowNext.of(programmes, nowMs)?.let { channel to it } }.toMap()
 
         private fun accept(match: MatchResult) {
             val attributes = ATTRIBUTE.findAll(match.groupValues[1]).associate { it.groupValues[1] to it.groupValues[2] }
@@ -53,18 +63,24 @@ object XmltvParser {
             if (wanted != null && channel !in wanted) return
             val start = parseTime(attributes["start"]) ?: return
             val stop = parseTime(attributes["stop"]) ?: return
-            if (stop <= nowMs) return
-            val title = TITLE.find(match.groupValues[2])?.groupValues?.get(1)?.let(::decodeEntities)?.trim()
+            if (stop <= nowMs || start > nowMs + WINDOW_MS || stop <= start) return
+            val body = match.groupValues[2]
+            val title = TITLE.find(body)?.groupValues?.get(1)?.let(::decodeEntities)?.trim()
                 ?.takeIf(String::isNotEmpty) ?: return
-            val programme = LiveProgramme(title = title, startMs = start, stopMs = stop)
-            val current = found[channel] ?: LiveNowNext()
-            val next = current.next
-            found[channel] = if (start <= nowMs) {
-                current.copy(now = programme)
-            } else if (next == null || start < next.startMs) {
-                current.copy(next = programme)
+            val description = if (start > nowMs + DESCRIPTION_AHEAD_MS) {
+                null
             } else {
-                current
+                DESCRIPTION.find(body)?.groupValues?.get(1)?.let(::decodeEntities)?.trim()
+                    ?.take(MAX_DESCRIPTION)?.takeIf(String::isNotEmpty)
+            }
+            val programme = LiveProgramme(title = title, startMs = start, stopMs = stop, description = description)
+            val list = found.getOrPut(channel) { ArrayList() }
+            if (list.any { it.startMs == start }) return
+            list += programme
+            if (list.size > MAX_PER_CHANNEL) {
+                // Keep the earliest ones: those are what the guide shows first.
+                list.sortBy { it.startMs }
+                list.removeAt(list.lastIndex)
             }
         }
     }

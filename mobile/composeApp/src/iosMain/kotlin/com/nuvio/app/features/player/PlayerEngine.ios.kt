@@ -339,7 +339,13 @@ actual fun PlatformPlayerSurface(
         bridge.loadFileWithAudio(
             videoUrl = sourceUrl,
             audioUrl = sourceAudioUrl,
-            headersJson = encodePlaybackHeadersForBridge(sourceHeaders),
+            // The Live TV VPN proxy travels to the player under a private key the player strips;
+            // it is set for Live TV addresses only and cleared for everything else.
+            headersJson = encodePlaybackHeadersForBridge(
+                com.nuvio.app.features.livetv.LiveTvIosProxy.proxyFor(sourceUrl)
+                    ?.let { sourceHeaders + (LIVE_TV_PROXY_HEADER to it) }
+                    ?: sourceHeaders,
+            ),
             subtitlesJson = encodeExternalSubtitlesForBridge(externalSubtitles),
         )
         if (playWhenReady) {
@@ -523,3 +529,6 @@ private fun encodePlaybackHeadersForBridge(headers: Map<String, String>): String
         Json.encodeToString(sanitized)
     }.getOrNull()
 }
+
+/** Private header key that carries the Live TV VPN proxy to the iOS player. Never sent to servers. */
+internal const val LIVE_TV_PROXY_HEADER = "X-Meowio-Live-Proxy"

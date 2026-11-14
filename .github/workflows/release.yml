@@ -6,12 +6,14 @@ on:
     paths:
       - "tv/**"
       - "mobile/**"
+      - "native/**"
       - ".github/workflows/release.yml"
   # Pull requests build both APKs as a compile check; only main publishes.
   pull_request:
     paths:
       - "tv/**"
       - "mobile/**"
+      - "native/**"
       - ".github/workflows/release.yml"
   workflow_dispatch:
 
@@ -42,6 +44,12 @@ jobs:
 
       # Private settings (account server address and keys) come from repository
       # secrets only. They are never stored in the repository.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: native/livetv-vpn/go.sum
+      - name: Build Live TV VPN library
+        run: bash "$GITHUB_WORKSPACE/native/livetv-vpn/build-android.sh" "$ANDROID_NDK_LATEST_HOME" "$GITHUB_WORKSPACE/native/livetv-vpn/build/jniLibs"
       - name: Prepare local properties
         env:
           LOCAL_PROPERTIES_BASE64: ${{ secrets.TV_LOCAL_PROPERTIES_BASE64 }}
@@ -95,7 +103,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Build
-        run: ./gradlew :app:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.app.versionName=0.2.10 -Pnuvio.app.versionCode=$((2000 + ${{ github.run_number }})) --stacktrace
+        run: ./gradlew :app:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.app.versionName=0.2.11 -Pnuvio.app.versionCode=$((2000 + ${{ github.run_number }})) --stacktrace
 
       - name: Rename APK
         run: |
@@ -142,6 +150,12 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: native/livetv-vpn/go.sum
+      - name: Build Live TV VPN library
+        run: bash "$GITHUB_WORKSPACE/native/livetv-vpn/build-android.sh" "$ANDROID_NDK_LATEST_HOME" "$GITHUB_WORKSPACE/native/livetv-vpn/build/jniLibs"
       - name: Prepare local properties
         env:
           LOCAL_PROPERTIES_BASE64: ${{ secrets.MOBILE_LOCAL_PROPERTIES_BASE64 }}
@@ -187,7 +201,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Build
-        run: ./gradlew :androidApp:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.android.distribution=full -Pnuvio.ios.distribution=appstore -Pnuvio.app.versionName=0.2.10 -Pnuvio.app.versionCode=$((3000 + ${{ github.run_number }})) --stacktrace
+        run: ./gradlew :androidApp:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.android.distribution=full -Pnuvio.ios.distribution=appstore -Pnuvio.app.versionName=0.2.11 -Pnuvio.app.versionCode=$((3000 + ${{ github.run_number }})) --stacktrace
 
       - name: Rename APK
         run: cp androidApp/build/outputs/apk/full/debug/androidApp-full-debug.apk "$RUNNER_TEMP/Meowio-mobile.apk"
@@ -230,7 +244,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          tag="v0.2.10"
+          tag="v0.2.11"
           cat > notes.md <<'NOTES'
           ## Download
 

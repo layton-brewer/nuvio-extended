@@ -13,11 +13,25 @@ struct LiveChannel: Identifiable, Hashable {
     var guideId: String? = nil
     var headers: [String: String] = [:]
     var xtreamStreamId: String? = nil
+    /// The provider's channel number, when the playlist gives one.
+    var number: Int? = nil
+    /// Key of the playlist this channel came from.
+    var sourceKey: String = ""
+
+    var displayName: String { number.map { "\($0)  \(name)" } ?? name }
 }
 
 struct LivePlaylist {
     var channels: [LiveChannel]
     var guideUrls: [String] = []
+    var account: LiveAccountInfo? = nil
+}
+
+/// Subscription details an Xtream provider reports at login.
+struct LiveAccountInfo: Hashable {
+    var expires: Date?
+    var maxConnections: Int?
+    var activeConnections: Int?
 }
 
 struct LiveProgramme: Hashable {
@@ -29,6 +43,114 @@ struct LiveProgramme: Hashable {
 struct LiveNowNext: Hashable {
     var now: LiveProgramme?
     var next: LiveProgramme?
+    /// Programmes from now on, oldest first, for the guide.
+    var upcoming: [LiveProgramme] = []
+
+    static func of(_ programmes: [LiveProgramme], now: Date) -> LiveNowNext? {
+        let ahead = programmes.filter { $0.stop > now }.sorted { $0.start < $1.start }
+        if ahead.isEmpty { return nil }
+        return LiveNowNext(now: ahead.first { $0.start <= now }, next: ahead.first { $0.start > now }, upcoming: ahead)
+    }
+}
+
+/// Finds other copies of a channel (HD, FHD, backup feeds, other playlists) to fall back to.
+/// Same rules as the Android apps' LiveTvVariants.
+enum LiveTvVariants {
+    private static let quality: Set<String> = [
+        "hd", "fhd", "uhd", "sd", "4k", "8k", "hevc", "h265", "h264", "hq", "lq", "720p", "1080p",
+        "2160p", "1080i", "576p", "480p", "backup", "alt", "raw", "vip", "50fps", "60fps", "hdr",
+    ]
+    private static let prefix = try! NSRegularExpression(pattern: #"^\s*(?:\[[^\]]{1,12}\]|\([^)]{1,12}\)|[a-z]{2,3}\s*[:|]{1,2})\s*"#)
+    private static let brackets = try! NSRegularExpression(pattern: #"[\[(][^\])]{0,20}[\])]"#)
+
+    static func key(_ name: String) -> String {
+        var text = name.lowercased()
+        for _ in 0..<2 {
+            text = prefix.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: "")
+        }
+        text = brackets.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: " ")
+        let words = text.split { !($0.isLetter || $0.isNumber || $0 == "+") }.map(String.init)
+            .filter { !$0.isEmpty && !quality.contains($0) }
+        return words.joined(separator: " ")
+    }
+
+    static func alternates(for channel: LiveChannel, in channels: [LiveChannel], offline: Set<String> = [], limit: Int = 5) -> [LiveChannel] {
+        let wanted = key(channel.name)
+        if wanted.isEmpty { return [] }
+        let matches = channels.filter {
+            $0.id != channel.id && $0.url != channel.url && !offline.contains($0.id) && key($0.name) == wanted
+        }
+        let ordered = matches.filter { $0.sourceKey == channel.sourceKey } + matches.filter { $0.sourceKey != channel.sourceKey }
+        var seen = Set<String>()
+        return Array(ordered.filter { seen.insert($0.url).inserted }.prefix(limit))
+    }
+}
+
+/// Keeps the Live TV VPN to Live TV: debrid links never go through it.
+enum LiveVpnGuard {
+    private static let debridHosts = [
+        "real-debrid.com", "rdeb.io", "rdb.so", "alldebrid.com", "alldebrid.fr", "debrid.it",
+        "premiumize.me", "premiumize.com", "torbox.app", "tb-cdn.io", "tb-cdn.st", "debrid-link.com",
+        "debrid-link.fr", "offcloud.com", "easydebrid.com", "put.io", "linksnappy.com", "mega-debrid.eu",
+        "deepbrid.com", "high-way.me", "stremthru.xyz",
+    ]
+
+    static func isDebrid(_ url: String) -> Bool {
+        guard let host = URLComponents(string: url)?.host?.lowercased(), !host.isEmpty else { return false }
+        return host.contains("debrid") || debridHosts.contains { host == $0 || host.hasSuffix("." + $0) }
+    }
+
+    static func mayRoute(_ url: String) -> Bool {
+        let l = url.lowercased()
+        return (l.hasPrefix("http://") || l.hasPrefix("https://")) && !isDebrid(url)
+    }
+
+    struct Proxy: Hashable {
+        var host: String
+        var port: Int
+        var username = ""
+        var password = ""
+
+        func asUrl() -> String {
+            let enc: (String) -> String = { $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? $0 }
+            let login = username.isEmpty ? "" : "\(enc(username)):\(enc(password))@"
+            let h = host.contains(":") ? "[\(host)]" : host
+            return "http://\(login)\(h):\(port)"
+        }
+    }
+
+    /// Reads `http://user:pass@host:port` (the scheme and login are optional). Only HTTP proxies work.
+    static func parseProxy(_ text: String) -> Proxy? {
+        var value = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if value.isEmpty { return nil }
+        if let r = value.range(of: "://") {
+            guard value.lowercased().hasPrefix("http://") else { return nil }
+            value = String(value[r.upperBound...])
+        }
+        value = String(value.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: false).first ?? "")
+        var login = ""
+        var address = value
+        if let at = value.lastIndex(of: "@") {
+            login = String(value[..<at])
+            address = String(value[value.index(after: at)...])
+        }
+        let host: String
+        let portText: String
+        if address.hasPrefix("[") {
+            host = String(address.dropFirst().prefix { $0 != "]" })
+            portText = address.components(separatedBy: "]:").dropFirst().first ?? ""
+        } else if let colon = address.lastIndex(of: ":") {
+            host = String(address[..<colon])
+            portText = String(address[address.index(after: colon)...])
+        } else {
+            return nil
+        }
+        guard let port = Int(portText), (1...65535).contains(port), !host.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
+        let parts = login.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false).map(String.init)
+        let user = parts.first ?? ""
+        let pass = parts.count > 1 ? parts[1] : ""
+        return Proxy(host: host, port: port, username: user.removingPercentEncoding ?? user, password: pass.removingPercentEncoding ?? pass)
+    }
 }
 
 enum LiveTvError: String {
@@ -208,7 +330,8 @@ enum M3uParser {
                         logo: a["tvg-logo"].flatMap { isHttp($0) ? $0 : nil },
                         group: (group?.isEmpty ?? true) ? nil : group,
                         guideId: a["tvg-id"].map { $0.trimmingCharacters(in: .whitespaces) }.flatMap { $0.isEmpty ? nil : $0 },
-                        headers: headers
+                        headers: headers,
+                        number: (a["tvg-chno"] ?? a["channel-number"] ?? a["tvg-num"]).flatMap { Int($0.trimmingCharacters(in: .whitespaces)) }
                     ))
                 }
                 reset()
@@ -256,7 +379,19 @@ enum XtreamApi {
         "\(normalizeServer(s.url))/live/\(enc(s.username))/\(enc(s.password))/\(id).m3u8"
     }
     static func shortGuideUrl(_ s: LiveSource, id: String) -> String {
-        apiUrl(s, "get_short_epg") + "&stream_id=\(enc(id))&limit=4"
+        apiUrl(s, "get_short_epg") + "&stream_id=\(enc(id))&limit=12"
+    }
+    /// The provider's full XMLTV guide.
+    static func guideFileUrl(_ s: LiveSource) -> String {
+        "\(normalizeServer(s.url))/xmltv.php?username=\(enc(s.username))&password=\(enc(s.password))"
+    }
+
+    static func parseAccount(_ data: Data) -> LiveAccountInfo? {
+        guard let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let user = root["user_info"] as? [String: Any] else { return nil }
+        let exp = string(user, "exp_date").flatMap(Double.init).flatMap { $0 > 0 ? Date(timeIntervalSince1970: $0) : nil }
+        return LiveAccountInfo(expires: exp, maxConnections: string(user, "max_connections").flatMap { Int($0) },
+                               activeConnections: string(user, "active_cons").flatMap { Int($0) })
     }
 
     private static func string(_ obj: [String: Any], _ key: String) -> String? {
@@ -290,7 +425,8 @@ enum XtreamApi {
             let icon = string(item, "stream_icon").flatMap { M3uParser.isHttp($0) ? $0 : nil }
             let epg = string(item, "epg_channel_id").flatMap { $0.isEmpty ? nil : $0 }
             return LiveChannel(id: "xtream:\(sid)", name: name, url: streamUrl(source, id: sid), logo: icon,
-                               group: string(item, "category_id").flatMap { categories[$0] }, guideId: epg, xtreamStreamId: sid)
+                               group: string(item, "category_id").flatMap { categories[$0] }, guideId: epg, xtreamStreamId: sid,
+                               number: string(item, "num").flatMap { Int($0) })
         }
     }
 
@@ -313,6 +449,8 @@ enum XtreamApi {
 enum XmltvParser {
     /// What is on now and next, by lower-case guide id. Only the wanted ids are kept.
     static func parseNowNext(_ xml: String, now: Date, wanted: Set<String>) -> [String: LiveNowNext] {
+        var lists: [String: [LiveProgramme]] = [:]
+        let windowEnd = now.addingTimeInterval(6 * 3600)
         var found: [String: LiveNowNext] = [:]
         guard let programme = try? NSRegularExpression(pattern: #"<programme\b([^>]*)>(.*?)</programme>"#, options: [.dotMatchesLineSeparators]),
               let attr = try? NSRegularExpression(pattern: #"([A-Za-z_-]+)\s*=\s*"([^"]*)""#),
@@ -328,20 +466,15 @@ enum XmltvParser {
             }
             guard let channel = attrs["channel"]?.trimmingCharacters(in: .whitespaces).lowercased(), !channel.isEmpty,
                   wanted.contains(channel),
-                  let start = parseTime(attrs["start"]), let stop = parseTime(attrs["stop"]), stop > now else { continue }
+                  let start = parseTime(attrs["start"]), let stop = parseTime(attrs["stop"]), stop > now,
+                  start < windowEnd, (lists[channel]?.count ?? 0) < 12 else { continue }
             let body = ns.substring(with: m.range(at: 2)) as NSString
             guard let t = titleRx.firstMatch(in: body as String, range: NSRange(location: 0, length: body.length)) else { continue }
             let title = decode(body.substring(with: t.range(at: 1))).trimmingCharacters(in: .whitespacesAndNewlines)
             if title.isEmpty { continue }
-            let p = LiveProgramme(title: title, start: start, stop: stop)
-            var current = found[channel] ?? LiveNowNext()
-            if start <= now {
-                current.now = p
-            } else if current.next == nil || start < current.next!.start {
-                current.next = p
-            }
-            found[channel] = current
+            lists[channel, default: []].append(LiveProgramme(title: title, start: start, stop: stop))
         }
+        for (channel, list) in lists { found[channel] = LiveNowNext.of(list, now: now) }
         return found
     }
 
@@ -462,8 +595,14 @@ final class LiveTVStore: ObservableObject {
     @Published var guide: [String: LiveNowNext] = [:]
     @Published var offline: Set<String> = []
 
+    /// Playlists that failed to load while others worked, by playlist key.
+    @Published var failedSources: [String: LiveTvError] = [:]
+    /// Xtream subscription details, by playlist key.
+    @Published var accounts: [String: LiveAccountInfo] = [:]
+
+    /// The built-in playlist, kept for per-group guides and checks.
     private var playlist: LivePlaylist?
-    private var source = LiveSource()
+    private var sources: [String: LiveSource] = [:]
     private var loadTask: Task<Void, Never>?
     private var groupGuideRequested = Set<String>()
     private var groupCheckRequested = Set<String>()
@@ -479,43 +618,83 @@ final class LiveTVStore: ObservableObject {
         recent = d.stringArray(forKey: "liveRecent") ?? []
     }
 
-    /// Loads the channel list for [source] (an empty address means the built-in free channels).
-    func load(source newSource: LiveSource, force: Bool = false) {
-        let key = "\(newSource.type.rawValue)|\(newSource.url)|\(newSource.username)|\(newSource.password)|\(newSource.guideUrl)"
+    /// Loads every enabled playlist together. With none, the built-in free channels load.
+    func load(sources list: [LiveSource], force: Bool = false) {
+        let active = list.filter { $0.enabled && !$0.isEmpty }
+        let key = active.map { "\($0.type.rawValue)|\($0.url)|\($0.username)|\($0.password)|\($0.guideUrl)" }.joined(separator: "\n")
         if !force, key == loadedKey, !channels.isEmpty { return }
         loadedKey = key
         loadTask?.cancel()
-        source = newSource
-        let isDefault = newSource.url.trimmingCharacters(in: .whitespaces).isEmpty
+        let isDefault = active.isEmpty
         usingDefault = isDefault
-        let effective = isDefault ? LiveSource(type: .m3u, url: LiveTvDefaults.playlistURL) : newSource
+        let effective = isDefault ? [LiveSource(type: .m3u, url: LiveTvDefaults.playlistURL)] : active
+        sources = Dictionary(effective.map { ($0.key, $0) }, uniquingKeysWith: { a, _ in a })
         groupGuideRequested.removeAll()
         groupCheckRequested.removeAll()
         channelGuideRequested.removeAll()
         playlist = nil
         offline = []
         guide = [:]
+        failedSources = [:]
+        accounts = [:]
         loading = true
         error = nil
         loadTask = Task {
-            do {
-                let list = try await Self.loadPlaylist(effective)
+            let results = await withTaskGroup(of: (Int, LiveSource, Result<LivePlaylist, LiveError>).self) { tg in
+                for (i, s) in effective.enumerated() {
+                    tg.addTask {
+                        do { return (i, s, .success(try await Self.loadPlaylist(s))) }
+                        catch let e as LiveError { return (i, s, .failure(e)) }
+                        catch { return (i, s, .failure(LiveError(error: .network))) }
+                    }
+                }
+                var out: [(Int, LiveSource, Result<LivePlaylist, LiveError>)] = []
+                for await r in tg { out.append(r) }
+                return out.sorted { $0.0 < $1.0 }
+            }
+            if Task.isCancelled { return }
+            var merged: [LiveChannel] = []
+            var seenIds = Set<String>()
+            var loaded: [(LiveSource, LivePlaylist)] = []
+            var failures: [String: LiveTvError] = [:]
+            for (_, s, result) in results {
+                switch result {
+                case .success(var list):
+                    list.channels = list.channels.map { c in
+                        var c = c
+                        c.sourceKey = s.key
+                        if !seenIds.insert(c.id).inserted { c.id = "\(s.key)|\(c.id)"; seenIds.insert(c.id) }
+                        return c
+                    }
+                    merged += list.channels
+                    loaded.append((s, list))
+                    if let account = list.account { accounts[s.key] = account }
+                case .failure(let e):
+                    failures[s.key] = e.error
+                }
+            }
+            if isDefault { playlist = loaded.first?.1 }
+            channels = merged
+            var seen = Set<String>()
+            groups = merged.compactMap { $0.group }.filter { !$0.isEmpty && seen.insert($0).inserted }
+            loading = false
+            if merged.isEmpty {
+                error = failures.values.first ?? .noChannels
+                failedSources = failures
+                return
+            }
+            failedSources = failures
+            for (s, list) in loaded {
+                let found = await Self.loadGuide(s, playlist: list)
                 if Task.isCancelled { return }
-                playlist = list
-                channels = list.channels
-                var seen = Set<String>()
-                groups = list.channels.compactMap { $0.group }.filter { !$0.isEmpty && seen.insert($0).inserted }
-                loading = false
-                let found = await Self.loadGuide(effective, playlist: list)
-                if !Task.isCancelled, !found.isEmpty { guide.merge(found) { a, _ in a } }
-            } catch let e as LiveError {
-                if Task.isCancelled { return }
-                channels = []; groups = []; loading = false; error = e.error
-            } catch {
-                if Task.isCancelled { return }
-                channels = []; groups = []; loading = false; self.error = .network
+                if !found.isEmpty { guide.merge(found) { a, _ in a } }
             }
         }
+    }
+
+    /// Other copies of a channel to fall back to when it does not play.
+    func alternates(for channel: LiveChannel) -> [LiveChannel] {
+        LiveTvVariants.alternates(for: channel, in: channels, offline: offline)
     }
 
     struct LiveError: Error { var error: LiveTvError }
@@ -544,7 +723,7 @@ final class LiveTVStore: ObservableObject {
             guard let streams = await LiveNetwork.data(XtreamApi.apiUrl(s, "get_live_streams")) else { throw LiveError(error: .network) }
             let channels = XtreamApi.parseStreams(streams, categories: categories, source: s)
             if channels.isEmpty { throw LiveError(error: .noChannels) }
-            return LivePlaylist(channels: channels)
+            return LivePlaylist(channels: channels, guideUrls: [XtreamApi.guideFileUrl(s)], account: XtreamApi.parseAccount(login))
         }
     }
 
@@ -580,8 +759,7 @@ final class LiveTVStore: ObservableObject {
     /// Loads the guide for one group of a worldwide playlist the first time that group is opened.
     func requestGroupGuide(_ group: String) {
         guard let list = playlist else { return }
-        let effective = usingDefault ? LiveSource(type: .m3u, url: LiveTvDefaults.playlistURL) : source
-        guard Self.hasGuidePerGroup(effective, list), groupGuideRequested.insert(group).inserted,
+        guard usingDefault, let effective = sources.values.first, Self.hasGuidePerGroup(effective, list), groupGuideRequested.insert(group).inserted,
               let url = LiveTvDefaults.guideUrl(forGroup: group, in: list.guideUrls) else { return }
         let members = list.channels.filter { $0.group == group }
         Task {
@@ -617,15 +795,12 @@ final class LiveTVStore: ObservableObject {
 
     /// Asks an Xtream provider what is on a channel now, once per channel.
     func requestChannelGuide(_ channel: LiveChannel) {
-        guard !usingDefault, source.type == .xtream, let sid = channel.xtreamStreamId,
+        guard !usingDefault, let s = sources[channel.sourceKey], s.type == .xtream, let sid = channel.xtreamStreamId,
               guide[channel.id] == nil, channelGuideRequested.insert(channel.id).inserted else { return }
-        let s = source
         Task {
-            guard let data = await LiveNetwork.data(XtreamApi.shortGuideUrl(s, id: sid)) else { return }
-            let now = Date()
-            let upcoming = XtreamApi.parseShortGuide(data).filter { $0.stop > now }
-            if upcoming.isEmpty { return }
-            guide[channel.id] = LiveNowNext(now: upcoming.first { $0.start <= now }, next: upcoming.first { $0.start > now })
+            guard let data = await LiveNetwork.data(XtreamApi.shortGuideUrl(s, id: sid)),
+                  let entry = LiveNowNext.of(XtreamApi.parseShortGuide(data), now: Date()) else { return }
+            guide[channel.id] = entry
         }
     }
 
@@ -649,7 +824,9 @@ final class LiveTVStore: ObservableObject {
 
     func visible(query: String, selection: String) -> [LiveChannel] {
         let needle = query.trimmingCharacters(in: .whitespaces)
-        func matches(_ c: LiveChannel) -> Bool { needle.isEmpty || c.name.range(of: needle, options: .caseInsensitive) != nil }
+        func matches(_ c: LiveChannel) -> Bool {
+            needle.isEmpty || c.name.range(of: needle, options: .caseInsensitive) != nil || c.number.map(String.init) == needle
+        }
         var result: [LiveChannel]
         switch selection {
         case LiveTvSelection.favorites:
@@ -677,6 +854,7 @@ struct LiveTVView: View {
     @State private var query = ""
     @State private var playing: PlayRequest?
     @State private var openedPreferred = false
+    @State private var showGuide = false
 
     private var shown: [LiveChannel] { live.visible(query: query, selection: selection) }
 
@@ -697,8 +875,13 @@ struct LiveTVView: View {
                     Text("Free channels from the Free-TV project. Add your own playlist or login in Settings.")
                         .font(.callout).foregroundStyle(.secondary).padding(.leading, 60)
                 }
+                if !live.failedSources.isEmpty {
+                    Text("\(live.failedSources.count) of your playlists did not load. The rest are shown.")
+                        .font(.callout).foregroundStyle(.orange).padding(.leading, 60)
+                }
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
+                        Button(showGuide ? "Channels" : "Guide") { showGuide.toggle() }
                         ForEach([LiveTvSelection.all, LiveTvSelection.favorites, LiveTvSelection.recent] + live.groups, id: \.self) { g in
                             Button(title(for: g)) { selection = g }
                                 .opacity(selection == g ? 1 : 0.7)
@@ -710,6 +893,18 @@ struct LiveTVView: View {
                 if let error = live.error {
                     Text(error.rawValue).foregroundStyle(.orange).padding(.horizontal, 60)
                 }
+                if showGuide {
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 14) {
+                            ForEach(shown) { ch in
+                                Button { play(ch) } label: { GuideRow(channel: ch, info: live.guide[ch.id]) }
+                                    .buttonStyle(.card)
+                                    .onAppear { live.requestChannelGuide(ch) }
+                            }
+                        }
+                        .padding(.horizontal, 60)
+                    }
+                } else {
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 30), count: 4), spacing: 30) {
                         ForEach(shown) { ch in
@@ -723,11 +918,12 @@ struct LiveTVView: View {
                     }
                     .padding(.horizontal, 60)
                 }
+                }
             }
         }
         .searchable(text: $query)
-        .task(id: settings.liveSource) {
-            live.load(source: settings.liveSource)
+        .task(id: settings.liveSources) {
+            live.load(sources: settings.liveSources)
         }
         .onChange(of: live.groups) { _, groups in
             if !openedPreferred, !groups.isEmpty, let g = live.preferredGroup() {
@@ -748,9 +944,18 @@ struct LiveTVView: View {
 
     private func play(_ ch: LiveChannel) {
         live.markWatched(ch)
-        let item = StreamItem(name: ch.name, title: nil, description: nil, url: ch.url, infoHash: nil, behaviorHints: nil)
-        playing = PlayRequest(meta: MetaItem(id: ch.id, type: "tv", name: ch.name), videoId: nil, title: ch.name,
-                              candidates: [item], headers: ch.headers, isLive: true)
+        // The channel first, then other copies of it (HD/SD, backup feeds, other playlists) to fall back to.
+        let copies = [ch] + live.alternates(for: ch)
+        let items = copies.map { c in
+            // Each copy carries its own playlist's headers.
+            StreamItem(name: c.name, title: nil, description: nil, url: c.url, infoHash: nil,
+                       behaviorHints: c.headers.isEmpty ? nil : .init(proxyHeaders: .init(request: c.headers)))
+        }
+        var request = PlayRequest(meta: MetaItem(id: ch.id, type: "tv", name: ch.name), videoId: nil, title: ch.name,
+                                  candidates: items, headers: [:], isLive: true)
+        // The Live TV VPN is only handed to this Live TV request; other playback never gets it.
+        request.liveProxy = settings.liveProxyForPlayback
+        playing = request
     }
 }
 
@@ -771,7 +976,7 @@ struct ChannelCard: View {
                 .frame(maxWidth: .infinity)
                 if favorite { Image(systemName: "star.fill").foregroundStyle(.yellow) }
             }
-            Text(channel.name).lineLimit(1).font(.headline)
+            Text(channel.displayName).lineLimit(1).font(.headline)
             if let now = info?.now?.title {
                 Text(now).font(.caption).lineLimit(1).foregroundStyle(.secondary)
                 if let next = info?.next?.title {
@@ -784,5 +989,113 @@ struct ChannelCard: View {
         .frame(maxWidth: .infinity)
         .padding()
         .opacity(offline ? 0.55 : 1)
+    }
+}
+
+/// One channel in the guide: what is on now and the programmes after it.
+struct GuideRow: View {
+    let channel: LiveChannel
+    let info: LiveNowNext?
+
+    private static let time: DateFormatter = {
+        let f = DateFormatter()
+        f.timeStyle = .short
+        f.dateStyle = .none
+        return f
+    }()
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 20) {
+            Text(channel.displayName).font(.headline).lineLimit(2).frame(width: 300, alignment: .leading)
+            if let list = info?.upcoming, !list.isEmpty {
+                HStack(spacing: 12) {
+                    ForEach(Array(list.prefix(4).enumerated()), id: \.offset) { i, p in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(i == 0 && p.start <= Date() ? "Now" : Self.time.string(from: p.start))
+                                .font(.caption2).foregroundStyle(.secondary)
+                            Text(p.title).font(.callout).lineLimit(2)
+                        }
+                        .frame(width: 260, alignment: .leading)
+                        .padding(10)
+                        .background(i == 0 ? Color.white.opacity(0.12) : Color.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+            } else {
+                Text("No guide for this channel").font(.callout).foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding()
+    }
+}
+
+/// Adds, edits, turns off or removes one Live TV playlist or Xtream login.
+struct LiveSourceEditor: View {
+    @EnvironmentObject var settings: SettingsStore
+    @EnvironmentObject var live: LiveTVStore
+    @Environment(\.dismiss) private var dismiss
+    let original: LiveSource?
+    @State private var draft = LiveSource()
+
+    var body: some View {
+        Form {
+            Section(original == nil ? "Add a playlist" : "Edit playlist") {
+                TextField("Name, optional", text: $draft.name)
+                Picker("Type", selection: $draft.type) {
+                    Text("M3U playlist").tag(LiveSourceType.m3u)
+                    Text("Xtream login").tag(LiveSourceType.xtream)
+                }
+                TextField(draft.type == .m3u ? "Playlist URL" : "Server address", text: $draft.url)
+                    .onChange(of: draft.url) { _, value in
+                        // A pasted Xtream playlist link fills in the login.
+                        if let x = XtreamApi.source(fromPlaylistLink: value) {
+                            draft.type = .xtream; draft.url = x.url; draft.username = x.username; draft.password = x.password
+                        }
+                    }
+                if draft.type == .xtream {
+                    TextField("Username", text: $draft.username)
+                    SecureField("Password", text: $draft.password)
+                }
+                TextField("Guide (XMLTV) URL, optional", text: $draft.guideUrl)
+                Toggle("Turned on", isOn: $draft.enabled)
+            }
+            if let o = original {
+                if let error = live.failedSources[o.key] {
+                    Section("Last load") { Text(error.rawValue).foregroundStyle(.orange) }
+                }
+                if let account = live.accounts[o.key] {
+                    Section("Account") {
+                        if let exp = account.expires { Text("Expires \(exp.formatted(date: .abbreviated, time: .omitted))") }
+                        if let max = account.maxConnections {
+                            Text("Connections: \(account.activeConnections ?? 0) of \(max) in use")
+                        }
+                    }
+                }
+            }
+            Section {
+                Button("Save") { save() }.disabled(draft.isEmpty)
+                if let o = original {
+                    Button("Remove", role: .destructive) {
+                        settings.liveSources.removeAll { $0.key == o.key }
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .onAppear { if let original { draft = original } }
+    }
+
+    private func save() {
+        var list = settings.liveSources
+        if let o = original, let i = list.firstIndex(where: { $0.key == o.key }) {
+            list[i] = draft
+        } else if let i = list.firstIndex(where: { $0.key == draft.key }) {
+            list[i] = draft
+        } else {
+            list.append(draft)
+        }
+        var seen = Set<String>()
+        settings.liveSources = list.filter { seen.insert($0.key).inserted }
+        dismiss()
     }
 }

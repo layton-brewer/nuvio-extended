@@ -1484,11 +1484,12 @@ internal fun MainAppContent(
                                 },
                                 onLibrarySectionViewAllClick = onLibrarySectionViewAllClick,
                                 onLiveChannelPlay = { channel ->
+                                    val liveTarget = com.nuvio.app.features.livetv.LiveTvRepository.playbackTarget(channel)
                                     val playerLaunch = PlayerLaunch(
                                         profileId = activePlaybackProfileId,
                                         title = channel.name,
-                                        sourceUrl = channel.url,
-                                        sourceHeaders = channel.headers,
+                                        sourceUrl = liveTarget.url,
+                                        sourceHeaders = liveTarget.headers,
                                         logo = channel.logo,
                                         streamTitle = channel.name,
                                         streamSubtitle = channel.group,

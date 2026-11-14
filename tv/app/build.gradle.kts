@@ -351,7 +351,9 @@ android {
 
     sourceSets {
         getByName("main") {
-            jniLibs.srcDirs("src/main/jniLibs")
+            // The Live TV VPN library is built by native/livetv-vpn/build-android.sh (CI runs it
+            // before the build). Without it the app still builds; WireGuard then says it is unavailable.
+            jniLibs.srcDirs("src/main/jniLibs", "../../native/livetv-vpn/build/jniLibs")
         }
     }
 

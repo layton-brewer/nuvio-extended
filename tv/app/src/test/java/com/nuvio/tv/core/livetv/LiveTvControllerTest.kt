@@ -56,7 +56,7 @@ class LiveTvControllerTest {
         assertEquals(listOf("News One", "Sport Two"), state.channels.map(LiveChannel::name))
         assertEquals(listOf("News", "Sport"), state.groups)
         assertFalse(state.loading)
-        assertEquals(source, LiveTvCodec.decodeSource(storage.values["source"]))
+        assertEquals(source.copy(id = source.key), LiveTvCodec.decodeSources(storage.values["sources"]).single())
     }
 
     @Test
@@ -105,18 +105,89 @@ class LiveTvControllerTest {
         Thread.sleep(200)
         assertTrue(controller.state.value.usingDefault)
         assertEquals(2, controller.state.value.channels.size)
-        assertNull(storage.values["source"])
+        assertNull(storage.values["sources"])
 
         controller.setSource(source)
         Thread.sleep(200)
         assertFalse(controller.state.value.usingDefault)
-        assertEquals(source, controller.state.value.source)
+        assertEquals(source.copy(id = source.key), controller.state.value.source)
 
         controller.removeSource()
         Thread.sleep(200)
         assertTrue(controller.state.value.usingDefault)
         assertEquals(builtIn, controller.state.value.source)
         assertEquals(2, controller.state.value.channels.size)
+    }
+
+    @Test
+    fun `several playlists load together and one that fails does not hide the others`() = runTest(UnconfinedTestDispatcher()) {
+        val second = """
+            #EXTM3U
+            #EXTINF:-1 tvg-chno="7" group-title="News",News One HD
+            http://other.example/one.m3u8
+            #EXTINF:-1 group-title="Movies",Film Four
+            http://example.com/one.m3u8
+        """.trimIndent()
+        val pages = mapOf(
+            "http://example.com/list.m3u" to playlist,
+            "http://other.example/list.m3u" to second,
+        )
+        val storage = MemoryStorage()
+        val controller = LiveTvController(storage, LiveTvLoader({ pages[it] }, { 0L }), backgroundScope, defaultSource = null)
+        controller.start()
+        controller.addSource(source)
+        controller.addSource(LiveSource(LiveSourceType.M3U, "http://other.example/list.m3u", name = "Other"))
+        controller.addSource(LiveSource(LiveSourceType.M3U, "http://broken.example/list.m3u"))
+        Thread.sleep(300)
+
+        val state = controller.state.value
+        assertEquals(3, state.sources.size)
+        assertEquals(listOf("News One", "Sport Two", "News One HD", "Film Four"), state.channels.map(LiveChannel::name))
+        // Every channel keeps its own id, even when two playlists share an address.
+        assertEquals(4, state.channels.map(LiveChannel::id).toSet().size)
+        assertEquals(setOf(state.sources[2].key), state.failedSources.keys)
+        assertEquals(7, state.channels[2].number)
+        assertEquals("Other", LiveTvController.sourceLabel(state, state.channels[2]))
+
+        // The HD copy from the other playlist backs up the first channel.
+        assertEquals(listOf("News One HD"), controller.alternatesFor(state.channels[0]).map(LiveChannel::name))
+
+        controller.setSourceEnabled(state.sources[1].key, false)
+        Thread.sleep(300)
+        assertEquals(listOf("News One", "Sport Two"), controller.state.value.channels.map(LiveChannel::name))
+        assertEquals(3, LiveTvCodec.decodeSources(storage.values["sources"]).size)
+
+        controller.removeSource(state.sources[0].key)
+        Thread.sleep(300)
+        assertEquals(2, controller.state.value.sources.size)
+    }
+
+    @Test
+    fun `a playlist saved by an older version is still read`() = runTest(UnconfinedTestDispatcher()) {
+        val storage = MemoryStorage()
+        storage.values["source"] = LiveTvCodec.encodeSource(source)
+        val controller = LiveTvController(storage, LiveTvLoader({ playlist }, { 0L }), backgroundScope, defaultSource = null)
+        controller.ensureChannels()
+        Thread.sleep(200)
+        assertEquals(listOf(source.copy(id = source.key)), controller.state.value.sources)
+        assertEquals(2, controller.state.value.channels.size)
+    }
+
+    @Test
+    fun `vpn settings are kept and only count as ready with a usable config`() = runTest(UnconfinedTestDispatcher()) {
+        val storage = MemoryStorage()
+        val controller = LiveTvController(storage, LiveTvLoader({ playlist }, { 0L }), backgroundScope, defaultSource = null)
+        controller.start()
+        assertFalse(controller.state.value.vpn.enabled)
+        val wireGuard = "[Interface]\nPrivateKey = a\nAddress = 10.0.0.2/32\n[Peer]\nPublicKey = b\nEndpoint = vpn.example:51820"
+        controller.setVpn(LiveVpnSettings(enabled = true, wireGuardConfig = wireGuard))
+        assertTrue(controller.state.value.vpn.ready)
+        assertFalse(LiveVpnSettings(enabled = true, wireGuardConfig = "nonsense").ready)
+        assertFalse(LiveVpnSettings(enabled = false, wireGuardConfig = wireGuard).ready)
+
+        val again = LiveTvController(storage, LiveTvLoader({ playlist }, { 0L }), backgroundScope, defaultSource = null)
+        again.start()
+        assertEquals(controller.state.value.vpn, again.state.value.vpn)
     }
 
     @Test
