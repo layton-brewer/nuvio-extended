@@ -91,6 +91,20 @@ class AppUpdaterRepositoryTest {
         )
     }
 
+    @Test
+    fun iosPicksThePhoneIpaNotTheAppleTvOneOrAnApk() {
+        val response = """{
+            "tag_name": "v0.2.6",
+            "assets": [
+                {"name": "Meowio-mobile.apk", "browser_download_url": "https://example.com/m.apk"},
+                {"name": "Meowio-tvos.ipa", "browser_download_url": "https://example.com/tv.ipa"},
+                {"name": "Meowio-ios.ipa", "browser_download_url": "https://example.com/ios.ipa"}
+            ]
+        }"""
+        val update = AppUpdaterRepository.selectUpdate(response, UpdateChannel.STABLE, listOf(IOS_IPA_ABI))
+        assertEquals("Meowio-ios.ipa", update?.assetName)
+    }
+
     private fun select(response: String, channel: UpdateChannel): AppUpdate? =
         AppUpdaterRepository.selectUpdate(response, channel, listOf("arm64-v8a"))
 }

@@ -50,7 +50,7 @@ Notes:
 
 - The iPhone/iPad app is the same Kotlin Multiplatform app as the Android phone app. The Mac app is built from the Nuvio Desktop codebase with the Meowio features merged in (Smart auto-play, silent failover, season packs, preloading, pinned sources, sleep timer, Live TV, backup/restore, quality picker, themes, insights, AI assistant, glass UI). Its updater follows the latest release.
 - The Apple TV app is a native SwiftUI app with the same features: Smart auto-play with silent failover and preloading for every season, season-pack and same-release preference, pinned sources, resume where you left off (also across a source switch), sleep timer, quality picker, Live TV with now/next guide and dead-stream pruning, themes, insights and AI assistant (your own key). It has a Netflix-style Home with Continue Watching and rows from your add-ons' catalogs. MKV and other formats AVPlayer can't open play through a built-in mpv engine, with audio and subtitle track menus. For settings backup, open **Settings > Backup and restore** and visit the address it shows from a phone or computer on the same network to download or upload a backup file. Add a stream add-on in **Settings** first. It plays direct and debrid HTTP streams (not raw torrents); there are no downloads on Apple TV.
-- **Platform differences:** CloudStream plugins run only on Android phones, one-tap downloads are on phone, Mac and Windows only (on Android TV you can save a single source instead: long-press it in the source list, then find it under **Profile > Downloads**), and audio passthrough/decoder defaults only on Android. Apple devices use the system decoders instead.
+- **Platform differences:** every app has the same features, with two exceptions. TV apps (Android TV and Apple TV) have no downloads; one-tap downloads are on phones, iPhone/iPad, Mac and Windows. CloudStream plugins load Android plugin code, so they run on the Android phone and Android TV apps only. Audio passthrough/decoder defaults are Android-only; Apple devices use the system decoders. iPhone/iPad back up to and restore from the Files app (**Settings > Advanced > Backup**), and their update check opens the release page because sideloaded apps can't update themselves. Apple TV shows when an update is out under **Settings > About**.
 - Apple does not allow notarized or App Store distribution without a developer account, so these cannot be installed with a plain tap.
 
 ## What's different from Nuvio?
@@ -87,7 +87,7 @@ Channel availability depends on the source and your region. Built-in Live TV doe
 ### More features
 
 - **CloudStream extensions on the phone:** The phone app can run CloudStream extensions as an additional source of streams. This is new and has had less testing than the rest of the app.
-- **One-tap downloads (phone, Mac, Windows):** Press **Download** on a title page. Movies download the best source automatically. For a series you choose **This episode** or **Entire season**; Meowio finds the best source for each episode (preferring the same release), and if a download fails it quietly switches to the next best source. Everything lands in **Library > Downloads** (the chip next to Saved and Cloud), which shows what is saved for offline viewing and how much space it uses, and lets you delete items. Downloads use debrid (direct link) sources only; anything else is skipped in favor of the next source.
+- **One-tap downloads (phone, iPhone/iPad, Mac, Windows):** Press **Download** on a title page. Movies download the best source automatically. For a series you choose **This episode** or **Entire season**; Meowio finds the best source for each episode (preferring the same release), and if a download fails it quietly switches to the next best source. Everything lands in **Library > Downloads** (the chip next to Saved and Cloud), which shows what is saved for offline viewing and how much space it uses, and lets you delete items. Downloads use debrid (direct link) sources only; anything else is skipped in favor of the next source.
 - **Quality picker:** Choose a stream quality yourself when you do not want the automatic pick.
 - **Watch stats:** See statistics about what you watch.
 - **AI assistant:** Ask for suggestions on what to watch. It uses your own API key.
@@ -101,7 +101,7 @@ Channel availability depends on the source and your region. Built-in Live TV doe
 - **Meowio branding:** Cat icons, themed app artwork, TV banners, and a matching splash screen.
 - **Sleep timer:** Pause playback after a chosen time or at the end of the episode.
 - **Playback speed remembered per show:** Available on both apps; Meowio adds this behavior to mobile.
-- **Meowio updates:** The in-app updater checks this repository's releases and selects the APK for your device.
+- **Meowio updates:** The in-app updater checks this repository's releases and selects the file for your device (on iPhone/iPad it opens the release page to re-sideload).
 - **Optimized distributed builds:** Code optimization and startup profiles are enabled in the shipped APKs.
 
 ### Playback defaults

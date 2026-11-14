@@ -441,21 +441,6 @@ fun StreamScreen(
             )
         } else {
             // Content overlay
-            val downloadStartedMessage = stringResource(R.string.downloads_started)
-            val downloadUnsupportedMessage = stringResource(R.string.downloads_unsupported)
-            val downloadFromLongPress: (Stream) -> Unit = { stream ->
-                scope.coroutineLaunch {
-                    val started = viewModel.downloadStream(stream)
-                    Toast.makeText(
-                        context,
-                        if (started) downloadStartedMessage else downloadUnsupportedMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-            androidx.compose.runtime.CompositionLocalProvider(
-                LocalStreamLongPress provides downloadFromLongPress
-            ) {
             Row(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -538,7 +523,6 @@ fun StreamScreen(
                         .weight(0.6f)
                         .fillMaxHeight()
                 )
-            }
             }
         }
 
@@ -1373,9 +1357,6 @@ private fun StreamProviderHeader(sourceName: String?) {
     }
 }
 
-/** Holding select on a source saves it for offline viewing. Null where that is not offered. */
-private val LocalStreamLongPress = androidx.compose.runtime.staticCompositionLocalOf<((Stream) -> Unit)?> { null }
-
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 private fun StreamCard(
@@ -1401,7 +1382,6 @@ private fun StreamCard(
     val hasGradientFocusRing = NuvioTheme.palette.focusRingGradient.size > 1
 
     var isFocused by remember { mutableStateOf(false) }
-    val onLongPress = LocalStreamLongPress.current
 
     // Track whether badges transitioned from empty to non-empty while this
     // card was composed. If they did, we animate. If the card enters
@@ -1426,7 +1406,6 @@ private fun StreamCard(
 
     Card(
         onClick = onClick,
-        onLongClick = onLongPress?.let { longPress -> { longPress(stream) } },
         modifier = Modifier
             .fillMaxWidth()
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)

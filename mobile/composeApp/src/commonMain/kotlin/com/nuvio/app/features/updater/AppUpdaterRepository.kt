@@ -90,6 +90,13 @@ internal object AppUpdaterRepository {
         assets: List<GitHubAssetDto>,
         supportedAbis: List<String>,
     ): GitHubAssetDto? {
+        // iPhone/iPad builds look for the sideloadable IPA instead of an APK.
+        if (IOS_IPA_ABI in supportedAbis) {
+            return assets.firstOrNull { it.name.equals("Meowio-ios.ipa", ignoreCase = true) }
+                ?: assets.firstOrNull { asset ->
+                    asset.name.endsWith(".ipa", ignoreCase = true) && !asset.name.contains("tvos", ignoreCase = true)
+                }
+        }
         val allApkAssets = assets.filter { asset ->
             asset.name.endsWith(".apk", ignoreCase = true) ||
                 asset.contentType == "application/vnd.android.package-archive"
@@ -109,3 +116,6 @@ internal object AppUpdaterRepository {
         } ?: apkAssets.firstOrNull()
     }
 }
+
+/** Passed as the only "ABI" by the iOS updater so the release IPA is picked instead of an APK. */
+internal const val IOS_IPA_ABI = "ios-ipa"

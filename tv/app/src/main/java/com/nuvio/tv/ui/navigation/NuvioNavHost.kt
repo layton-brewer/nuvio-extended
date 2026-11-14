@@ -1331,37 +1331,6 @@ private fun PlaybackNavHost(
                     navController.navigate(Screen.Search.route) { launchSingleTop = true }
                 }
             }
-            val downloadsEntryPoint = androidx.compose.runtime.remember(navController.context) {
-                dagger.hilt.android.EntryPointAccessors.fromApplication(
-                    navController.context.applicationContext,
-                    com.nuvio.tv.core.downloads.TvDownloadEntryPoint::class.java
-                )
-            }
-            val pendingDownload by com.nuvio.tv.core.downloads.TvDownloadPlayback.pending.collectAsState()
-            androidx.compose.runtime.LaunchedEffect(pendingDownload) {
-                pendingDownload?.let { download ->
-                    com.nuvio.tv.core.downloads.TvDownloadPlayback.pending.value = null
-                    val file = downloadsEntryPoint.tvDownloadManager().fileFor(download)
-                    navController.navigate(
-                        Screen.Player.createRoute(
-                            streamUrl = android.net.Uri.fromFile(file).toString(),
-                            title = download.title,
-                            year = download.year,
-                            contentId = download.contentId,
-                            contentType = download.contentType,
-                            contentName = download.contentName,
-                            poster = download.poster,
-                            backdrop = download.backdrop,
-                            logo = download.logo,
-                            videoId = download.videoId,
-                            season = download.season,
-                            episode = download.episode,
-                            episodeTitle = download.episodeTitle,
-                            profileId = download.profileId
-                        )
-                    )
-                }
-            }
             SettingsScreen(
                 showBuiltInHeader = !hideBuiltInHeaders,
                 onNavigateToAddons = { navController.navigate(Screen.AddonManager.route) },

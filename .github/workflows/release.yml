@@ -7,13 +7,19 @@ on:
       - "tv/**"
       - "mobile/**"
       - ".github/workflows/release.yml"
+  # Pull requests build both APKs as a compile check; only main publishes.
+  pull_request:
+    paths:
+      - "tv/**"
+      - "mobile/**"
+      - ".github/workflows/release.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: release
+  group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -89,7 +95,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Build
-        run: ./gradlew :app:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.app.versionName=0.2.5 -Pnuvio.app.versionCode=$((2000 + ${{ github.run_number }})) --stacktrace
+        run: ./gradlew :app:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.app.versionName=0.2.6 -Pnuvio.app.versionCode=$((2000 + ${{ github.run_number }})) --stacktrace
 
       - name: Rename APK
         run: |
@@ -181,7 +187,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Build
-        run: ./gradlew :androidApp:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.android.distribution=full -Pnuvio.ios.distribution=appstore -Pnuvio.app.versionName=0.2.5 -Pnuvio.app.versionCode=$((3000 + ${{ github.run_number }})) --stacktrace
+        run: ./gradlew :androidApp:assembleFullDebug -Pmeowio.armOnly=true -Pnuvio.android.distribution=full -Pnuvio.ios.distribution=appstore -Pnuvio.app.versionName=0.2.6 -Pnuvio.app.versionCode=$((3000 + ${{ github.run_number }})) --stacktrace
 
       - name: Rename APK
         run: cp androidApp/build/outputs/apk/full/debug/androidApp-full-debug.apk "$RUNNER_TEMP/Meowio-mobile.apk"
@@ -209,6 +215,7 @@ jobs:
   release:
     name: Publish release
     needs: [tv, mobile]
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     permissions:
@@ -223,7 +230,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          tag="v0.2.5"
+          tag="v0.2.6"
           cat > notes.md <<'NOTES'
           ## Download
 
@@ -262,6 +269,12 @@ jobs:
             gh release download "$t" --repo "${{ github.repository }}" --dir apple --skip-existing \
               --pattern 'Meowio-ios.ipa' --pattern 'Meowio-macos-*.dmg' --pattern 'Meowio-tvos.ipa' --pattern 'Meowio-windows-x64.exe' || true
           done
-          if ls apple/* >/dev/null 2>&1; then
-            gh release upload "$tag" apple/* --repo "${{ github.repository }}" --clobber
-          fi
+          # Never overwrite a file the Apple or Windows build already attached to this page, and never fail
+          # the release over a carried-over file (those builds attach their own copy anyway).
+          existing="$(gh release view "$tag" --repo "${{ github.repository }}" --json assets -q '.assets[].name' || true)"
+          for f in apple/*; do
+            [ -e "$f" ] || continue
+            name="$(basename "$f")"
+            if grep -qxF "$name" <<<"$existing"; then echo "$name already attached"; continue; fi
+            gh release upload "$tag" "$f" --repo "${{ github.repository }}" || echo "::warning::Could not carry over $name; its own build attaches it."
+          done

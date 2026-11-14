@@ -5,6 +5,7 @@ struct SettingsView: View {
     @EnvironmentObject var library: LibraryStore
     @State private var newAddon = ""
     @State private var addonNames: [String: String] = [:]
+    @StateObject private var updates = UpdateChecker()
 
     var body: some View {
         NavigationStack {
@@ -88,13 +89,25 @@ struct SettingsView: View {
                 }
 
                 Section("About") {
-                    Text("Meowio for Apple TV \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")")
-                    Text("MKV and other formats play through the built-in mpv engine. CloudStream plugins and downloads are Android-only.")
+                    Text("Meowio for Apple TV \(UpdateChecker.currentVersion)")
+                    switch updates.state {
+                    case .idle, .checking:
+                        Text("Checking for updates…").foregroundStyle(.secondary)
+                    case .upToDate:
+                        Text("You have the latest version.").foregroundStyle(.secondary)
+                    case .available(let tag):
+                        Text("Meowio \(tag) is available. Download Meowio-tvos.ipa from github.com/layton-brewer/Meowio/releases and sideload it over this version.")
+                    case .failed:
+                        Text("Could not check for updates.").foregroundStyle(.secondary)
+                    }
+                    Button("Check for updates") { Task { await updates.check() } }
+                    Text("MKV and other formats play through the built-in mpv engine. CloudStream plugins are Android-only, and TV apps do not offer downloads.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }
             .navigationTitle("Settings")
         }
+        .task { if case .idle = updates.state { await updates.check() } }
         .task(id: settings.addons) {
             var map: [String: String] = [:]
             for base in settings.addons { map[base] = await AddonClient.addonName(for: base) }
