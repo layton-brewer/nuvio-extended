@@ -260,20 +260,7 @@ internal fun PlayerControlsShell(
                         ),
                 )
             } else {
-                if (showPlaybackControls) {
-                    PlayerToolbar(
-                        isLocked = isLocked,
-                        onLockToggle = onLockToggle,
-                        onBack = onBack,
-                        onPartyClick = onPartyClick,
-                        partyActive = partyActive,
-                        onSwitchEngineClick = onSwitchEngineClick,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Top))
-                            .padding(horizontal = metrics.horizontalPadding, vertical = metrics.verticalPadding / 4),
-                    )
-                }
+                // The non-legacy top toolbar is drawn on its own top layer by the player runtime.
                 ParentalGuideOverlay(
                     warnings = parentalWarnings,
                     isVisible = showParentalGuide,
