@@ -7,9 +7,17 @@ final class LibraryStore: ObservableObject {
     @Published var continueWatching: [ContinueItem] = []
     @Published var saved: [MetaItem] = []
     @Published var records: [WatchRecord] = []
+    /// This profile's storage, fixed when the store is made so a profile switch never writes into another profile.
+    private let store = ProfileScope.defaults
+    /// Called when a title is added to (true) or removed from (false) My List. Account sync and Trakt listen.
+    var onSavedChanged: ((MetaItem, Bool) -> Void)?
+    /// Called after a play position is stored, and when something is marked watched or unwatched.
+    var onRecordChanged: ((WatchRecord, MetaItem?) -> Void)?
+    /// Called when the user marks something watched or unwatched by hand.
+    var onManualMark: ((MetaItem, String?, Bool) -> Void)?
 
     init() {
-        let d = UserDefaults.standard
+        let d = store
         if let data = d.data(forKey: "continue"), let items = try? JSONDecoder().decode([ContinueItem].self, from: data) {
             continueWatching = items
         }
@@ -22,7 +30,7 @@ final class LibraryStore: ObservableObject {
     }
 
     private func persist() {
-        let d = UserDefaults.standard
+        let d = store
         if let data = try? JSONEncoder().encode(continueWatching) { d.set(data, forKey: "continue") }
         if let data = try? JSONEncoder().encode(saved) { d.set(data, forKey: "saved") }
         if let data = try? JSONEncoder().encode(records) { d.set(data, forKey: "records") }
@@ -40,14 +48,18 @@ final class LibraryStore: ObservableObject {
     func isSaved(_ meta: MetaItem) -> Bool { saved.contains { $0.id == meta.id } }
 
     func toggleSaved(_ meta: MetaItem) {
+        var slim = meta
+        slim.videos = nil
+        let adding: Bool
         if let i = saved.firstIndex(where: { $0.id == meta.id }) {
             saved.remove(at: i)
+            adding = false
         } else {
-            var slim = meta
-            slim.videos = nil
             saved.insert(slim, at: 0)
+            adding = true
         }
         persist()
+        onSavedChanged?(slim, adding)
     }
 
     /// Where to pick up a title or episode that was left part way, or 0 to start at the beginning.
@@ -76,6 +88,86 @@ final class LibraryStore: ObservableObject {
                                    seconds: seconds, completed: completed, at: Date(), duration: duration))
         if records.count > 2000 { records.removeFirst(records.count - 2000) }
         persist()
+        if let r = records.last { onRecordChanged?(r, meta) }
+    }
+
+    func isWatched(_ itemId: String) -> Bool { records.contains { $0.id == itemId && $0.completed } }
+
+    /// Marks a movie or an episode as finished (from the episode menu, Trakt or account sync).
+    func markWatched(meta: MetaItem, videoId: String?, notify: Bool = true, at date: Date = Date()) {
+        let itemId = videoId ?? meta.id
+        if let i = records.lastIndex(where: { $0.id == itemId }) {
+            guard !records[i].completed else { return }
+            records[i].completed = true
+            records[i].at = date
+        } else {
+            records.append(WatchRecord(id: itemId, contentId: meta.id, title: meta.name,
+                                       isEpisode: videoId != nil && meta.type == "series",
+                                       seconds: 0, completed: true, at: date))
+        }
+        persist()
+        if notify, let r = records.last(where: { $0.id == itemId }) {
+            onRecordChanged?(r, meta)
+            onManualMark?(meta, videoId, true)
+        }
+    }
+
+    func markUnwatched(meta: MetaItem, videoId: String?) {
+        let itemId = videoId ?? meta.id
+        guard let r = records.last(where: { $0.id == itemId }) else { return }
+        records.removeAll { $0.id == itemId }
+        persist()
+        var cleared = r
+        cleared.completed = false
+        cleared.seconds = 0
+        onRecordChanged?(cleared, meta)
+        onManualMark?(meta, videoId, false)
+    }
+
+    /// Adds titles from the account or Trakt to My List without sending them back.
+    func mergeSaved(_ items: [MetaItem]) {
+        var changed = false
+        for item in items where !saved.contains(where: { $0.id == item.id }) {
+            saved.append(item)
+            changed = true
+        }
+        if changed { persist() }
+    }
+
+    /// Takes a play position from the account or Trakt when it is newer than the one stored here.
+    func mergeProgress(itemId: String, meta: MetaItem, isEpisode: Bool, seconds: Double, duration: Double?,
+                       completed: Bool, at date: Date) {
+        if let existing = records.last(where: { $0.id == itemId }), existing.at >= date { return }
+        records.removeAll { $0.id == itemId }
+        records.append(WatchRecord(id: itemId, contentId: meta.id, title: meta.name, isEpisode: isEpisode,
+                                   seconds: seconds, completed: completed, at: date, duration: duration))
+        records.sort { $0.at < $1.at }
+        if !completed, seconds > 30, !continueWatching.contains(where: { $0.id == meta.id && $0.updated >= date }) {
+            var slim = meta
+            slim.videos = nil
+            continueWatching.removeAll { $0.id == meta.id }
+            let entry = ContinueItem(id: meta.id, meta: slim, videoId: isEpisode ? itemId : nil, updated: date)
+            let at = continueWatching.firstIndex { $0.updated < date } ?? continueWatching.count
+            continueWatching.insert(entry, at: at)
+            if continueWatching.count > 30 { continueWatching.removeLast() }
+        }
+        persist()
+    }
+
+    /// Fills in names and artwork for Continue Watching entries that came from sync with only an id.
+    func refreshContinueMeta(_ meta: MetaItem) {
+        var slim = meta
+        slim.videos = nil
+        var changed = false
+        for i in continueWatching.indices where continueWatching[i].id == meta.id && continueWatching[i].meta.poster == nil {
+            continueWatching[i].meta = slim
+            changed = true
+        }
+        for i in records.indices where records[i].contentId == meta.id && records[i].title == meta.id {
+            records[i].title = meta.name
+            changed = true
+        }
+        if changed { persist() }
     }
 }
 
@@ -106,7 +198,8 @@ final class StreamStore: ObservableObject {
 
     /// Ranked candidates, best first.
     func candidates(type: String, id: String, parentId: String, settings: SettingsStore) async -> [StreamItem] {
-        let list = await raw(type: type, id: id, addons: settings.addons)
+        var list = await raw(type: type, id: id, addons: settings.addons)
+        if !settings.debridReady { list.removeAll { $0.isTorrentOnly } }
         var ranked = SmartRanker.rank(list, isSeries: type == "series", pinned: Set(settings.pinnedSources))
         if type == "series", settings.sameRelease, let release = lastRelease[parentId],
            let i = ranked.firstIndex(where: { releaseKey($0) == release }), i > 0 {

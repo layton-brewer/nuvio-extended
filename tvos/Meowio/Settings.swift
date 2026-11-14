@@ -9,6 +9,20 @@ enum StreamMode: String, Codable, CaseIterable, Identifiable {
 
 enum LiveSourceType: String, Codable { case m3u, xtream }
 
+/// Debrid services that can turn torrent results into direct links, like Direct Debrid on Android TV.
+enum DebridService: String, Codable, CaseIterable, Identifiable {
+    case none, realDebrid, torbox, premiumize
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .none: return "None"
+        case .realDebrid: return "Real-Debrid"
+        case .torbox: return "TorBox"
+        case .premiumize: return "Premiumize"
+        }
+    }
+}
+
 /// Where Live TV channels come from. Empty address means the built-in free channels.
 struct LiveSource: Codable, Hashable {
     var type: LiveSourceType = .m3u
@@ -69,10 +83,26 @@ final class SettingsStore: ObservableObject {
     @Published var liveTabVisible: Bool { didSet { save() } }
     @Published var aiKey: String { didSet { save() } }
     @Published var aiModel: String { didSet { save() } }
+    @Published var debridService: DebridService { didSet { save() } }
+    @Published var debridKey: String { didSet { save() } }
+    /// Preferred audio and subtitle languages as ISO 639-1 codes. Empty means the file's default.
+    @Published var audioLanguage: String { didSet { save() } }
+    @Published var subtitleLanguage: String { didSet { save() } }
+    @Published var subtitlesOn: Bool { didSet { save() } }
+    @Published var skipIntro: Bool { didSet { save() } }
+    @Published var upNextCard: Bool { didSet { save() } }
 
-    init() {
-        let d = UserDefaults.standard
-        addons = d.stringArray(forKey: "addons") ?? []
+    /// Storage for this profile, and for its add-ons (the main profile's when it shares them).
+    private let store: UserDefaults
+    private let addonStore: UserDefaults
+
+    var debridReady: Bool { debridService != .none && !debridKey.trimmingCharacters(in: .whitespaces).isEmpty }
+
+    init(sharesPrimaryAddons: Bool = false) {
+        let d = ProfileScope.defaults
+        store = d
+        addonStore = sharesPrimaryAddons ? ProfileScope.defaults(for: 1) : d
+        addons = addonStore.stringArray(forKey: "addons") ?? []
         streamMode = StreamMode(rawValue: d.string(forKey: "streamMode") ?? "") ?? .smart
         autoNext = d.object(forKey: "autoNext") as? Bool ?? true
         sameRelease = d.object(forKey: "sameRelease") as? Bool ?? true
@@ -92,11 +122,18 @@ final class SettingsStore: ObservableObject {
         liveTabVisible = d.object(forKey: "liveTabVisible") as? Bool ?? true
         aiKey = d.string(forKey: "aiKey") ?? ""
         aiModel = d.string(forKey: "aiModel") ?? ""
+        debridService = DebridService(rawValue: d.string(forKey: "debridService") ?? "") ?? .none
+        debridKey = d.string(forKey: "debridKey") ?? ""
+        audioLanguage = d.string(forKey: "audioLanguage") ?? ""
+        subtitleLanguage = d.string(forKey: "subtitleLanguage") ?? ""
+        subtitlesOn = d.object(forKey: "subtitlesOn") as? Bool ?? false
+        skipIntro = d.object(forKey: "skipIntro") as? Bool ?? true
+        upNextCard = d.object(forKey: "upNextCard") as? Bool ?? true
     }
 
     private func save() {
-        let d = UserDefaults.standard
-        d.set(addons, forKey: "addons")
+        let d = store
+        addonStore.set(addons, forKey: "addons")
         d.set(streamMode.rawValue, forKey: "streamMode")
         d.set(autoNext, forKey: "autoNext")
         d.set(sameRelease, forKey: "sameRelease")
@@ -110,6 +147,13 @@ final class SettingsStore: ObservableObject {
         d.set(liveTabVisible, forKey: "liveTabVisible")
         d.set(aiKey, forKey: "aiKey")
         d.set(aiModel, forKey: "aiModel")
+        d.set(debridService.rawValue, forKey: "debridService")
+        d.set(debridKey, forKey: "debridKey")
+        d.set(audioLanguage, forKey: "audioLanguage")
+        d.set(subtitleLanguage, forKey: "subtitleLanguage")
+        d.set(subtitlesOn, forKey: "subtitlesOn")
+        d.set(skipIntro, forKey: "skipIntro")
+        d.set(upNextCard, forKey: "upNextCard")
     }
 
     func addAddon(_ raw: String) {
@@ -127,7 +171,7 @@ final class SettingsStore: ObservableObject {
 
     // MARK: Backup and restore
 
-    /// Settings backup. The AI key is left out on purpose so a backup is safe to share.
+    /// Settings backup. The AI key and debrid key are left out on purpose so a backup is safe to share.
     struct Backup: Codable {
         var app = "meowio-tvos"
         var version = 1
@@ -145,6 +189,12 @@ final class SettingsStore: ObservableObject {
         var liveTabVisible: Bool
         /// True when personal add-on links were left out; restoring keeps this device's own. Absent in older backups.
         var privateAddonLinksLeftOut: Bool?
+        var audioLanguage: String?
+        var subtitleLanguage: String?
+        var subtitlesOn: Bool?
+        var skipIntro: Bool?
+        var upNextCard: Bool?
+        var debridService: DebridService?
     }
 
     /// True for an add-on link that carries anything beyond a host and /manifest.json (usually a debrid key).
@@ -165,6 +215,13 @@ final class SettingsStore: ObservableObject {
                        startupTimeout: startupTimeout, pinnedSources: pinnedSources, theme: theme,
                        liveSource: liveSource, liveTabVisible: liveTabVisible)
         if !includePrivateAddonLinks { b.privateAddonLinksLeftOut = true }
+        b.audioLanguage = audioLanguage
+        b.subtitleLanguage = subtitleLanguage
+        b.subtitlesOn = subtitlesOn
+        b.skipIntro = skipIntro
+        b.upNextCard = upNextCard
+        // The debrid service is kept, its key is not, so a backup is safe to share.
+        b.debridService = debridService
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         guard let data = try? encoder.encode(b), let text = String(data: data, encoding: .utf8) else { return "" }
@@ -192,6 +249,12 @@ final class SettingsStore: ObservableObject {
         theme = b.theme
         liveSource = b.liveSource
         liveTabVisible = b.liveTabVisible
+        if let v = b.audioLanguage { audioLanguage = v }
+        if let v = b.subtitleLanguage { subtitleLanguage = v }
+        if let v = b.subtitlesOn { subtitlesOn = v }
+        if let v = b.skipIntro { skipIntro = v }
+        if let v = b.upNextCard { upNextCard = v }
+        if let v = b.debridService, v != debridService { debridService = v; if v == .none { debridKey = "" } }
         return true
     }
 }
