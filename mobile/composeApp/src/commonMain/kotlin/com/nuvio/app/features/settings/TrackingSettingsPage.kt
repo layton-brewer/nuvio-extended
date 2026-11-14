@@ -129,7 +129,7 @@ internal fun LazyListScope.trackingSettingsContent(
     onCommentsEnabledChange: (Boolean) -> Unit,
     mdbListConnected: Boolean,
 ) {
-    item {
+    if (anyTrackingProviderOffered()) item {
         SettingsSection(
             title = stringResource(Res.string.settings_tracking_services),
             isTablet = isTablet,
@@ -546,7 +546,7 @@ private fun librarySourceOptions(
             enabled = mdblistConnected,
             unavailableReason = trackingUnavailableReason(TrackingBrand.MDBLIST, mdblistConnected),
         ),
-    )
+    ).filter { it.value.providerBrand()?.let(::isTrackingProviderOffered) ?: true }
 }
 
 @Composable
@@ -584,7 +584,7 @@ private fun watchProgressSourceOptions(
             enabled = mdblistConnected,
             unavailableReason = trackingUnavailableReason(TrackingBrand.MDBLIST, mdblistConnected),
         ),
-    )
+    ).filter { it.value.providerBrand()?.let(::isTrackingProviderOffered) ?: true }
 }
 
 @Composable
@@ -626,7 +626,13 @@ private fun recommendationsSourceOptions(
             enabled = simklConnected,
             unavailableReason = if (!simklConnected) stringResource(Res.string.settings_tracking_connect_first, "Simkl") else null,
         ),
-    )
+    ).filter {
+        when (it.value) {
+            MoreLikeThisSourcePreference.TRAKT -> isTrackingProviderOffered(TrackingBrand.TRAKT)
+            MoreLikeThisSourcePreference.SIMKL -> isTrackingProviderOffered(TrackingBrand.SIMKL)
+            else -> true
+        }
+    }
 }
 
 @Composable
@@ -653,7 +659,27 @@ private fun ratingSourceOptions(
         enabled = mdblistConnected,
         unavailableReason = trackingUnavailableReason(TrackingBrand.MDBLIST, mdblistConnected),
     ),
-)
+).filter {
+    when (it.value) {
+        TrackingProviderId.SIMKL -> isTrackingProviderOffered(TrackingBrand.SIMKL)
+        TrackingProviderId.MDBLIST -> isTrackingProviderOffered(TrackingBrand.MDBLIST)
+        else -> true
+    }
+}
+
+private fun LibrarySourceMode.providerBrand(): TrackingBrand? = when (this) {
+    LibrarySourceMode.TRAKT -> TrackingBrand.TRAKT
+    LibrarySourceMode.SIMKL -> TrackingBrand.SIMKL
+    LibrarySourceMode.MDBLIST -> TrackingBrand.MDBLIST
+    else -> null
+}
+
+private fun WatchProgressSource.providerBrand(): TrackingBrand? = when (this) {
+    WatchProgressSource.TRAKT -> TrackingBrand.TRAKT
+    WatchProgressSource.SIMKL -> TrackingBrand.SIMKL
+    WatchProgressSource.MDBLIST -> TrackingBrand.MDBLIST
+    else -> null
+}
 
 @Composable
 private fun ratingSourceLabel(source: TrackingProviderId?): String =

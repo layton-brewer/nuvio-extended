@@ -6,7 +6,7 @@
     <!-- HomeScreen -->
     <string name="home_no_addons">Inga tillägg installerade. Lägg till ett tillägg för att komma igång.</string>
     <string name="home_no_catalog_addons">Inga tillägg med kataloger installerade. Installera ett katalogtillägg för att se innehåll.</string>
-    <string name="auth_notice_nuvio_logged_out">Du har loggats ut från Nuvio. Logga in igen.</string>
+    <string name="auth_notice_nuvio_logged_out">Du har loggats ut från Meowio. Logga in igen.</string>
     <string name="auth_notice_trakt_logged_out">Du har loggats ut från Trakt. Anslut igen.</string>
     <string name="error_generic">Ett fel uppstod</string>
 
@@ -543,14 +543,15 @@
     <string name="trakt_code_expires">Koden går ut om %1$s</string>
     <string name="trakt_token_refreshes">Trakt-åtkomsttoken uppdateras om %1$s</string>
     <string name="trakt_login_instruction">Tryck på Logga in för att starta Trakt-enhetsautentisering. En QR-kod visas här.</string>
+    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET saknas i local.properties.</string>
     <string name="trakt_watch_progress_title">Tittarframsteg</string>
     <string name="trakt_watch_progress_subtitle">Välj vilken framstegskälla som styr återupptagning och fortsätt titta</string>
     <string name="trakt_watch_progress_dialog_title">Tittarframsteg</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Välj om återupptagning och fortsätt titta ska använda Trakt eller Nuvio Sync medan Trakt-scrobbling förblir aktiv.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Välj om återupptagning och fortsätt titta ska använda Trakt eller Meowio Sync medan Trakt-scrobbling förblir aktiv.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_watch_progress_trakt_selected">Tittarframstegskälla satt till Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Tittarframstegskälla satt till Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Tittarframstegskälla satt till Meowio Sync</string>
     <string name="trakt_continue_watching_window">Fortsätt titta-fönster</string>
     <string name="trakt_continue_watching_subtitle">Trakt-historik som beaktas för fortsätt titta</string>
     <string name="trakt_unaired_next_up">Osända nästa avsnitt</string>
@@ -991,7 +992,7 @@
     <string name="update_unknown_sources">Tillåt installation från okända källor för att fortsätta.</string>
     <!-- AccountScreen -->
     <string name="account_title">Konto</string>
-    <string name="account_sign_in_description">Logga in för att synkronisera ditt bibliotek, tittarframsteg, tillägg och plugins mellan enheter. Bibliotekssynk använder Nuvio Sync när Trakt inte är anslutet, och tittarframsteg kan använda antingen Trakt eller Nuvio Sync.</string>
+    <string name="account_sign_in_description">Logga in för att synkronisera ditt bibliotek, tittarframsteg, tillägg och plugins mellan enheter. Bibliotekssynk använder Meowio Sync när Trakt inte är anslutet, och tittarframsteg kan använda antingen Trakt eller Meowio Sync.</string>
     <string name="account_sync_code_title">Synkkod</string>
     <string name="account_sync_code_description">Synkronisera mellan enheter utan att skapa ett konto.</string>
     <string name="account_linked_devices">Länkade enheter (%1$d)</string>
@@ -1210,7 +1211,7 @@
     <string name="profile_pin_overlay_set_support">Denna PIN krävs innan denna profil öppnas.</string>
     <string name="profile_pin_overlay_confirm_support">Ange samma 4 siffror igen för att slutföra.</string>
     <string name="profile_pin_overlay_mismatch">PIN-koderna matchade inte. Ange en ny PIN igen.</string>
-    <string name="profile_pin_overlay_forgot_hint">Glömt PIN? Återställ den från ditt Nuvio-konto på Nuvios webbplats.</string>
+    <string name="profile_pin_overlay_forgot_hint">Glömt PIN? Återställ den från ditt Meowio-konto på Meowios webbplats.</string>
     <string name="profile_pin_overlay_back_hint">Tryck tillbaka för att avbryta</string>
 
     <!-- Missing: Debug library -->
@@ -1370,9 +1371,9 @@
     <string name="trakt_library_source_dialog_title">Bibliotekskälla</string>
     <string name="trakt_library_source_dialog_subtitle">Välj var du vill spara och hantera dina biblioteksobjekt</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio-bibliotek</string>
+    <string name="trakt_library_source_nuvio">Meowio-bibliotek</string>
     <string name="trakt_library_source_trakt_selected">Trakt-bibliotek valt</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio-bibliotek valt</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio-bibliotek valt</string>
 
     <!-- ProfileSettingsContent -->
     <string name="profile_edit_header">Redigera profil</string>
@@ -1651,7 +1652,7 @@
     <string name="party_start_title">Titta tillsammans</string>
     <string name="party_start_description">Bjud in dina vänner. Alla spelar upp från sina egna källor och håller sig synkroniserade</string>
     <string name="party_start_action">Starta watch party</string>
-    <string name="party_sign_in_required">Logga in på ditt Nuvio konto för att använda funktionen watch parties.</string>
+    <string name="party_sign_in_required">Logga in på ditt Meowio konto för att använda funktionen watch parties.</string>
     <string name="party_unavailable">Watch parties är inte tillgänglig just nu.</string>
     <string name="party_experimental">Watch parties är en experimentell funktion och kanske inte fungerar som förväntat.</string>
     <string name="party_code_label">Grupp kod</string>
@@ -1720,7 +1721,7 @@
     <string name="party_share_unavailable">Den här strömmen kan inte delas.</string>
     <string name="party_shared_by">Delad av %1$s</string>
     <string name="party_invite_scan">Skanna med telefonen för att ansluta</string>
-    <string name="party_invite_share">Eller dela koden. Dina vänner kan ange den under Watch party i valfri Nuvio-app.</string>
+    <string name="party_invite_share">Eller dela koden. Dina vänner kan ange den under Watch party i valfri Meowio-app.</string>
     <string name="party_invite_qr">Watch party inbjudan QR kod</string>
     <string name="servers_sign_in_subtitle">Ange serveradressen och det %1$s konto du vill logga in med. Ditt lösenord används endast för inloggningen.</string>
     <string name="servers_username">Användarnamn</string>

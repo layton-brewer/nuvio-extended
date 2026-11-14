@@ -4,13 +4,13 @@
     <string name="party_start_title">একসাথে দেখুন</string>
     <string name="party_start_description">আপনার বন্ধুদের আমন্ত্রণ জানান। প্রত্যেকে তাদের নিজস্ব সোর্স থেকে প্লে করবেন এবং সিঙ্কে থাকবেন।</string>
     <string name="party_start_action">ওয়াচ পার্টি শুরু করুন</string>
-    <string name="party_sign_in_required">ওয়াচ পার্টি ব্যবহার করতে আপনার Nuvio অ্যাকাউন্টে সাইন ইন করুন।</string>
+    <string name="party_sign_in_required">ওয়াচ পার্টি ব্যবহার করতে আপনার Meowio অ্যাকাউন্টে সাইন ইন করুন।</string>
     <string name="party_unavailable">ওয়াচ পার্টি এই মুহূর্তে উপলব্ধ নেই।</string>
     <string name="party_experimental">ওয়াচ পার্টি পরীক্ষামূলক পর্যায়ে রয়েছে এবং প্রত্যাশিতভাবে কাজ নাও করতে পারে।</string>
     <string name="party_code_label">পার্টি কোড</string>
     <string name="party_copy_invite">আমন্ত্রণ কপি করুন</string>
     <string name="party_invite_copied">আমন্ত্রণ কপি করা হয়েছে</string>
-    <string name="party_invite_message">%1$s কোড ব্যবহার করে আমার Nuvio ওয়াচ পার্টিতে যোগ দিন\n%2$s</string>
+    <string name="party_invite_message">%1$s কোড ব্যবহার করে আমার Meowio ওয়াচ পার্টিতে যোগ দিন\n%2$s</string>
     <string name="party_seats">%2$dটির মধ্যে %1$dটি আসন</string>
     <string name="party_host">হোস্ট</string>
     <string name="party_you">আপনি</string>

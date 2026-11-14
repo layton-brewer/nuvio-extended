@@ -100,7 +100,7 @@
     <!-- HomeScreen -->
     <string name="home_no_addons">Tidak ada addon terpasang. Tambahkan satu untuk memulai.</string>
     <string name="home_no_catalog_addons">Tidak ada addon katalog terpasang. Pasang addon katalog untuk melihat konten.</string>
-    <string name="auth_notice_nuvio_logged_out">Anda telah keluar dari Nuvio. Silakan masuk kembali.</string>
+    <string name="auth_notice_nuvio_logged_out">Anda telah keluar dari Meowio. Silakan masuk kembali.</string>
     <string name="auth_notice_trakt_logged_out">Anda telah keluar dari Trakt. Silakan sambungkan kembali.</string>
     <string name="error_generic">Terjadi kesalahan</string>
 
@@ -360,7 +360,7 @@
     <string name="about_licenses_attributions">Lisensi &amp; Atribusi</string>
     <string name="about_licenses_attributions_subtitle">Sumber data, pengakuan, dan lisensi Android</string>
     <string name="licenses_attributions_title">Lisensi &amp; Atribusi</string>
-    <string name="licenses_attributions_subtitle">Penyedia data, kredit layanan, dan lisensi pemutaran Android yang digunakan oleh Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Penyedia data, kredit layanan, dan lisensi pemutaran Android yang digunakan oleh Meowio TV.</string>
     <string name="licenses_attributions_section_app">LISENSI APLIKASI</string>
     <string name="licenses_attributions_section_data">DATA &amp; LAYANAN</string>
     <string name="licenses_attributions_section_playback">LISENSI PEMUTARAN ANDROID</string>
@@ -1057,24 +1057,25 @@
     <string name="trakt_code_expires">Kode kedaluwarsa dalam %1$s</string>
     <string name="trakt_token_refreshes">Token akses Trakt diperbarui dalam %1$s</string>
     <string name="trakt_login_instruction">Tekan Login untuk memulai autentikasi perangkat Trakt. Kode QR akan muncul di sini.</string>
+    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET tidak ada di local.properties.</string>
     <string name="trakt_watch_progress_title">Progres Tonton</string>
     <string name="trakt_watch_progress_subtitle">Pilih sumber progres mana yang menggerakkan lanjutkan dan continue watching</string>
     <string name="trakt_watch_progress_dialog_title">Progres Tonton</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Pilih apakah lanjutkan dan continue watching harus menggunakan Trakt atau Nuvio Sync sementara scrobbling Trakt tetap aktif.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Pilih apakah lanjutkan dan continue watching harus menggunakan Trakt atau Meowio Sync sementara scrobbling Trakt tetap aktif.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Sumber Pustaka</string>
     <string name="trakt_library_source_subtitle">Pilih pustaka mana yang digunakan untuk menyimpan dan melihat koleksi Anda</string>
     <string name="trakt_library_source_dialog_title">Sumber Pustaka</string>
     <string name="trakt_library_source_dialog_subtitle">Pilih di mana menyimpan dan mengelola item pustaka Anda</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Pustaka Nuvio</string>
+    <string name="trakt_library_source_nuvio">Pustaka Meowio</string>
     <string name="trakt_library_source_trakt_selected">Pustaka Trakt dipilih</string>
-    <string name="trakt_library_source_nuvio_selected">Pustaka Nuvio dipilih</string>
+    <string name="trakt_library_source_nuvio_selected">Pustaka Meowio dipilih</string>
     <string name="trakt_setting_on">Aktif</string>
     <string name="trakt_setting_off">Nonaktif</string>
     <string name="trakt_watch_progress_trakt_selected">Sumber progres tonton diatur ke Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Sumber progres tonton diatur ke Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Sumber progres tonton diatur ke Meowio Sync</string>
     <string name="trakt_continue_watching_window">Jendela Lanjutkan Menonton</string>
     <string name="trakt_continue_watching_subtitle">Riwayat Trakt yang dipertimbangkan untuk lanjutkan menonton</string>
     <string name="trakt_unaired_next_up">Episode Selanjutnya yang Belum Tayang</string>
@@ -1168,7 +1169,7 @@
     <string name="profile_addons">addon</string>
     <string name="profile_plugins">plugin</string>
     <string name="profile_choose_avatar">Pilih Avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">URL avatar kustom dapat dikonfigurasi dari panel web Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">URL avatar kustom dapat dikonfigurasi dari panel web Meowio.</string>
     <string name="profile_avatar_none_selected">Tidak ada avatar dipilih</string>
     <string name="profile_avatar_focus_hint">Fokuskan avatar untuk melihat namanya</string>
     <string name="profile_avatar_category_all">Semua</string>
@@ -1211,7 +1212,7 @@
     <string name="profile_pin_overlay_set_support">PIN ini akan diperlukan sebelum membuka profil ini.</string>
     <string name="profile_pin_overlay_confirm_support">Masukkan ulang 4 digit yang sama untuk menyelesaikan pengaturan.</string>
     <string name="profile_pin_overlay_mismatch">PIN tidak cocok. Masukkan PIN baru lagi.</string>
-    <string name="profile_pin_overlay_forgot_hint">Lupa PIN? Setel ulang dari akun Nuvio Anda di situs web nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Lupa PIN? Setel ulang dari akun Meowio Anda di situs web nuvio.</string>
     <string name="profile_pin_overlay_back_hint">Tekan kembali untuk membatalkan</string>
 
 
@@ -1732,7 +1733,7 @@
     <string name="update_unknown_sources">Izinkan pemasangan dari sumber tidak dikenal untuk melanjutkan.</string>
     <!-- AccountScreen -->
     <string name="account_title">Akun</string>
-    <string name="account_sign_in_description">Masuk untuk menyinkronkan pustaka, progres tonton, addon, dan plugin di semua perangkat. Sinkronisasi pustaka menggunakan Nuvio Sync saat Trakt tidak terhubung, dan progres tonton dapat menggunakan Trakt atau Nuvio Sync.</string>
+    <string name="account_sign_in_description">Masuk untuk menyinkronkan pustaka, progres tonton, addon, dan plugin di semua perangkat. Sinkronisasi pustaka menggunakan Meowio Sync saat Trakt tidak terhubung, dan progres tonton dapat menggunakan Trakt atau Meowio Sync.</string>
     <string name="account_sync_code_title">Kode Sinkronisasi</string>
     <string name="account_sync_code_description">Sinkronkan di semua perangkat tanpa membuat akun.</string>
     <string name="account_linked_devices">Perangkat Tertaut (%1$d)</string>
@@ -2966,7 +2967,7 @@
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Latar Belakang</string>
     <string name="profile_choose_background">Pilih Latar Belakang Profil</string>
-    <string name="profile_background_member_note">URL latar belakang kustom dapat diatur dari panel web Nuvio.</string>
+    <string name="profile_background_member_note">URL latar belakang kustom dapat diatur dari panel web Meowio.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="profile_background_custom">Kustom</string>
     <string name="profile_avatar_category_supporter">Pendukung</string>

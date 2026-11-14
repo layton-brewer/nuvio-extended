@@ -96,7 +96,7 @@
     <string name="web_import_invalid_json">JSON i pavlefshëm</string>
     <string name="home_no_addons">Nuk ka shtesa të instaluara. Shtoni një për të filluar.</string>
     <string name="home_no_catalog_addons">Nuk ka shtesa katalogu të instaluara. Instaloni një shtesë katalogu për të parë përmbajtjen.</string>
-    <string name="auth_notice_nuvio_logged_out">Jeni çkyçur nga Nuvio. Ju lutemi kyçuni përsëri.</string>
+    <string name="auth_notice_nuvio_logged_out">Jeni çkyçur nga Meowio. Ju lutemi kyçuni përsëri.</string>
     <string name="auth_notice_trakt_logged_out">Jeni çkyçur nga Trakt. Ju lutemi rilidhuni.</string>
     <string name="error_generic">Ndodhi një gabim</string>
     <string name="action_retry">Provo përsëri</string>
@@ -355,7 +355,7 @@
     <string name="about_licenses_attributions">Licencat dhe atributet</string>
     <string name="about_licenses_attributions_subtitle">Burimet e të dhënave, falënderimet dhe licencat Android</string>
     <string name="licenses_attributions_title">Licencat dhe atributet</string>
-    <string name="licenses_attributions_subtitle">Ofruesit e të dhënave, kreditet e shërbimeve dhe licencat e riprodhimit Android të përdorura nga Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Ofruesit e të dhënave, kreditet e shërbimeve dhe licencat e riprodhimit Android të përdorura nga Meowio TV.</string>
     <string name="licenses_attributions_section_app">LICENCA E APLIKACIONIT</string>
     <string name="licenses_attributions_section_data">TË DHËNAT DHE SHËRBIMET</string>
     <string name="licenses_attributions_section_playback">LICENCAT E RIPRODHIMIT ANDROID</string>
@@ -1227,24 +1227,25 @@
     <string name="trakt_code_expires">Kodi skadon pas %1$s</string>
     <string name="trakt_token_refreshes">Tokeni i qasjes Trakt rifreskohet pas %1$s</string>
     <string name="trakt_login_instruction">Shtyp Hyr për të nisur autentifikimin e pajisjes Trakt. Këtu do të shfaqet një kod QR.</string>
+    <string name="trakt_missing_credentials">Mungon TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET në local.properties.</string>
     <string name="trakt_watch_progress_title">Progresi i shikimit</string>
     <string name="trakt_watch_progress_subtitle">Zgjidh cili burim progresi furnizon vazhdimin dhe Vazhdo shikimin</string>
     <string name="trakt_watch_progress_dialog_title">Progresi i shikimit</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Zgjidh nëse vazhdimi dhe Vazhdo shikimin duhet të përdorin Trakt ose Nuvio Sync ndërsa scrobbling i Trakt mbetet aktiv.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Zgjidh nëse vazhdimi dhe Vazhdo shikimin duhet të përdorin Trakt ose Meowio Sync ndërsa scrobbling i Trakt mbetet aktiv.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Burimi i bibliotekës</string>
     <string name="trakt_library_source_subtitle">Zgjidh cilin burim lexon Nuvio për Bibliotekën tënde</string>
     <string name="trakt_library_source_dialog_title">Burimi i bibliotekës</string>
     <string name="trakt_library_source_dialog_subtitle">Zgjidh ku të ruhen dhe menaxhohen artikujt e bibliotekës</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Biblioteka Nuvio</string>
+    <string name="trakt_library_source_nuvio">Biblioteka Meowio</string>
     <string name="trakt_library_source_trakt_selected">Biblioteka Trakt u zgjodh</string>
-    <string name="trakt_library_source_nuvio_selected">Biblioteka Nuvio u zgjodh</string>
+    <string name="trakt_library_source_nuvio_selected">Biblioteka Meowio u zgjodh</string>
     <string name="trakt_setting_on">Aktiv</string>
     <string name="trakt_setting_off">Joaktiv</string>
     <string name="trakt_watch_progress_trakt_selected">Burimi i progresit të shikimit u caktua në Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Burimi i progresit të shikimit u caktua në Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Burimi i progresit të shikimit u caktua në Meowio Sync</string>
     <string name="trakt_continue_watching_window">Dritarja e Vazhdo shikimin</string>
     <string name="trakt_continue_watching_subtitle">Historiku Trakt që merret parasysh për Vazhdo shikimin</string>
     <string name="trakt_unaired_next_up">Episodet e ardhshme që ende nuk janë transmetuar</string>
@@ -1347,11 +1348,11 @@
     <string name="profile_addons">shtesa</string>
     <string name="profile_plugins">shtojca</string>
     <string name="profile_choose_avatar">Zgjidh avatarin</string>
-    <string name="profile_custom_avatar_web_panel_note">URL-të e personalizuara të avatarëve mund të konfigurohen nga paneli web i Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">URL-të e personalizuara të avatarëve mund të konfigurohen nga paneli web i Meowio.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Sfondi</string>
     <string name="profile_choose_background">Zgjidh sfondin e profilit</string>
-    <string name="profile_background_member_note">URL-të e personalizuara të sfondit mund të konfigurohen nga paneli web i Nuvio.</string>
+    <string name="profile_background_member_note">URL-të e personalizuara të sfondit mund të konfigurohen nga paneli web i Meowio.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="profile_background_custom">I personalizuar</string>
     <string name="profile_avatar_none_selected">Nuk është zgjedhur avatar</string>
@@ -1397,7 +1398,7 @@
     <string name="profile_pin_overlay_set_support">Ky PIN do të kërkohet para hapjes së këtij profili.</string>
     <string name="profile_pin_overlay_confirm_support">Shkruaj përsëri të njëjtat 4 shifra për të përfunduar konfigurimin.</string>
     <string name="profile_pin_overlay_mismatch">PIN-et nuk përputhen. Shkruaj përsëri një PIN të ri.</string>
-    <string name="profile_pin_overlay_forgot_hint">Harrove PIN-in? Rivendose nga llogaria jote Nuvio në faqen e internetit të Nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Harrove PIN-in? Rivendose nga llogaria jote Meowio në faqen e internetit të Meowio.</string>
     <string name="profile_pin_overlay_back_hint">Shtyp Kthehu për të anuluar</string>
     <!-- Essential addon setup wizard -->
     <string name="essential_addon_setup_title">Konfiguro shtesat</string>
@@ -1998,7 +1999,7 @@
     <string name="update_unknown_sources">Lejo instalimet nga burime të panjohura për të vazhduar.</string>
     <!-- AccountScreen -->
     <string name="account_title">Llogaria</string>
-    <string name="account_sign_in_description">Hyr për të sinkronizuar bibliotekën, progresin e shikimit, shtesat dhe shtojcat në të gjitha pajisjet. Sinkronizimi i bibliotekës përdor Nuvio Sync kur Trakt nuk është i lidhur, ndërsa progresi i shikimit mund të përdorë Trakt ose Nuvio Sync.</string>
+    <string name="account_sign_in_description">Hyr për të sinkronizuar bibliotekën, progresin e shikimit, shtesat dhe shtojcat në të gjitha pajisjet. Sinkronizimi i bibliotekës përdor Meowio Sync kur Trakt nuk është i lidhur, ndërsa progresi i shikimit mund të përdorë Trakt ose Meowio Sync.</string>
     <string name="account_sync_code_title">Kodi i sinkronizimit</string>
     <string name="account_sync_code_description">Sinkronizo ndërmjet pajisjeve pa krijuar llogari.</string>
     <string name="account_linked_devices">Pajisjet e lidhura (%1$d)</string>

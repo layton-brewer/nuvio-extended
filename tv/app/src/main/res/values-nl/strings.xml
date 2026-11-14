@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">Er zijn geen add-ons geïnstalleerd. Voeg er één toe om te beginnen.</string>
     <string name="home_no_catalog_addons">Er zijn geen catalogus-add-ons geïnstalleerd. Installeer een catalogus-add-on om de inhoud te bekijken.</string>
-    <string name="auth_notice_nuvio_logged_out">Je bent afgemeld bij Nuvio. Meld je opnieuw aan.</string>
+    <string name="auth_notice_nuvio_logged_out">Je bent afgemeld bij Meowio. Meld je opnieuw aan.</string>
     <string name="auth_notice_trakt_logged_out">Je bent afgemeld bij Trakt. Maak opnieuw verbinding.</string>
     <string name="error_generic">Er is een fout opgetreden</string>
 
@@ -434,7 +434,7 @@
     <string name="about_licenses_attributions">Licenties &amp; naamsvermelding</string>
     <string name="about_licenses_attributions_subtitle">Gegevensbronnen, dankbetuigingen en Android-licenties</string>
     <string name="licenses_attributions_title">Licenties &amp; naamsvermelding</string>
-    <string name="licenses_attributions_subtitle">Gegevensleveranciers, service-credits en Android-afspeellicenties die door Nuvio TV worden gebruikt.</string>
+    <string name="licenses_attributions_subtitle">Gegevensleveranciers, service-credits en Android-afspeellicenties die door Meowio TV worden gebruikt.</string>
     <string name="licenses_attributions_section_app">APP-LICENTIE</string>
     <string name="licenses_attributions_section_data">GEGEVENS &amp; SERVICES</string>
     <string name="licenses_attributions_section_playback">ANDROID-AFSPEELLICENTIES</string>
@@ -1500,24 +1500,25 @@
     <string name="trakt_code_expires">Code verloopt over %1$s</string>
     <string name="trakt_token_refreshes">Trakt-toegangstoken wordt vernieuwd over %1$s</string>
     <string name="trakt_login_instruction">Druk op Aanmelden bij account om de apparaatverificatie van Trakt te starten. Hier verschijnt een QR-code.</string>
+    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET ontbreken in local.properties.</string>
     <string name="trakt_watch_progress_title">Kijkvoortgang</string>
     <string name="trakt_watch_progress_subtitle">Kies welke voortgangsbron hervatten en Verder kijken aanstuurt</string>
     <string name="trakt_watch_progress_dialog_title">Kijkvoortgang</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Kies of hervatten en Verder kijken Trakt of Nuvio Sync gebruiken, terwijl Trakt-scrobbelen actief blijft.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Kies of hervatten en Verder kijken Trakt of Meowio Sync gebruiken, terwijl Trakt-scrobbelen actief blijft.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Bibliotheekbron</string>
     <string name="trakt_library_source_subtitle">Kies welke bron Nuvio uitleest voor je bibliotheek</string>
     <string name="trakt_library_source_dialog_title">Bibliotheekbron</string>
     <string name="trakt_library_source_dialog_subtitle">Kies waar je bibliotheekitems worden opgeslagen en beheerd</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio-bibliotheek</string>
+    <string name="trakt_library_source_nuvio">Meowio-bibliotheek</string>
     <string name="trakt_library_source_trakt_selected">Trakt-bibliotheek geselecteerd</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio-bibliotheek geselecteerd</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio-bibliotheek geselecteerd</string>
     <string name="trakt_setting_on">Aan</string>
     <string name="trakt_setting_off">Uit</string>
     <string name="trakt_watch_progress_trakt_selected">Bron voor kijkvoortgang ingesteld op Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Bron voor kijkvoortgang ingesteld op Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Bron voor kijkvoortgang ingesteld op Meowio Sync</string>
     <string name="trakt_continue_watching_window">Verder kijken-venster</string>
     <string name="trakt_continue_watching_subtitle">Trakt-geschiedenis die wordt meegenomen voor Verder kijken</string>
     <string name="trakt_unaired_next_up">Nog niet uitgezonden afleveringen in Volgende</string>
@@ -1623,11 +1624,11 @@
     <string name="profile_addons">add-ons</string>
     <string name="profile_plugins">plug-ins</string>
     <string name="profile_choose_avatar">Avatar kiezen</string>
-    <string name="profile_custom_avatar_web_panel_note">Eigen avatar-URL\'s kunnen worden ingesteld via het Nuvio-webpaneel.</string>
+    <string name="profile_custom_avatar_web_panel_note">Eigen avatar-URL\'s kunnen worden ingesteld via het Meowio-webpaneel.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Achtergrond</string>
     <string name="profile_choose_background">Profielachtergrond kiezen</string>
-    <string name="profile_background_member_note">Eigen achtergrond-URL\'s kunnen worden ingesteld via het Nuvio-webpaneel.</string>
+    <string name="profile_background_member_note">Eigen achtergrond-URL\'s kunnen worden ingesteld via het Meowio-webpaneel.</string>
     <string name="profile_background_normal">Normaal</string>
     <string name="profile_background_custom">Aangepast</string>
     <string name="profile_avatar_none_selected">Geen avatar geselecteerd</string>
@@ -1695,7 +1696,7 @@
     <string name="profile_pin_overlay_set_support">Deze pincode is vereist voordat dit profiel wordt geopend.</string>
     <string name="profile_pin_overlay_confirm_support">Voer dezelfde 4 cijfers nogmaals in om het instellen te voltooien.</string>
     <string name="profile_pin_overlay_mismatch">De pincodes kwamen niet overeen. Voer opnieuw een nieuwe pincode in.</string>
-    <string name="profile_pin_overlay_forgot_hint">Pincode vergeten? Stel deze opnieuw in via je Nuvio-account op de Nuvio-website.</string>
+    <string name="profile_pin_overlay_forgot_hint">Pincode vergeten? Stel deze opnieuw in via je Meowio-account op de Meowio-website.</string>
     <string name="profile_pin_overlay_back_hint">Druk op terug om te annuleren</string>
 
 
@@ -2392,7 +2393,7 @@
     <string name="update_unknown_sources">Sta installaties van onbekende bronnen toe om door te gaan.</string>
     <!-- AccountScreen -->
     <string name="account_title">Account</string>
-    <string name="account_sign_in_description">Meld je aan om je bibliotheek, kijkvoortgang, add-ons en plug-ins op al je apparaten te synchroniseren. Bibliotheeksynchronisatie gebruikt Nuvio Sync wanneer Trakt niet is verbonden. Voor kijkvoortgang kan Trakt of Nuvio Sync worden gebruikt.</string>
+    <string name="account_sign_in_description">Meld je aan om je bibliotheek, kijkvoortgang, add-ons en plug-ins op al je apparaten te synchroniseren. Bibliotheeksynchronisatie gebruikt Meowio Sync wanneer Trakt niet is verbonden. Voor kijkvoortgang kan Trakt of Meowio Sync worden gebruikt.</string>
     <string name="account_sync_code_title">Synchronisatiecode</string>
     <string name="account_sync_code_description">Synchroniseer apparaten zonder account aan te maken.</string>
     <string name="account_linked_devices">Verbonden apparaten (%1$d)</string>

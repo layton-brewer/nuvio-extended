@@ -673,6 +673,7 @@
     <string name="trakt_code_expires">Kod wygasa za %1$s</string>
     <string name="trakt_token_refreshes">Token dostępu Trakt odświeży się za %1$s</string>
     <string name="trakt_login_instruction">Naciśnij Zaloguj, aby rozpocząć uwierzytelnianie urządzenia Trakt. Tutaj pojawi się kod QR.</string>
+    <string name="trakt_missing_credentials">Brak TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET w local.properties.</string>
     <string name="trakt_continue_watching_window">Okno kontynuowania oglądania</string>
     <string name="trakt_continue_watching_subtitle">Historia Trakt uwzględniana przy kontynuowaniu oglądania</string>
     <string name="trakt_unaired_next_up">Niewyemitowane odcinki</string>
@@ -1238,7 +1239,7 @@
     <string name="audio_mix_range_saved">Zakres: %1$d dB do %2$d dB (zapisano)</string>
     <string name="audio_mix_unavailable">Wzmocnienie nie jest dostępne na tym urządzeniu</string>
 
-    <string name="auth_notice_nuvio_logged_out">Zostałeś wylogowany z Nuvio. Zaloguj się ponownie.</string>
+    <string name="auth_notice_nuvio_logged_out">Zostałeś wylogowany z Meowio. Zaloguj się ponownie.</string>
     <string name="auth_notice_trakt_logged_out">Zostałeś wylogowany z Trakt. Połącz ponownie.</string>
 
     <string name="error_state_generic_issue">Coś poszło nie tak.</string>
@@ -1307,13 +1308,13 @@
     <string name="trakt_watch_progress_title">Postęp oglądania</string>
     <string name="trakt_watch_progress_subtitle">Wybierz źródło postępu dla wznawiania i kontynuowania oglądania</string>
     <string name="trakt_watch_progress_dialog_title">Postęp oglądania</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Wybierz, czy wznawianie i kontynuowanie oglądania ma używać Trakt czy Nuvio Sync, gdy scrobbling Trakt jest aktywny.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Wybierz, czy wznawianie i kontynuowanie oglądania ma używać Trakt czy Meowio Sync, gdy scrobbling Trakt jest aktywny.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_setting_on">Wł.</string>
     <string name="trakt_setting_off">Wył.</string>
     <string name="trakt_watch_progress_trakt_selected">Źródło postępu oglądania ustawione na Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Źródło postępu oglądania ustawione na Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Źródło postępu oglądania ustawione na Meowio Sync</string>
     <string name="trakt_comments_title">Komentarze</string>
     <string name="trakt_comments_subtitle">Pokaż recenzje Trakt na stronach metadanych</string>
     <string name="trakt_comments_dialog_title">Komentarze</string>
@@ -1385,7 +1386,7 @@
     <string name="profile_pin_overlay_set_support">Ten PIN będzie wymagany przed otwarciem tego profilu.</string>
     <string name="profile_pin_overlay_confirm_support">Wprowadź ponownie te same 4 cyfry, aby zakończyć konfigurację.</string>
     <string name="profile_pin_overlay_mismatch">PINy nie są zgodne. Wprowadź nowy PIN ponownie.</string>
-    <string name="profile_pin_overlay_forgot_hint">Zapomniałeś PIN? Zresetuj go ze swojego konta Nuvio na stronie nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Zapomniałeś PIN? Zresetuj go ze swojego konta Meowio na stronie nuvio.</string>
     <string name="profile_pin_overlay_back_hint">Naciśnij wstecz, aby anulować</string>
 
     <string name="debug_section_library">Biblioteka</string>
@@ -1801,8 +1802,8 @@
     <string name="tmdb_trailers_title">Zwiastuny</string>
     <string name="trakt_library_source_dialog_subtitle">Wybierz, gdzie zapisywać i zarządzać elementami biblioteki</string>
     <string name="trakt_library_source_dialog_title">Źródło biblioteki</string>
-    <string name="trakt_library_source_nuvio">Biblioteka Nuvio</string>
-    <string name="trakt_library_source_nuvio_selected">Wybrano bibliotekę Nuvio</string>
+    <string name="trakt_library_source_nuvio">Biblioteka Meowio</string>
+    <string name="trakt_library_source_nuvio_selected">Wybrano bibliotekę Meowio</string>
     <string name="trakt_library_source_subtitle">Wybierz, której biblioteki używać do zapisywania i przeglądania kolekcji</string>
     <string name="trakt_library_source_title">Źródło biblioteki</string>
     <string name="trakt_library_source_trakt">Trakt</string>
@@ -2198,7 +2199,7 @@
     <string name="web_title_show">Pokaż</string>
 
     <string name="tv_channel_continue_watching">Kontynuuj oglądanie</string>
-    <string name="profile_custom_avatar_web_panel_note">Niestandardowe adresy URL awatarów można skonfigurować z panelu webowego Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">Niestandardowe adresy URL awatarów można skonfigurować z panelu webowego Meowio.</string>
     <string name="collections_editor_tmdb_mode_person">Osoba</string>
     <string name="collections_editor_tmdb_mode_director">Reżyser</string>
     <string name="collections_editor_tmdb_help_person">Wpisz ID osoby z TMDB lub URL, aby zbudować wiersz z obsady.</string>
@@ -2389,7 +2390,7 @@
     <string name="licenses_attributions_section_ui">BIBLIOTEKI UI</string>
     <string name="licenses_attributions_haze_title">Haze 1.7.2</string>
     <string name="licenses_attributions_haze_body">Używany do efektów rozmycia tła. Stworzony przez Chrisa Banesa. Licencjonowany na licencji Apache, wersja 2.0.</string>
-    <string name="licenses_attributions_subtitle">Dostawcy danych, podziękowania i licencje odtwarzania Android używane przez Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Dostawcy danych, podziękowania i licencje odtwarzania Android używane przez Meowio TV.</string>
     <string name="licenses_attributions_title">Licencje i atrybucje</string>
     <string name="licenses_attributions_tmdb_body">Nuvio korzysta z API TMDB do metadanych filmów i seriali, grafik, zwiastunów, obsady, szczegółów produkcji, kolekcji i rekomendacji. Ten produkt korzysta z API TMDB, ale nie jest zatwierdzony ani certyfikowany przez TMDB.</string>
     <string name="licenses_attributions_tmdb_title">The Movie Database (TMDB)</string>
@@ -3305,7 +3306,7 @@
     <string name="profile_editor_tab_avatar">Awatar</string>
     <string name="profile_editor_tab_background">Tło</string>
     <string name="profile_choose_background">Wybierz tło profilu</string>
-    <string name="profile_background_member_note">Niestandardowe adresy URL tła można skonfigurować z panelu Nuvio.</string>
+    <string name="profile_background_member_note">Niestandardowe adresy URL tła można skonfigurować z panelu Meowio.</string>
     <string name="profile_background_normal">Normalne</string>
     <string name="profile_background_custom">Niestandardowe</string>
     <string name="profile_avatar_category_supporter">Supporter</string>

@@ -4,7 +4,7 @@
     <string name="party_start_title">Žiūrėkite kartu</string>
     <string name="party_start_description">Pakvieskite draugus. Kiekvienas žiūri iš savo šaltinių, o atkūrimas sinchronizuojamas.</string>
     <string name="party_start_action">Pradėti žiūrėjimą kartu</string>
-    <string name="party_sign_in_required">Norėdami žiūrėti kartu, prisijunkite prie „Nuvio“ paskyros.</string>
+    <string name="party_sign_in_required">Norėdami žiūrėti kartu, prisijunkite prie „Meowio“ paskyros.</string>
     <string name="party_unavailable">Žiūrėjimas kartu šiuo metu nepasiekiamas.</string>
     <string name="party_experimental">Žiūrėjimas kartu yra bandomoji funkcija ir gali veikti netinkamai.</string>
     <string name="party_code_label">Grupės kodas</string>
@@ -72,7 +72,7 @@
     <string name="party_share_unavailable">Šio srauto bendrinti negalima.</string>
     <string name="party_shared_by">Bendrino: %1$s</string>
     <string name="party_invite_scan">Nuskaitykite telefonu, kad prisijungtumėte</string>
-    <string name="party_invite_share">Arba bendrinkite kodą. Draugai gali jį įvesti bet kurios „Nuvio“ programos skiltyje „Žiūrėjimas kartu“.</string>
+    <string name="party_invite_share">Arba bendrinkite kodą. Draugai gali jį įvesti bet kurios „Meowio“ programos skiltyje „Žiūrėjimas kartu“.</string>
     <string name="party_invite_qr">Kvietimo žiūrėti kartu QR kodas</string>
     <string name="party_phone_chat_note">Norėdami kalbėtis, telefone atidarykite „Žiūrėjimas kartu“ su šiuo profiliu.</string>
 </resources>

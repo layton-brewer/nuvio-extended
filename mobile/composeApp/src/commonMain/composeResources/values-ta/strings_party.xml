@@ -4,13 +4,13 @@
     <string name="party_start_title">ஒன்றாகப் பாருங்கள்</string>
     <string name="party_start_description">நண்பர்களை அழைக்கவும். ஒவ்வொருவரும் தங்கள் சொந்த ஆதாரத்தில் பார்க்கலாம்; அனைவரும் ஒரே நேரத்தில் ஒத்திசைவாக இருப்பார்கள்.</string>
     <string name="party_start_action">ஒன்றாகப் பார்க்கும் அறையைத் தொடங்கு</string>
-    <string name="party_sign_in_required">ஒன்றாகப் பார்க்கும் வசதியைப் பயன்படுத்த உங்கள் Nuvio கணக்கில் உள்நுழையவும்.</string>
+    <string name="party_sign_in_required">ஒன்றாகப் பார்க்கும் வசதியைப் பயன்படுத்த உங்கள் Meowio கணக்கில் உள்நுழையவும்.</string>
     <string name="party_unavailable">ஒன்றாகப் பார்க்கும் அறைகள் தற்போது கிடைக்கவில்லை.</string>
     <string name="party_experimental">இந்த வசதி சோதனை நிலையில் உள்ளது; எதிர்பார்த்தபடி செயல்படாமல் இருக்கலாம்.</string>
     <string name="party_code_label">அறைக் குறியீடு</string>
     <string name="party_copy_invite">அழைப்பை நகலெடு</string>
     <string name="party_invite_copied">அழைப்பு நகலெடுக்கப்பட்டது</string>
-    <string name="party_invite_message">%1$s குறியீட்டைப் பயன்படுத்தி என் Nuvio பார்வை அறையில் சேரவும்\n%2$s</string>
+    <string name="party_invite_message">%1$s குறியீட்டைப் பயன்படுத்தி என் Meowio பார்வை அறையில் சேரவும்\n%2$s</string>
     <string name="party_seats">%1$d / %2$d இடங்கள்</string>
     <string name="party_host">நிர்வாகி</string>
     <string name="party_you">நீங்கள்</string>

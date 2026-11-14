@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">未安装扩展。请添加一个以开始使用。</string>
     <string name="home_no_catalog_addons">未安装目录扩展。请安装目录扩展以浏览内容。</string>
-    <string name="auth_notice_nuvio_logged_out">您已登出 Nuvio。请重新登录。</string>
+    <string name="auth_notice_nuvio_logged_out">您已登出 Meowio。请重新登录。</string>
     <string name="auth_notice_trakt_logged_out">您已登出 Trakt。请重新连接。</string>
     <string name="error_generic">出错了</string>
 
@@ -415,7 +415,7 @@
     <string name="about_licenses_attributions">许可与出处</string>
     <string name="about_licenses_attributions_subtitle">数据来源、致谢与 Android 许可</string>
     <string name="licenses_attributions_title">许可与出处</string>
-    <string name="licenses_attributions_subtitle">Nuvio TV 使用的数据提供者、服务致谢与 Android 播放许可。</string>
+    <string name="licenses_attributions_subtitle">Meowio TV 使用的数据提供者、服务致谢与 Android 播放许可。</string>
     <string name="licenses_attributions_section_app">应用许可</string>
     <string name="licenses_attributions_section_data">数据与服务</string>
     <string name="licenses_attributions_section_playback">Android 播放许可</string>
@@ -1404,24 +1404,25 @@
     <string name="trakt_code_expires">代码将在 %1$s 后过期</string>
     <string name="trakt_token_refreshes">Trakt 访问令牌将在 %1$s 后刷新</string>
     <string name="trakt_login_instruction">按下「登录」以启动 Trakt 设备验证。QR 码将在此显示。</string>
+    <string name="trakt_missing_credentials">local.properties 中缺少 TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET。</string>
     <string name="trakt_watch_progress_title">观看进度</string>
     <string name="trakt_watch_progress_subtitle">选择哪个进度来源提供继续播放和继续观看功能</string>
     <string name="trakt_watch_progress_dialog_title">观看进度</string>
-    <string name="trakt_watch_progress_dialog_subtitle">选择继续播放和继续观看应使用 Trakt 还是 Nuvio Sync，同时 Trakt 记录保持启用。</string>
+    <string name="trakt_watch_progress_dialog_subtitle">选择继续播放和继续观看应使用 Trakt 还是 Meowio Sync，同时 Trakt 记录保持启用。</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">媒体库来源</string>
     <string name="trakt_library_source_subtitle">选择 Nuvio 从哪里读取您的媒体库</string>
     <string name="trakt_library_source_dialog_title">媒体库来源</string>
     <string name="trakt_library_source_dialog_subtitle">选择存储和管理媒体库项目的位置</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio 媒体库</string>
+    <string name="trakt_library_source_nuvio">Meowio 媒体库</string>
     <string name="trakt_library_source_trakt_selected">已选择 Trakt 媒体库</string>
-    <string name="trakt_library_source_nuvio_selected">已选择 Nuvio 媒体库</string>
+    <string name="trakt_library_source_nuvio_selected">已选择 Meowio 媒体库</string>
     <string name="trakt_setting_on">开启</string>
     <string name="trakt_setting_off">关闭</string>
     <string name="trakt_watch_progress_trakt_selected">观看进度来源设为 Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">观看进度来源设为 Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">观看进度来源设为 Meowio Sync</string>
     <string name="trakt_continue_watching_window">继续观看范围</string>
     <string name="trakt_continue_watching_subtitle">纳入继续观看的 Trakt 历史记录</string>
     <string name="trakt_unaired_next_up">未播出的下一集</string>
@@ -1526,11 +1527,11 @@
     <string name="profile_addons">扩展</string>
     <string name="profile_plugins">插件</string>
     <string name="profile_choose_avatar">选择头像</string>
-    <string name="profile_custom_avatar_web_panel_note">自定义头像网址可从 Nuvio 网页面板配置。</string>
+    <string name="profile_custom_avatar_web_panel_note">自定义头像网址可从 Meowio 网页面板配置。</string>
     <string name="profile_editor_tab_avatar">头像</string>
     <string name="profile_editor_tab_background">背景</string>
     <string name="profile_choose_background">选择个人资料背景</string>
-    <string name="profile_background_member_note">自定义背景网址可从 Nuvio 网页面板配置。</string>
+    <string name="profile_background_member_note">自定义背景网址可从 Meowio 网页面板配置。</string>
     <string name="profile_background_normal">普通</string>
     <string name="profile_background_custom">自定义</string>
     <string name="profile_avatar_none_selected">未选择头像</string>
@@ -1598,7 +1599,7 @@
     <string name="profile_pin_overlay_set_support">打开此个人资料前将需要此 PIN。</string>
     <string name="profile_pin_overlay_confirm_support">重新输入相同的 4 位数字以完成设置。</string>
     <string name="profile_pin_overlay_mismatch">PIN 码不匹配。请重新输入新的 PIN。</string>
-    <string name="profile_pin_overlay_forgot_hint">忘记 PIN？请从 nuvio 网站上的 Nuvio 账户重置。</string>
+    <string name="profile_pin_overlay_forgot_hint">忘记 PIN？请从 nuvio 网站上的 Meowio 账户重置。</string>
     <string name="profile_pin_overlay_back_hint">按返回键取消</string>
 
 
@@ -2259,7 +2260,7 @@
     <string name="update_unknown_sources">允许从未知来源安装以继续。</string>
     <!-- AccountScreen -->
     <string name="account_title">账户</string>
-    <string name="account_sign_in_description">登录以在设备间同步您的媒体库、观看进度、扩展和插件。当 Trakt 未连接时，媒体库同步使用 Nuvio Sync，观看进度可使用 Trakt 或 Nuvio Sync。</string>
+    <string name="account_sign_in_description">登录以在设备间同步您的媒体库、观看进度、扩展和插件。当 Trakt 未连接时，媒体库同步使用 Meowio Sync，观看进度可使用 Trakt 或 Meowio Sync。</string>
     <string name="account_sync_code_title">同步码</string>
     <string name="account_sync_code_description">无需创建账户即可跨设备同步。</string>
     <string name="account_linked_devices">已链接的设备 (%1$d)</string>

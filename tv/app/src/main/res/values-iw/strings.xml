@@ -99,7 +99,7 @@
 
     <string name="home_no_addons">אין עדיין תוספים מותקנים. יש להוסיף תוסף כדי להתחיל לצפות.</string>
     <string name="home_no_catalog_addons">אין תוספי קטלוג מותקנים עדיין. יש להתקין תוסף קטלוג כדי להתחיל לראות תוכן.</string>
-    <string name="auth_notice_nuvio_logged_out">יצאת מחשבון Nuvio. נדרשת התחברות מחדש.</string>
+    <string name="auth_notice_nuvio_logged_out">יצאת מחשבון Meowio. נדרשת התחברות מחדש.</string>
     <string name="auth_notice_trakt_logged_out">יצאת מחשבון Trakt. נדרשת התחברות מחדש.</string>
     <string name="error_generic">אירעה שגיאה</string>
 
@@ -438,7 +438,7 @@
     <string name="about_licenses_attributions">רישיונות וקרדיטים</string>
     <string name="about_licenses_attributions_subtitle">מקורות מידע, תודות ורישיונות Android</string>
     <string name="licenses_attributions_title">רישיונות וקרדיטים</string>
-    <string name="licenses_attributions_subtitle">ספקי מידע, קרדיטים לשירותים ורישיונות הפעלת Android שבהם משתמשת Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">ספקי מידע, קרדיטים לשירותים ורישיונות הפעלת Android שבהם משתמשת Meowio TV.</string>
     <string name="licenses_attributions_section_app">רישיון האפליקציה</string>
     <string name="licenses_attributions_section_data">מידע ושירותים</string>
     <string name="licenses_attributions_section_playback">רישיונות הפעלת Android</string>
@@ -1522,24 +1522,25 @@
     <string name="trakt_code_expires">הקוד יפוג בעוד %1$s</string>
     <string name="trakt_token_refreshes">אסימון גישה Trakt יתחדש בעוד %1$s</string>
     <string name="trakt_login_instruction">יש ללחוץ על \"התחברות\" להתחלת אימות מכשיר Trakt.</string>
+    <string name="trakt_missing_credentials">חסר TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET ב-local.properties.</string>
     <string name="trakt_watch_progress_title">התקדמות צפייה</string>
     <string name="trakt_watch_progress_subtitle">בחירת מקור ההתקדמות שמנהל את חידוש הצפייה ואת המשך הצפייה</string>
     <string name="trakt_watch_progress_dialog_title">התקדמות צפייה</string>
-    <string name="trakt_watch_progress_dialog_subtitle">בחירת מקום לשמירת התקדמות הצפייה: ב-Trakt או בשרת של Nuvio.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">בחירת מקום לשמירת התקדמות הצפייה: ב-Trakt או בשרת של Meowio.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">מקור ספרייה</string>
     <string name="trakt_library_source_subtitle">בחירת הספרייה שתשמש לשמירה וצפייה באוסף שלך</string>
     <string name="trakt_library_source_dialog_title">מקור ספרייה</string>
     <string name="trakt_library_source_dialog_subtitle">בחירת המקום לשמירה ולניהול של פריטי הספרייה שלך</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">ספריית Nuvio</string>
+    <string name="trakt_library_source_nuvio">ספריית Meowio</string>
     <string name="trakt_library_source_trakt_selected">ספריית Trakt נבחרה</string>
-    <string name="trakt_library_source_nuvio_selected">ספריית Nuvio נבחרה</string>
+    <string name="trakt_library_source_nuvio_selected">ספריית Meowio נבחרה</string>
     <string name="trakt_setting_on">פעיל</string>
     <string name="trakt_setting_off">כבוי</string>
     <string name="trakt_watch_progress_trakt_selected">מקור התקדמות צפייה הוגדר ל-Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">מקור התקדמות צפייה הוגדר ל-Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">מקור התקדמות צפייה הוגדר ל-Meowio Sync</string>
     <string name="trakt_continue_watching_window">חלון \"המשך בצפייה\"</string>
     <string name="trakt_continue_watching_subtitle">היסטוריית Trakt הנחשבת להמשך צפייה</string>
     <string name="trakt_unaired_next_up">פרקים הבאים שטרם שודרו</string>
@@ -1645,11 +1646,11 @@
     <string name="profile_addons">תוספים</string>
     <string name="profile_plugins">פלאגינים</string>
     <string name="profile_choose_avatar">בחירת אווטאר</string>
-    <string name="profile_custom_avatar_web_panel_note">ניתן להגדיר כתובות אווטאר מותאמות אישית מלוח הבקרה המקוון של Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">ניתן להגדיר כתובות אווטאר מותאמות אישית מלוח הבקרה המקוון של Meowio.</string>
     <string name="profile_editor_tab_avatar">אווטאר</string>
     <string name="profile_editor_tab_background">רקע</string>
     <string name="profile_choose_background">בחירת רקע פרופיל</string>
-    <string name="profile_background_member_note">ניתן להגדיר כתובות רקע מותאמות אישית מלוח הבקרה המקוון של Nuvio.</string>
+    <string name="profile_background_member_note">ניתן להגדיר כתובות רקע מותאמות אישית מלוח הבקרה המקוון של Meowio.</string>
     <string name="profile_background_normal">רגיל</string>
     <string name="profile_background_custom">מותאם אישית</string>
     <string name="profile_avatar_none_selected">לא נבחר אווטאר</string>
@@ -1717,7 +1718,7 @@
     <string name="profile_pin_overlay_set_support">סיסמה זו תידרש לפני פתיחת פרופיל זה.</string>
     <string name="profile_pin_overlay_confirm_support">יש להזין שוב את אותן 4 ספרות כדי לסיים את ההגדרה.</string>
     <string name="profile_pin_overlay_mismatch">הסיסמות אינן תואמות. יש להזין סיסמה חדשה שוב.</string>
-    <string name="profile_pin_overlay_forgot_hint">שכחת את הסיסמה? אפשר לאפס אותה באתר של Nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">שכחת את הסיסמה? אפשר לאפס אותה באתר של Meowio.</string>
     <string name="profile_pin_overlay_back_hint">יש ללחוץ חזרה כדי לבטל</string>
 
 
@@ -2409,7 +2410,7 @@
     <string name="update_unknown_sources">יש לאפשר התקנות ממקורות לא ידועים כדי להמשיך.</string>
     <!-- AccountScreen -->
     <string name="account_title">חשבון</string>
-    <string name="account_sign_in_description">התחברות לסנכרון הספרייה, התקדמות הצפייה, התוספים והפלאגינים בין מכשירים. סנכרון הספרייה משתמש ב-Nuvio Sync כאשר Trakt לא מחובר, והתקדמות הצפייה יכולה להשתמש ב-Trakt או ב-Nuvio Sync.</string>
+    <string name="account_sign_in_description">התחברות לסנכרון הספרייה, התקדמות הצפייה, התוספים והפלאגינים בין מכשירים. סנכרון הספרייה משתמש ב-Meowio Sync כאשר Trakt לא מחובר, והתקדמות הצפייה יכולה להשתמש ב-Trakt או ב-Meowio Sync.</string>
     <string name="account_sync_code_title">קוד סנכרון</string>
     <string name="account_sync_code_description">סנכרון בין מכשירים ללא יצירת חשבון.</string>
     <string name="account_linked_devices">מכשירים מקושרים (%1$d)</string>

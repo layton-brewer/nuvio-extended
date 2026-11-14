@@ -100,7 +100,7 @@
     <!-- HomeScreen -->
     <string name="home_no_addons">لا توجد إضافات مثبتة. أضف إضافة واحدة للبدء.</string>
     <string name="home_no_catalog_addons">لا توجد إضافات قوائم عرض مثبتة. ثبت واحدة لعرض المحتوى.</string>
-    <string name="auth_notice_nuvio_logged_out">تم تسجيل خروجك من Nuvio. يرجى تسجيل الدخول مرة أخرى.</string>
+    <string name="auth_notice_nuvio_logged_out">تم تسجيل خروجك من Meowio. يرجى تسجيل الدخول مرة أخرى.</string>
     <string name="auth_notice_trakt_logged_out">تم تسجيل خروجك من Trakt. يرجى إعادة الاتصال.</string>
     <string name="error_generic">حدث خطأ</string>
 
@@ -360,7 +360,7 @@
     <string name="about_licenses_attributions">Licenses &amp; Attribution</string>
     <string name="about_licenses_attributions_subtitle">Data sources, acknowledgements, and Android licenses</string>
     <string name="licenses_attributions_title">Licenses &amp; Attribution</string>
-    <string name="licenses_attributions_subtitle">Data providers, service credits, and Android playback licenses used by Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Data providers, service credits, and Android playback licenses used by Meowio TV.</string>
     <string name="licenses_attributions_section_app">APP LICENSE</string>
     <string name="licenses_attributions_section_data">DATA &amp; SERVICES</string>
     <string name="licenses_attributions_section_playback">ANDROID PLAYBACK LICENSES</string>
@@ -1116,24 +1116,25 @@
     <string name="trakt_code_expires">تنتهي صلاحية الرمز خلال %1$s</string>
     <string name="trakt_token_refreshes">يتجدد رمز وصول Trakt خلال %1$s</string>
     <string name="trakt_login_instruction">اضغط تسجيل دخول لبدء مصادقة جهاز Trakt. سيظهر رمز QR هنا.</string>
+    <string name="trakt_missing_credentials">بيانات TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET مفقودة في local.properties.</string>
     <string name="trakt_watch_progress_title">مستوى المشاهدة</string>
     <string name="trakt_watch_progress_subtitle">إختر مصدر مستوى المشاهدة الذي يتحكم في الاستئناف ومتابعة المشاهدة</string>
     <string name="trakt_watch_progress_dialog_title">مستوى المشاهدة</string>
-    <string name="trakt_watch_progress_dialog_subtitle">إختر ما إذا كان الاستئناف ومتابعة المشاهدة سيستخدم Trakt أم مزامنة Nuvio، بينما تظل سجلات Trakt مفعلة.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">إختر ما إذا كان الاستئناف ومتابعة المشاهدة سيستخدم Trakt أم مزامنة Meowio، بينما تظل سجلات Trakt مفعلة.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">مزامنة Nuvio</string>
+    <string name="trakt_watch_progress_source_nuvio">مزامنة Meowio</string>
     <string name="trakt_library_source_title">مصدر المكتبة</string>
     <string name="trakt_library_source_subtitle">إختر المكتبة المراد استخدامها لحفظ مجموعتك وعرضها</string>
     <string name="trakt_library_source_dialog_title">مصدر المكتبة</string>
     <string name="trakt_library_source_dialog_subtitle">إختر مكان حفظ عناصر مكتبتك وإدارتها</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">مكتبة Nuvio</string>
+    <string name="trakt_library_source_nuvio">مكتبة Meowio</string>
     <string name="trakt_library_source_trakt_selected">تم اختيار مكتبة Trakt</string>
-    <string name="trakt_library_source_nuvio_selected">تم اختيار مكتبة Nuvio</string>
+    <string name="trakt_library_source_nuvio_selected">تم اختيار مكتبة Meowio</string>
     <string name="trakt_setting_on">مفعل</string>
     <string name="trakt_setting_off">معطل</string>
     <string name="trakt_watch_progress_trakt_selected">تم تعيين مصدر مستوى المشاهدة إلى Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">تم تعيين مصدر مستوى المشاهدة إلى مزامنة Nuvio</string>
+    <string name="trakt_watch_progress_nuvio_selected">تم تعيين مصدر مستوى المشاهدة إلى مزامنة Meowio</string>
     <string name="trakt_continue_watching_window">نافذة متابعة المشاهدة</string>
     <string name="trakt_continue_watching_subtitle">تاريخ Trakt المعتمد لمتابعة المشاهدة</string>
     <string name="trakt_unaired_next_up">الحلقات التالية التي لم تعرض بعد</string>
@@ -1229,7 +1230,7 @@
     <string name="profile_addons">الإضافات</string>
     <string name="profile_plugins">الملحقات</string>
     <string name="profile_choose_avatar">اختيار الصورة الرمزية</string>
-    <string name="profile_custom_avatar_web_panel_note">يمكنك ضبط وتغيير روابط الصور الرمزية المخصصة عبر لوحة ويب Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">يمكنك ضبط وتغيير روابط الصور الرمزية المخصصة عبر لوحة ويب Meowio.</string>
     <string name="profile_avatar_none_selected">لم يتم تحديد رمز تعبيري</string>
     <string name="profile_avatar_focus_hint">قف على الصورة الرمزية لعرض الاسم</string>
     <string name="profile_avatar_category_all">الكل</string>
@@ -1272,7 +1273,7 @@
     <string name="profile_pin_overlay_set_support">سيكون هذا الرمز مطلوباً قبل فتح هذا الملف الشخصي.</string>
     <string name="profile_pin_overlay_confirm_support">أعد إدخال نفس الـ 4 أرقام لإنهاء الإعداد.</string>
     <string name="profile_pin_overlay_mismatch">رموز PIN غير متطابقة. أدخل رمزاً جديداً مرة أخرى.</string>
-    <string name="profile_pin_overlay_forgot_hint">نسيت رمز PIN؟ أعد تعيينه من حساب Nuvio الخاص بك على موقع nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">نسيت رمز PIN؟ أعد تعيينه من حساب Meowio الخاص بك على موقع nuvio.</string>
     <string name="profile_pin_overlay_back_hint">اضغط رجوع للإلغاء</string>
 
 
@@ -1836,7 +1837,7 @@
     <string name="update_unknown_sources">اسمح بتثبيت التطبيقات من مصادر غير معروفة للمتابعة.</string>
     <!-- AccountScreen -->
     <string name="account_title">الحساب</string>
-    <string name="account_sign_in_description">سجل دخولك لمزامنة مكتبتك، وتقدم المشاهدة، والإضافات، والملحقات عبر أجهزتك. تستخدم مزامنة المكتبة Nuvio Sync عندما يكون Trakt غير متصل، ويمكن لمستوى المشاهدة استخدام Trakt أو مزامنة Nuvio.</string>
+    <string name="account_sign_in_description">سجل دخولك لمزامنة مكتبتك، وتقدم المشاهدة، والإضافات، والملحقات عبر أجهزتك. تستخدم مزامنة المكتبة Meowio Sync عندما يكون Trakt غير متصل، ويمكن لمستوى المشاهدة استخدام Trakt أو مزامنة Meowio.</string>
     <string name="account_sync_code_title">رمز المزامنة</string>
     <string name="account_sync_code_description">المزامنة عبر الأجهزة دون إنشاء حساب.</string>
     <string name="account_linked_devices">الأجهزة المرتبطة (%1$d)</string>
@@ -2817,7 +2818,7 @@
     <string name="player_report_loading_issue">الإبلاغ عن مشكلة تحميل</string>
     <string name="profile_avatar_category_supporter">داعم</string>
     <string name="profile_background_custom">مخصص</string>
-    <string name="profile_background_member_note">يمكن ضبط روابط الخلفية المخصصة من لوحة Nuvio على الويب.</string>
+    <string name="profile_background_member_note">يمكن ضبط روابط الخلفية المخصصة من لوحة Meowio على الويب.</string>
     <string name="profile_background_normal">عادي</string>
     <string name="profile_choose_background">اختر خلفية الملف الشخصي</string>
     <string name="profile_default_name">الملف الشخصي %1$d</string>

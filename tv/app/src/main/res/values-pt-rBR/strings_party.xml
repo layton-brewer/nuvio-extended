@@ -4,7 +4,7 @@
     <string name="party_start_title">Assistir juntos</string>
     <string name="party_start_description">Convide seus amigos. Cada um usa sua própria fonte, e todos assistem em sincronia.</string>
     <string name="party_start_action">Criar sessão</string>
-    <string name="party_sign_in_required">Entre na sua conta do Nuvio para assistir com amigos.</string>
+    <string name="party_sign_in_required">Entre na sua conta do Meowio para assistir com amigos.</string>
     <string name="party_unavailable">O recurso Assistir juntos não está disponível no momento.</string>
     <string name="party_experimental">O recurso Assistir juntos ainda está em testes e pode apresentar falhas.</string>
     <string name="party_code_label">Código da sessão</string>
@@ -72,7 +72,7 @@
     <string name="party_share_unavailable">Esta fonte não pode ser compartilhada.</string>
     <string name="party_shared_by">Compartilhada por %1$s</string>
     <string name="party_invite_scan">Escaneie com o celular para entrar</string>
-    <string name="party_invite_share">Ou compartilhe o código. Seus amigos podem digitá-lo em Assistir juntos, em qualquer app do Nuvio.</string>
+    <string name="party_invite_share">Ou compartilhe o código. Seus amigos podem digitá-lo em Assistir juntos, em qualquer app do Meowio.</string>
     <string name="party_invite_qr">QR Code de convite para a sessão</string>
     <string name="party_phone_chat_note">Para conversar, abra Assistir juntos no celular usando este perfil.</string>
 </resources>

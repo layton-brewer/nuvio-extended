@@ -44,7 +44,7 @@
     <string name="compose_settings_root_general_section">பொது</string>
     <string name="compose_settings_root_integrations_description">கிடைக்கும் ஒருங்கிணைப்புகளை நிர்வகிக்கவும்</string>
     <string name="compose_settings_root_notifications_description">எபிசோடு வெளியீட்டு அறிவிப்புகளை நிர்வகித்து சோதனை அறிவிப்பை அனுப்பவும்.</string>
-    <string name="compose_settings_root_privacy_policy_description">Nuvio உங்கள் தரவை எவ்வாறு கையாளுகிறது என்பதை அறியவும்</string>
+    <string name="compose_settings_root_privacy_policy_description">Meowio உங்கள் தரவை எவ்வாறு கையாளுகிறது என்பதை அறியவும்</string>
     <string name="compose_settings_root_streams_description">ஸ்ட்ரீம் முடிவுகளின் காட்சி மற்றும் பேட்ஜ் URL விதிகள்.</string>
     <string name="compose_settings_root_switch_profile_description">வேறு சுயவிவரத்திற்கு மாறவும்.</string>
     <string name="compose_settings_root_switch_profile_title">சுயவிவரத்தை மாற்று</string>

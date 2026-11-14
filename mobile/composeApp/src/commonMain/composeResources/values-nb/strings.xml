@@ -659,7 +659,7 @@
     <string name="compose_settings_root_general_section">GENERELT</string>
     <string name="compose_settings_root_integrations_description">Administrer tilgjengelige integrasjoner</string>
     <string name="compose_settings_root_notifications_description">Administrer episodevarsler og send testvarsel.</string>
-    <string name="compose_settings_root_privacy_policy_description">Se hvordan Nuvio håndterer dataene dine</string>
+    <string name="compose_settings_root_privacy_policy_description">Se hvordan Meowio håndterer dataene dine</string>
     <string name="compose_settings_root_streams_description">Visning av strømresultater og regler for badge-URL-er.</string>
     <string name="compose_settings_root_switch_profile_description">Bytt til en annen profil.</string>
     <string name="compose_settings_root_switch_profile_title">Bytt profil</string>
@@ -969,7 +969,7 @@
     <string name="library_layout_show_horizontal">Vis vannrette hyller</string>
     <string name="library_layout_show_vertical">Vis loddrett rutenett</string>
     <string name="library_load_failed">Kunne ikke laste bibliotek</string>
-    <string name="library_local_tab_title">Nuvio-bibliotek</string>
+    <string name="library_local_tab_title">Meowio-bibliotek</string>
     <string name="library_other">Annet</string>
     <string name="library_remove_confirm">Fjern</string>
     <string name="library_remove_from_list_message">Fjern %1$s fra %2$s?</string>
@@ -1198,7 +1198,7 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="profile_avatar_selected">Avatar: %1$s</string>
     <string name="profile_avatar_url_invalid">Skriv inn en gyldig http:// eller https:// bilde-URL.</string>
     <string name="profile_background_custom">Tilpasset</string>
-    <string name="profile_background_member_note">Tilpassede bakgrunns-URLer kan konfigureres fra Nuvio-nettpanelet.</string>
+    <string name="profile_background_member_note">Tilpassede bakgrunns-URLer kan konfigureres fra Meowio-nettpanelet.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="profile_choose_avatar">Velg en avatar</string>
     <string name="profile_choose_avatar_below">Velg en avatar nedenfor.</string>
@@ -2040,11 +2040,11 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_tracking_approval_redirect">Etter godkjenning blir du automatisk sendt tilbake.</string>
     <string name="settings_tracking_connect_first">Koble til %1$s først</string>
     <string name="settings_tracking_data_sources">Kilder</string>
-    <string name="settings_tracking_disconnect_description">Dette fjerner tilkoblingen fra Nuvio. Dataene dine på %1$s forblir intakte, og utilgjengelige bibliotek- eller fremdriftskilder faller midlertidig tilbake til Nuvio.</string>
+    <string name="settings_tracking_disconnect_description">Dette fjerner tilkoblingen fra Meowio. Dataene dine på %1$s forblir intakte, og utilgjengelige bibliotek- eller fremdriftskilder faller midlertidig tilbake til Meowio.</string>
     <string name="settings_tracking_disconnect_title">Koble fra %1$s?</string>
     <string name="settings_tracking_features">KILDEPREFERANSER</string>
-    <string name="settings_tracking_nuvio_library_description">Behold lagrede titler i Nuvio-biblioteket ditt.</string>
-    <string name="settings_tracking_nuvio_progress_description">Gjenoppta med fremdrift lagret av Nuvio Sync.</string>
+    <string name="settings_tracking_nuvio_library_description">Behold lagrede titler i Meowio-biblioteket ditt.</string>
+    <string name="settings_tracking_nuvio_progress_description">Gjenoppta med fremdrift lagret av Meowio Sync.</string>
     <string name="settings_tracking_progress_refresh_failed">Kilden ble endret, men den nyeste seer-fremdriften kunne ikke oppdateres.</string>
     <string name="settings_tracking_services">Kontoer</string>
     <string name="settings_tracking_simkl_library_description">Bruk Simkl plan-to-watch- og statuslistene dine.</string>
@@ -2069,6 +2069,7 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="settings_trakt_features">FUNKSJONER</string>
     <string name="settings_trakt_finish_sign_in">Fullfør Trakt-innlogging i nettleseren din</string>
     <string name="settings_trakt_intro_description">Synkroniser seerliste, fremdrift, Fortsett å se, scrobbles og personlige lister med Trakt.</string>
+    <string name="settings_trakt_missing_credentials">Mangler Trakt-legitimasjon i local.properties (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
     <string name="settings_trakt_open_login">Åpne Trakt-innlogging</string>
     <string name="settings_trakt_save_actions_description">Lagre-handlinger kan nå målrette Trakt watchlist og personlige lister.</string>
     <string name="settings_trakt_sign_in_description">Logg inn med Trakt for å aktivere listebasert lagring og Trakt-bibliotekmodus.</string>
@@ -2207,8 +2208,8 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="trakt_library_load_failed">Kunne ikke laste Trakt-bibliotek</string>
     <string name="trakt_library_source_dialog_subtitle">Velg hvor du vil lagre og administrere bibliotekelementer</string>
     <string name="trakt_library_source_dialog_title">Bibliotekkilde</string>
-    <string name="trakt_library_source_nuvio">Nuvio-bibliotek</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio-bibliotek valgt</string>
+    <string name="trakt_library_source_nuvio">Meowio-bibliotek</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio-bibliotek valgt</string>
     <string name="trakt_library_source_subtitle">Velg hvilket bibliotek som skal brukes for lagring og visning av samlingen din</string>
     <string name="trakt_library_source_title">Bibliotekkilde</string>
     <string name="trakt_library_source_trakt">Trakt</string>
@@ -2237,10 +2238,10 @@ Du bruker denne funksjonen helt på eget ansvar. P2P kan deaktiveres når som he
     <string name="trakt_public_list_request_failed">Trakt-forespørsel mislyktes</string>
     <string name="trakt_sign_in_complete_failed">Kunne ikke fullføre Trakt-innlogging</string>
     <string name="trakt_user_fallback">Trakt-bruker</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Velg om resume og Fortsett å se skal bruke Trakt eller Nuvio Sync mens Trakt scrobbling er aktiv.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Velg om resume og Fortsett å se skal bruke Trakt eller Meowio Sync mens Trakt scrobbling er aktiv.</string>
     <string name="trakt_watch_progress_dialog_title">Seer-fremdrift</string>
-    <string name="trakt_watch_progress_nuvio_selected">Seer-fremdrift satt til Nuvio Sync</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Seer-fremdrift satt til Meowio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
     <string name="trakt_watch_progress_subtitle">Velg hvilken fremdriftskilde som driver resume og Fortsett å se</string>
     <string name="trakt_watch_progress_title">Seer-fremdrift</string>

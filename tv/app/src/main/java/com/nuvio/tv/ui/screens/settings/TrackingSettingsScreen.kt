@@ -75,11 +75,25 @@ fun TrackingSettingsContent(
     val mdbListState by mdbListViewModel.uiState.collectAsStateWithLifecycle()
     val mdbListLibraryLists by mdbListViewModel.libraryLists.collectAsStateWithLifecycle()
     val trackingState by trackingViewModel.uiState.collectAsStateWithLifecycle()
+    // A provider whose sign-in keys aren't in this build is hidden instead of showing setup errors.
+    val traktOffered = traktState.credentialsConfigured || traktState.mode == TraktConnectionMode.CONNECTED
+    val simklOffered = simklState.credentialsConfigured || simklState.mode == SimklConnectionMode.CONNECTED
+    val mdbListOffered = mdbListState.credentialsConfigured || mdbListState.isConnected
     val ownTraktFocusRequester = remember { FocusRequester() }
-    val traktFocusRequester = initialFocusRequester ?: ownTraktFocusRequester
-    val simklFocusRequester = remember { FocusRequester() }
-    val mdbListFocusRequester = remember { FocusRequester() }
-    val libraryFocusRequester = remember { FocusRequester() }
+    val ownSimklFocusRequester = remember { FocusRequester() }
+    val ownMdbListFocusRequester = remember { FocusRequester() }
+    val ownLibraryFocusRequester = remember { FocusRequester() }
+    // The screen's first focus goes to the first row that is shown.
+    val firstFocusRow = when {
+        traktOffered -> 0
+        simklOffered -> 1
+        mdbListOffered -> 2
+        else -> 3
+    }
+    val traktFocusRequester = initialFocusRequester?.takeIf { firstFocusRow == 0 } ?: ownTraktFocusRequester
+    val simklFocusRequester = initialFocusRequester?.takeIf { firstFocusRow == 1 } ?: ownSimklFocusRequester
+    val mdbListFocusRequester = initialFocusRequester?.takeIf { firstFocusRow == 2 } ?: ownMdbListFocusRequester
+    val libraryFocusRequester = initialFocusRequester?.takeIf { firstFocusRow == 3 } ?: ownLibraryFocusRequester
     val watchProgressFocusRequester = remember { FocusRequester() }
     val continueWatchingFocusRequester = remember { FocusRequester() }
     val moreLikeThisFocusRequester = remember { FocusRequester() }
@@ -183,6 +197,9 @@ fun TrackingSettingsContent(
     }
 
     TrackingSettingsOverview(
+        traktOffered = traktOffered,
+        simklOffered = simklOffered,
+        mdbListOffered = mdbListOffered,
         traktState = traktState,
         simklState = simklState,
         mdbListState = mdbListState,
@@ -235,7 +252,6 @@ fun TrackingSettingsContent(
                     dismissOnConnected = null
                     disconnectProvider = TrackingProviderId.TRAKT
                 },
-                onSaveOwnApp = traktViewModel::onSaveOwnTraktApp,
                 onDismiss = {
                     if (traktState.mode != TraktConnectionMode.CONNECTED) {
                         traktViewModel.onCancelDeviceFlow()
@@ -471,6 +487,9 @@ fun TrackingSettingsContent(
 
 @Composable
 internal fun TrackingSettingsOverview(
+    traktOffered: Boolean = true,
+    simklOffered: Boolean = true,
+    mdbListOffered: Boolean = true,
     traktState: TraktUiState,
     simklState: SimklSettingsUiState,
     mdbListState: MdbListTrackerUiState,
@@ -518,47 +537,53 @@ internal fun TrackingSettingsOverview(
                 contentPadding = PaddingValues(bottom = NuvioTheme.spacing.md),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                item(key = "tracking_accounts") {
+                if (traktOffered || simklOffered || mdbListOffered) item(key = "tracking_accounts") {
                     SettingsGroupCard(
                         title = stringResource(R.string.tracking_accounts_title),
                         subtitle = stringResource(R.string.tracking_accounts_subtitle)
                     ) {
-                        SettingsActionRow(
-                            title = stringResource(R.string.trakt_name),
-                            subtitle = traktPresentation.subtitle,
-                            value = traktPresentation.value,
-                            valueColor = traktPresentation.color,
-                            leadingRawIconRes = R.raw.trakt_tv_favicon,
-                            leadingArtworkSize = 40.dp,
-                            onClick = onTraktClick,
-                            modifier = Modifier
-                                .focusRequester(traktFocusRequester)
-                                .testTag(TrackingSettingsTestTags.TRAKT_PROVIDER)
-                        )
-                        SettingsActionRow(
-                            title = stringResource(R.string.simkl_name),
-                            subtitle = simklPresentation.subtitle,
-                            value = simklPresentation.value,
-                            valueColor = simklPresentation.color,
-                            leadingRawIconRes = R.raw.simkl_tv_glyph,
-                            leadingArtworkSize = 40.dp,
-                            onClick = onSimklClick,
-                            modifier = Modifier
-                                .focusRequester(simklFocusRequester)
-                                .testTag(TrackingSettingsTestTags.SIMKL_PROVIDER)
-                        )
-                        SettingsActionRow(
-                            title = stringResource(R.string.mdblist_name),
-                            subtitle = mdbListPresentation.subtitle,
-                            value = mdbListPresentation.value,
-                            valueColor = mdbListPresentation.color,
-                            leadingRawIconRes = R.raw.mdblist_logo,
-                            leadingArtworkSize = 40.dp,
-                            onClick = onMdbListClick,
-                            modifier = Modifier
-                                .focusRequester(mdbListFocusRequester)
-                                .testTag(TrackingSettingsTestTags.MDBLIST_PROVIDER)
-                        )
+                        if (traktOffered) {
+                            SettingsActionRow(
+                                title = stringResource(R.string.trakt_name),
+                                subtitle = traktPresentation.subtitle,
+                                value = traktPresentation.value,
+                                valueColor = traktPresentation.color,
+                                leadingRawIconRes = R.raw.trakt_tv_favicon,
+                                leadingArtworkSize = 40.dp,
+                                onClick = onTraktClick,
+                                modifier = Modifier
+                                    .focusRequester(traktFocusRequester)
+                                    .testTag(TrackingSettingsTestTags.TRAKT_PROVIDER)
+                            )
+                        }
+                        if (simklOffered) {
+                            SettingsActionRow(
+                                title = stringResource(R.string.simkl_name),
+                                subtitle = simklPresentation.subtitle,
+                                value = simklPresentation.value,
+                                valueColor = simklPresentation.color,
+                                leadingRawIconRes = R.raw.simkl_tv_glyph,
+                                leadingArtworkSize = 40.dp,
+                                onClick = onSimklClick,
+                                modifier = Modifier
+                                    .focusRequester(simklFocusRequester)
+                                    .testTag(TrackingSettingsTestTags.SIMKL_PROVIDER)
+                            )
+                        }
+                        if (mdbListOffered) {
+                            SettingsActionRow(
+                                title = stringResource(R.string.mdblist_name),
+                                subtitle = mdbListPresentation.subtitle,
+                                value = mdbListPresentation.value,
+                                valueColor = mdbListPresentation.color,
+                                leadingRawIconRes = R.raw.mdblist_logo,
+                                leadingArtworkSize = 40.dp,
+                                onClick = onMdbListClick,
+                                modifier = Modifier
+                                    .focusRequester(mdbListFocusRequester)
+                                    .testTag(TrackingSettingsTestTags.MDBLIST_PROVIDER)
+                            )
+                        }
                     }
                 }
                 item(key = "tracking_sources") {

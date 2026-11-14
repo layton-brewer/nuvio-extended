@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">Chưa cài đặt tiện ích nào. Thêm một tiện ích để bắt đầu.</string>
     <string name="home_no_catalog_addons">Chưa cài đặt tiện ích danh mục nào. Cài đặt tiện ích danh mục để xem nội dung.</string>
-    <string name="auth_notice_nuvio_logged_out">Bạn đã đăng xuất khỏi Nuvio. Vui lòng đăng nhập lại.</string>
+    <string name="auth_notice_nuvio_logged_out">Bạn đã đăng xuất khỏi Meowio. Vui lòng đăng nhập lại.</string>
     <string name="auth_notice_trakt_logged_out">Bạn đã đăng xuất khỏi Trakt. Vui lòng kết nối lại.</string>
     <string name="error_generic">Đã xảy ra lỗi</string>
 
@@ -434,7 +434,7 @@
     <string name="about_licenses_attributions">Giấy phép &amp; Ghi công</string>
     <string name="about_licenses_attributions_subtitle">Nguồn dữ liệu, lời cảm ơn và giấy phép Android</string>
     <string name="licenses_attributions_title">Giấy phép &amp; Ghi công</string>
-    <string name="licenses_attributions_subtitle">Nhà cung cấp dữ liệu, ghi nhận dịch vụ và giấy phép phát lại Android được Nuvio TV sử dụng.</string>
+    <string name="licenses_attributions_subtitle">Nhà cung cấp dữ liệu, ghi nhận dịch vụ và giấy phép phát lại Android được Meowio TV sử dụng.</string>
     <string name="licenses_attributions_section_app">GIẤY PHÉP ỨNG DỤNG</string>
     <string name="licenses_attributions_section_data">DỮ LIỆU &amp; DỊCH VỤ</string>
     <string name="licenses_attributions_section_playback">GIẤY PHÉP PHÁT LẠI TRÊN ANDROID</string>
@@ -1553,24 +1553,25 @@
     <string name="trakt_code_expires">Mã hết hạn sau %1$s</string>
     <string name="trakt_token_refreshes">Token truy cập Trakt làm mới sau %1$s</string>
     <string name="trakt_login_instruction">Nhấn Đăng nhập để bắt đầu xác thực thiết bị Trakt. Mã QR sẽ xuất hiện ở đây.</string>
+    <string name="trakt_missing_credentials">Thiếu TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET trong local.properties.</string>
     <string name="trakt_watch_progress_title">Tiến trình xem</string>
     <string name="trakt_watch_progress_subtitle">Chọn nguồn tiến trình dùng để tiếp tục xem</string>
     <string name="trakt_watch_progress_dialog_title">Tiến trình xem</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Chọn nguồn tiến trình dùng để phát tiếp và tiếp tục xem như Trakt hoặc Đồng bộ Nuvio, trong khi tính năng ghi nhật ký phát lại của Trakt vẫn hoạt động.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Chọn nguồn tiến trình dùng để phát tiếp và tiếp tục xem như Trakt hoặc Đồng bộ Meowio, trong khi tính năng ghi nhật ký phát lại của Trakt vẫn hoạt động.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Đồng bộ Nuvio</string>
+    <string name="trakt_watch_progress_source_nuvio">Đồng bộ Meowio</string>
     <string name="trakt_library_source_title">Nguồn thư viện</string>
     <string name="trakt_library_source_subtitle">Chọn thư viện để lưu và quản lý bộ sưu tập</string>
     <string name="trakt_library_source_dialog_title">Nguồn thư viện</string>
     <string name="trakt_library_source_dialog_subtitle">Chọn nguồn mà Nuvio sử dụng cho Thư viện của bạn</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Thư viện Nuvio</string>
+    <string name="trakt_library_source_nuvio">Thư viện Meowio</string>
     <string name="trakt_library_source_trakt_selected">Đã chọn thư viện Trakt</string>
-    <string name="trakt_library_source_nuvio_selected">Đã chọn thư viện Nuvio</string>
+    <string name="trakt_library_source_nuvio_selected">Đã chọn thư viện Meowio</string>
     <string name="trakt_setting_on">Bật</string>
     <string name="trakt_setting_off">Tắt</string>
     <string name="trakt_watch_progress_trakt_selected">Đã đặt nguồn tiến trình xem là Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Đã đặt nguồn tiến trình xem là Đồng bộ Nuvio</string>
+    <string name="trakt_watch_progress_nuvio_selected">Đã đặt nguồn tiến trình xem là Đồng bộ Meowio</string>
     <string name="trakt_continue_watching_window">Cửa sổ Xem tiếp</string>
     <string name="trakt_continue_watching_subtitle">Lịch sử Trakt được dùng cho mục Tiếp tục xem</string>
     <string name="trakt_unaired_next_up">Tập tiếp theo chưa phát sóng</string>
@@ -1676,11 +1677,11 @@
     <string name="profile_addons">tiện ích</string>
     <string name="profile_plugins">trình mở rộng</string>
     <string name="profile_choose_avatar">Chọn Ảnh đại diện</string>
-    <string name="profile_custom_avatar_web_panel_note">URL ảnh đại diện tùy chỉnh có thể được cấu hình tại bảng điều khiển web Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">URL ảnh đại diện tùy chỉnh có thể được cấu hình tại bảng điều khiển web Meowio.</string>
     <string name="profile_editor_tab_avatar">Ảnh đại diện</string>
     <string name="profile_editor_tab_background">Hình nền</string>
     <string name="profile_choose_background">Chọn hình nền hồ sơ</string>
-    <string name="profile_background_member_note">URL hình nền tùy chỉnh có thể được cấu hình từ bảng điều khiển web Nuvio.</string>
+    <string name="profile_background_member_note">URL hình nền tùy chỉnh có thể được cấu hình từ bảng điều khiển web Meowio.</string>
     <string name="profile_background_normal">Mặc định</string>
     <string name="profile_background_custom">Tùy chỉnh</string>
     <string name="profile_avatar_none_selected">Chưa chọn ảnh đại diện</string>
@@ -1748,7 +1749,7 @@
     <string name="profile_pin_overlay_set_support">Mã PIN này sẽ được yêu cầu trước khi mở hồ sơ này.</string>
     <string name="profile_pin_overlay_confirm_support">Nhập lại 4 chữ số để hoàn tất thiết lập.</string>
     <string name="profile_pin_overlay_mismatch">Mã PIN không khớp. Nhập lại mã PIN mới.</string>
-    <string name="profile_pin_overlay_forgot_hint">Quên mã PIN? Vui lòng đặt lại mã PIN từ tài khoản Nuvio trên trang web Nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Quên mã PIN? Vui lòng đặt lại mã PIN từ tài khoản Meowio trên trang web Meowio.</string>
     <string name="profile_pin_overlay_back_hint">Nhấn quay lại để hủy</string>
 
 
@@ -2445,7 +2446,7 @@
     <string name="update_unknown_sources">Cho phép cài đặt từ nguồn không xác định để tiếp tục.</string>
     <!-- AccountScreen -->
     <string name="account_title">Tài khoản</string>
-    <string name="account_sign_in_description">Đăng nhập để đồng bộ thư viện, tiến trình xem, tiện ích và trình mở rộng trên các thiết bị. Tính năng đồng bộ thư viện sử dụng Đồng bộ Nuvio khi chưa kết nối Trakt, còn tiến trình xem có thể sử dụng Trakt hoặc Đồng bộ Nuvio.</string>
+    <string name="account_sign_in_description">Đăng nhập để đồng bộ thư viện, tiến trình xem, tiện ích và trình mở rộng trên các thiết bị. Tính năng đồng bộ thư viện sử dụng Đồng bộ Meowio khi chưa kết nối Trakt, còn tiến trình xem có thể sử dụng Trakt hoặc Đồng bộ Meowio.</string>
     <string name="account_sync_code_title">Mã đồng bộ</string>
     <string name="account_sync_code_description">Đồng bộ giữa các thiết bị mà không cần tạo tài khoản.</string>
     <string name="account_linked_devices">Thiết bị đã liên kết (%1$d)</string>

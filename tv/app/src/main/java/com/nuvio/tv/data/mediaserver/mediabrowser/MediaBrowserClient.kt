@@ -89,7 +89,7 @@ internal class MediaBrowserClient(
     }
 
     fun authorizationValue(token: String?): String = buildString {
-        append("MediaBrowser Client=\"Nuvio\", Device=\"")
+        append("MediaBrowser Client=\"Meowio\", Device=\"")
         append(identity.device.headerValue())
         append("\", DeviceId=\"")
         append(deviceId.headerValue())

@@ -419,7 +419,7 @@
     <string name="about_licenses_attributions">Licence i atribucije</string>
     <string name="about_licenses_attributions_subtitle">Izvori podataka, zahvale i Android licence</string>
     <string name="licenses_attributions_title">Licence i atribucije</string>
-    <string name="licenses_attributions_subtitle">Pružatelji podataka, zasluge za usluge i Android licence za reprodukciju koje koristi Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Pružatelji podataka, zasluge za usluge i Android licence za reprodukciju koje koristi Meowio TV.</string>
     <string name="licenses_attributions_section_app">LICENCA APLIKACIJE</string>
     <string name="licenses_attributions_section_data">PODACI I USLUGE</string>
     <string name="licenses_attributions_section_playback">ANDROID LICENCE ZA REPRODUKCIJU</string>
@@ -1436,24 +1436,25 @@
     <string name="trakt_code_expires">Kôd istječe za %1$s</string>
     <string name="trakt_token_refreshes">Trakt pristupni token osvježava se za %1$s</string>
     <string name="trakt_login_instruction">Pritisni Prijava za pokretanje Trakt autentifikacije uređaja. Ovdje će se pojaviti QR kôd.</string>
+    <string name="trakt_missing_credentials">Nedostaju TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET u local.properties.</string>
     <string name="trakt_watch_progress_title">Napredak gledanja</string>
     <string name="trakt_watch_progress_subtitle">Odaberi koji izvor napretka pokreće nastavak reprodukcije i Nastavi gledati</string>
     <string name="trakt_watch_progress_dialog_title">Napredak gledanja</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Odaberi trebaju li nastavak reprodukcije i Nastavi gledati koristiti Trakt ili Nuvio Sync, dok Trakt scrobblanje ostaje aktivno.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Odaberi trebaju li nastavak reprodukcije i Nastavi gledati koristiti Trakt ili Meowio Sync, dok Trakt scrobblanje ostaje aktivno.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Izvor biblioteke</string>
     <string name="trakt_library_source_subtitle">Odaberi koji izvor Nuvio čita za tvoju biblioteku</string>
     <string name="trakt_library_source_dialog_title">Izvor biblioteke</string>
     <string name="trakt_library_source_dialog_subtitle">Odaberi gdje spremati i upravljati stavkama biblioteke</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio biblioteka</string>
+    <string name="trakt_library_source_nuvio">Meowio biblioteka</string>
     <string name="trakt_library_source_trakt_selected">Odabrana Trakt biblioteka</string>
-    <string name="trakt_library_source_nuvio_selected">Odabrana Nuvio biblioteka</string>
+    <string name="trakt_library_source_nuvio_selected">Odabrana Meowio biblioteka</string>
     <string name="trakt_setting_on">Uključeno</string>
     <string name="trakt_setting_off">Isključeno</string>
     <string name="trakt_watch_progress_trakt_selected">Izvor napretka gledanja postavljen na Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Izvor napretka gledanja postavljen na Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Izvor napretka gledanja postavljen na Meowio Sync</string>
     <string name="trakt_continue_watching_window">Razdoblje za Nastavi gledati</string>
     <string name="trakt_continue_watching_subtitle">Trakt povijest koja se uzima u obzir za Nastavi gledati</string>
     <string name="trakt_unaired_next_up">Neemitirane sljedeće epizode</string>
@@ -1559,11 +1560,11 @@
     <string name="profile_addons">dodaci</string>
     <string name="profile_plugins">pluginovi</string>
     <string name="profile_choose_avatar">Odaberi avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">Prilagođeni URL-ovi avatara mogu se konfigurirati na Nuvio web ploči.</string>
+    <string name="profile_custom_avatar_web_panel_note">Prilagođeni URL-ovi avatara mogu se konfigurirati na Meowio web ploči.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Pozadina</string>
     <string name="profile_choose_background">Odaberi pozadinu profila</string>
-    <string name="profile_background_member_note">Prilagođeni URL-ovi pozadine mogu se konfigurirati na Nuvio web ploči.</string>
+    <string name="profile_background_member_note">Prilagođeni URL-ovi pozadine mogu se konfigurirati na Meowio web ploči.</string>
     <string name="profile_background_normal">Obična</string>
     <string name="profile_background_custom">Prilagođena</string>
     <string name="profile_avatar_none_selected">Nije odabran avatar</string>
@@ -1631,7 +1632,7 @@
     <string name="profile_pin_overlay_set_support">Ovaj PIN bit će potreban prije otvaranja ovog profila.</string>
     <string name="profile_pin_overlay_confirm_support">Ponovno unesi iste 4 znamenke za dovršetak postavljanja.</string>
     <string name="profile_pin_overlay_mismatch">PIN-ovi se nisu podudarali. Ponovno unesi novi PIN.</string>
-    <string name="profile_pin_overlay_forgot_hint">Zaboravljen PIN? Poništi ga putem svog Nuvio računa na Nuvio web stranici.</string>
+    <string name="profile_pin_overlay_forgot_hint">Zaboravljen PIN? Poništi ga putem svog Meowio računa na Meowio web stranici.</string>
     <string name="profile_pin_overlay_back_hint">Pritisni natrag za odustajanje</string>
 
 
@@ -2316,7 +2317,7 @@
     <string name="update_unknown_sources">Dopusti instalacije iz nepoznatih izvora za nastavak.</string>
     <!-- AccountScreen -->
     <string name="account_title">Račun</string>
-    <string name="account_sign_in_description">Prijavi se za sinkronizaciju biblioteke, napretka gledanja, dodataka i pluginova na svim uređajima. Sinkronizacija biblioteke koristi Nuvio Sync kada Trakt nije povezan, a napredak gledanja može koristiti Trakt ili Nuvio Sync.</string>
+    <string name="account_sign_in_description">Prijavi se za sinkronizaciju biblioteke, napretka gledanja, dodataka i pluginova na svim uređajima. Sinkronizacija biblioteke koristi Meowio Sync kada Trakt nije povezan, a napredak gledanja može koristiti Trakt ili Meowio Sync.</string>
     <string name="account_sync_code_title">Kôd za sinkronizaciju</string>
     <string name="account_sync_code_description">Sinkroniziraj uređaje bez stvaranja računa.</string>
     <string name="account_linked_devices">Povezani uređaji (%1$d)</string>
