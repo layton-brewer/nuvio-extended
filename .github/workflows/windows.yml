@@ -12,6 +12,10 @@ on:
       - ".github/workflows/windows.yml"
   workflow_dispatch:
 
+env:
+  # Builds attach to this release page. Bump together with the version numbers below and the tag in release.yml.
+  MEOWIO_TAG: v0.2.4
+
 permissions:
   contents: write
 
@@ -103,10 +107,14 @@ jobs:
           path: out/Meowio-windows-x64.exe
           retention-days: 14
 
-      - name: Attach to the latest Meowio release
+      - name: Attach to this version's Meowio release
         if: github.ref == 'refs/heads/main'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh release upload "$(gh release view --json tagName -q .tagName)" out/Meowio-windows-x64.exe --clobber
+        run: |
+          # Wait for this version's release page (the Android build creates it), then attach.
+          for i in $(seq 1 40); do gh release view "$MEOWIO_TAG" >/dev/null 2>&1 && break; sleep 60; done
+          for i in 1 2 3 4; do gh release upload "$MEOWIO_TAG" out/Meowio-windows-x64.exe --clobber && exit 0; sleep 30; done
+          exit 1
