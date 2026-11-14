@@ -159,7 +159,7 @@ object TraktPublicListSourceResolver {
         endpoint: String,
         query: Map<String, String> = emptyMap(),
     ): RawHttpResponse {
-        if (TraktConfig.CLIENT_ID.isBlank()) {
+        if (TraktAppCredentials.clientId.isBlank()) {
             error(getString(Res.string.collections_trakt_credentials_missing))
         }
         val url = buildTraktUrl(endpoint, query)
@@ -169,7 +169,7 @@ object TraktPublicListSourceResolver {
             headers = mapOf(
                 "Accept" to "application/json",
                 "trakt-api-version" to API_VERSION,
-                "trakt-api-key" to TraktConfig.CLIENT_ID,
+                "trakt-api-key" to TraktAppCredentials.clientId,
             ),
             body = "",
         )

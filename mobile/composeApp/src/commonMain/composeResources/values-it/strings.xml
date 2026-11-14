@@ -676,7 +676,6 @@
   <string name="settings_trakt_features">FUNZIONALITÀ</string>
   <string name="settings_trakt_finish_sign_in">Completa l'accesso a Trakt nel tuo browser</string>
   <string name="settings_trakt_intro_description">Tieni traccia di ciò che guardi, salva contenuti nella watchlist o in liste personalizzate e mantieni la tua libreria sincronizzata con Trakt.</string>
-  <string name="settings_trakt_missing_credentials">Credenziali Trakt mancanti in local.properties (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
   <string name="settings_trakt_open_login">Apri Login Trakt</string>
   <string name="settings_trakt_save_actions_description">Le tue azioni di salvataggio possono ora riguardare la watchlist e le liste personali di Trakt.</string>
   <string name="settings_trakt_sign_in_description">Accedi con Trakt per abilitare il salvataggio basato su liste e la modalità libreria Trakt.</string>

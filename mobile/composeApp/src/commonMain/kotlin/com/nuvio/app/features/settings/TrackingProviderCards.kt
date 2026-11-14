@@ -245,6 +245,7 @@ private fun TraktProviderCard(
         onCancelAuthorization = TraktAuthRepository::onCancelAuthorization,
         onDisconnect = TraktAuthRepository::onDisconnectRequested,
         modifier = modifier,
+        setupContent = { TraktOwnAppSetup() },
     )
 }
 
@@ -323,6 +324,7 @@ internal fun TrackingProviderCard(
     onSyncRequested: (() -> Unit)? = null,
     onInfoRequested: (() -> Unit)? = null,
     onDisconnect: () -> Unit,
+    setupContent: (@Composable () -> Unit)? = null,
 ) {
     val tokens = MaterialTheme.nuvio
     val uriHandler = LocalUriHandler.current
@@ -499,10 +501,14 @@ internal fun TrackingProviderCard(
                                 onClick = { actionScope.launch { openUrl(onConnectRequested()) } },
                             )
                             if (!credentialsConfigured) {
-                                TrackingBrandMessage(
-                                    text = missingCredentialsMessage,
-                                    isError = true,
-                                )
+                                if (setupContent != null) {
+                                    setupContent()
+                                } else {
+                                    TrackingBrandMessage(
+                                        text = missingCredentialsMessage,
+                                        isError = true,
+                                    )
+                                }
                             }
                         }
                     }

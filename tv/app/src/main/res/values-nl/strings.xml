@@ -1500,7 +1500,6 @@
     <string name="trakt_code_expires">Code verloopt over %1$s</string>
     <string name="trakt_token_refreshes">Trakt-toegangstoken wordt vernieuwd over %1$s</string>
     <string name="trakt_login_instruction">Druk op Aanmelden bij account om de apparaatverificatie van Trakt te starten. Hier verschijnt een QR-code.</string>
-    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET ontbreken in local.properties.</string>
     <string name="trakt_watch_progress_title">Kijkvoortgang</string>
     <string name="trakt_watch_progress_subtitle">Kies welke voortgangsbron hervatten en Verder kijken aanstuurt</string>
     <string name="trakt_watch_progress_dialog_title">Kijkvoortgang</string>

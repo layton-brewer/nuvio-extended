@@ -1094,7 +1094,6 @@
     <string name="trakt_code_expires">O código expira em %1$s</string>
     <string name="trakt_token_refreshes">O token de acesso do Trakt renova-se em %1$s</string>
     <string name="trakt_login_instruction">Carrega em Iniciar sessão para começar a autenticação do dispositivo no Trakt. Vai aparecer aqui um código QR.</string>
-    <string name="trakt_missing_credentials">Falta TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET no ficheiro local.properties.</string>
     <string name="trakt_watch_progress_title">Progresso de visualização</string>
     <string name="trakt_watch_progress_subtitle">Define a fonte de progresso utilizada para retomar e continuar a ver.</string>
     <string name="trakt_watch_progress_dialog_title">Progresso de visualização</string>

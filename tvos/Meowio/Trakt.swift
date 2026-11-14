@@ -351,7 +351,7 @@ struct TraktSettingsView: View {
                         .disabled(!TraktStore.configured)
                 } footer: {
                     Text(TraktStore.configured ? "You'll get a short code to enter at trakt.tv/activate."
-                         : "This build has no Trakt app built in. Create one at trakt.tv/oauth/applications (redirect URI urn:ietf:wg:oauth:2.0:oob) and paste its client ID and secret below.")
+                         : "Set up your Trakt app first (one time). On a phone or computer, open trakt.tv/oauth/applications/new, give it any name, put urn:ietf:wg:oauth:2.0:oob and nuvio://auth/trakt on separate lines under Redirect URI, and save. Then paste its Client ID and Client Secret below. They stay on this Apple TV, and you sign in with your own Trakt account.")
                 }
             }
             if let m = trakt.message { Text(m).foregroundStyle(.orange) }

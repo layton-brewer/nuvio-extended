@@ -1323,7 +1323,6 @@
     <string name="settings_trakt_features">FUNCTIES</string>
     <string name="settings_trakt_finish_sign_in">Goedkeuring van de verbinding voltooien</string>
     <string name="settings_trakt_intro_description">Synchroniseer je kijklijst, kijkvoortgang, Verder kijken, scrobbelen en persoonlijke lijsten met Trakt.</string>
-    <string name="settings_trakt_missing_credentials">Trakt-inloggegevens ontbreken in local.properties (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
     <string name="settings_trakt_open_login">Trakt-inlog openen</string>
     <string name="settings_trakt_save_actions_description">Synchroniseer je kijklijst, kijkvoortgang, Verder kijken, scrobbelen en persoonlijke lijsten met Trakt.</string>
     <string name="settings_trakt_sign_in_description">Synchroniseer je kijklijst, kijkvoortgang, Verder kijken, scrobbelen en persoonlijke lijsten met Trakt.</string>

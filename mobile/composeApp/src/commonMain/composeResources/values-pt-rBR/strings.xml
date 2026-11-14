@@ -1321,7 +1321,6 @@
     <string name="settings_trakt_features">RECURSOS</string>
     <string name="settings_trakt_finish_sign_in">Concluir aprovação da conexão</string>
     <string name="settings_trakt_intro_description">Sincronize sua lista, progresso de reprodução, continuar assistindo, scrobbles e listas pessoais com o Trakt.</string>
-    <string name="settings_trakt_missing_credentials">Credenciais do Trakt ausentes em local.properties (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
     <string name="settings_trakt_open_login">Abrir Login do Trakt</string>
     <string name="settings_trakt_save_actions_description">Sincronize sua lista, progresso de reprodução, continuar assistindo, scrobbles e listas pessoais com o Trakt.</string>
     <string name="settings_trakt_sign_in_description">Sincronize sua lista, progresso de reprodução, continuar assistindo, scrobbles e listas pessoais com o Trakt.</string>
