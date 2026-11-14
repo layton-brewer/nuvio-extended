@@ -1257,7 +1257,6 @@
     <string name="settings_trakt_features">ফিচার</string>
     <string name="settings_trakt_finish_sign_in">সংযোগ অনুমোদন শেষ করুন</string>
     <string name="settings_trakt_intro_description">ওয়াচলিস্ট, দেখার অগ্রগতি, দেখা চালিয়ে যান, স্ক্রবল এবং ব্যক্তিগত তালিকা Trakt-এর সাথে সিঙ্ক করুন।</string>
-    <string name="settings_trakt_missing_credentials">local.properties-এ TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET অনুপস্থিত।</string>
     <string name="settings_trakt_open_login">Trakt সাইন-ইন খুলুন</string>
     <string name="settings_trakt_save_actions_description">ওয়াচলিস্ট, দেখার অগ্রগতি, দেখা চালিয়ে যান, স্ক্রবল এবং ব্যক্তিগত তালিকা Trakt-এর সাথে সিঙ্ক করুন।</string>
     <string name="settings_trakt_sign_in_description">ওয়াচলিস্ট, দেখার অগ্রগতি, দেখা চালিয়ে যান, স্ক্রবল এবং ব্যক্তিগত তালিকা Trakt-এর সাথে সিঙ্ক করুন।</string>

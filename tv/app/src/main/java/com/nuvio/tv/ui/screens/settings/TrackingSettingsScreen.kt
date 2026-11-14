@@ -235,6 +235,7 @@ fun TrackingSettingsContent(
                     dismissOnConnected = null
                     disconnectProvider = TrackingProviderId.TRAKT
                 },
+                onSaveOwnApp = traktViewModel::onSaveOwnTraktApp,
                 onDismiss = {
                     if (traktState.mode != TraktConnectionMode.CONNECTED) {
                         traktViewModel.onCancelDeviceFlow()

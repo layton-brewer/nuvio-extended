@@ -1122,7 +1122,6 @@
     <string name="trakt_code_expires">Koden udløber om %1$s</string>
     <string name="trakt_token_refreshes">Trakt-adgangstoken opdateres om %1$s</string>
     <string name="trakt_login_instruction">Tryk på Login for at starte Trakt-enhedsgodkendelse. En QR-kode vises her.</string>
-    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET mangler i local.properties.</string>
     <string name="trakt_watch_progress_title">Se-fremdrift</string>
     <string name="trakt_watch_progress_subtitle">Vælg hvilken fremskridtskilde der styrer genoptag og fortsæt med at se</string>
     <string name="trakt_watch_progress_dialog_title">Se-fremdrift</string>

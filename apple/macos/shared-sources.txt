@@ -46,3 +46,6 @@ commonMain/kotlin/com/nuvio/app/features/streams/StreamAutoPlaySelector.kt
 commonMain/kotlin/com/nuvio/app/features/streams/StreamSmartRanker.kt
 commonMain/kotlin/com/nuvio/app/features/watchprogress/WatchProgressRepository.kt
 fullCommonMain/kotlin/com/nuvio/app/features/plugins/CloudStreamBridge.kt
+commonMain/kotlin/com/nuvio/app/features/trakt/TraktAppCredentials.kt
+commonMain/kotlin/com/nuvio/app/features/trakt/TraktPublicListSourceResolver.kt
+commonMain/kotlin/com/nuvio/app/features/settings/TraktOwnAppSetup.kt

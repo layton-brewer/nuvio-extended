@@ -1256,7 +1256,6 @@
     <string name="settings_trakt_features">خصوصیات</string>
     <string name="settings_trakt_finish_sign_in">Connection approval مکمل کریں</string>
     <string name="settings_trakt_intro_description">اپنی Watchlist، watch progress، Continue Watching، scrobbles اور ذاتی فہرستیں Trakt کے ساتھ Sync کریں۔</string>
-    <string name="settings_trakt_missing_credentials">local.properties میں TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET موجود نہیں۔</string>
     <string name="settings_trakt_open_login">Trakt Login کھولیں</string>
     <string name="settings_trakt_save_actions_description">اپنی Watchlist، watch progress، Continue Watching، scrobbles اور ذاتی فہرستیں Trakt کے ساتھ Sync کریں۔</string>
     <string name="settings_trakt_sign_in_description">اپنی Watchlist، watch progress، Continue Watching، scrobbles اور ذاتی فہرستیں Trakt کے ساتھ Sync کریں۔</string>

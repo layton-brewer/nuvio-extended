@@ -1310,7 +1310,6 @@
     <string name="settings_trakt_features">الميزات</string>
     <string name="settings_trakt_finish_sign_in">إكمال الموافقة على الربط</string>
     <string name="settings_trakt_intro_description">مزامنة قائمة المشاهدة وتقدم المشاهدة ومتابعة المشاهدة وبيانات scrobbling وقوائمك الشخصية مع Trakt.</string>
-    <string name="settings_trakt_missing_credentials">بيانات TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET مفقودة في local.properties.</string>
     <string name="settings_trakt_open_login">فتح تسجيل الدخول إلى Trakt</string>
     <string name="settings_trakt_save_actions_description">مزامنة قائمة المشاهدة وتقدم المشاهدة ومتابعة المشاهدة وبيانات scrobbling وقوائمك الشخصية مع Trakt.</string>
     <string name="settings_trakt_sign_in_description">مزامنة قائمة المشاهدة وتقدم المشاهدة ومتابعة المشاهدة وبيانات scrobbling وقوائمك الشخصية مع Trakt.</string>

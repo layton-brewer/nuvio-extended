@@ -1214,7 +1214,6 @@
     <string name="settings_trakt_features">ФУНКЦИИ</string>
     <string name="settings_trakt_finish_sign_in">Завершить согласование подключения</string>
     <string name="settings_trakt_intro_description">Синхронизируйте свой список просмотра, следите за прогрессом, продолжайте просмотр, просматривайте и личные списки с помощью Trakt.</string>
-    <string name="settings_trakt_missing_credentials">В local.properties отсутствует TRAKT_CLIENT_ID/TRAKT_CLIENT_SECRET.</string>
     <string name="settings_trakt_open_login">Открыть Trakt Войти</string>
     <string name="settings_trakt_save_actions_description">Синхронизируйте свой список просмотра, следите за прогрессом, продолжайте просмотр, просматривайте и личные списки с помощью Trakt.</string>
     <string name="settings_trakt_sign_in_description">Синхронизируйте свой список просмотра, следите за прогрессом, продолжайте просмотр, просматривайте и личные списки с помощью Trakt.</string>

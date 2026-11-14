@@ -673,7 +673,6 @@
     <string name="trakt_code_expires">Kod wygasa za %1$s</string>
     <string name="trakt_token_refreshes">Token dostępu Trakt odświeży się za %1$s</string>
     <string name="trakt_login_instruction">Naciśnij Zaloguj, aby rozpocząć uwierzytelnianie urządzenia Trakt. Tutaj pojawi się kod QR.</string>
-    <string name="trakt_missing_credentials">Brak TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET w local.properties.</string>
     <string name="trakt_continue_watching_window">Okno kontynuowania oglądania</string>
     <string name="trakt_continue_watching_subtitle">Historia Trakt uwzględniana przy kontynuowaniu oglądania</string>
     <string name="trakt_unaired_next_up">Niewyemitowane odcinki</string>

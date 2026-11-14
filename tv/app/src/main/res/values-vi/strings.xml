@@ -1553,7 +1553,6 @@
     <string name="trakt_code_expires">Mã hết hạn sau %1$s</string>
     <string name="trakt_token_refreshes">Token truy cập Trakt làm mới sau %1$s</string>
     <string name="trakt_login_instruction">Nhấn Đăng nhập để bắt đầu xác thực thiết bị Trakt. Mã QR sẽ xuất hiện ở đây.</string>
-    <string name="trakt_missing_credentials">Thiếu TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET trong local.properties.</string>
     <string name="trakt_watch_progress_title">Tiến trình xem</string>
     <string name="trakt_watch_progress_subtitle">Chọn nguồn tiến trình dùng để tiếp tục xem</string>
     <string name="trakt_watch_progress_dialog_title">Tiến trình xem</string>

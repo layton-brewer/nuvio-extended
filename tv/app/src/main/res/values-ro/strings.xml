@@ -417,7 +417,6 @@
     <string name="trakt_code_expires">Codul expiră în %1$s</string>
     <string name="trakt_token_refreshes">Tokenul de acces Trakt se reînnoiește în %1$s</string>
     <string name="trakt_login_instruction">Apăsați Autentificare pentru a începe autentificarea dispozitivului Trakt. Un cod QR va apărea aici.</string>
-    <string name="trakt_missing_credentials">Lipsă TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET în local.properties.</string>
     <string name="trakt_continue_watching_window">Fereastră de continuare a vizionării</string>
     <string name="trakt_continue_watching_subtitle">Istoricul Trakt este luat în considerare pentru continuarea vizionării</string>
     <string name="trakt_unaired_next_up">Episoade următoare neemise</string>

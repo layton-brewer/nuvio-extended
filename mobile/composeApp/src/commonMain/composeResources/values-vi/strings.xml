@@ -1323,7 +1323,6 @@
     <string name="settings_trakt_features">TÍNH NĂNG</string>
     <string name="settings_trakt_finish_sign_in">Hoàn tất phê duyệt kết nối</string>
     <string name="settings_trakt_intro_description">Đồng bộ danh sách muốn xem, tiến độ xem, tiếp tục xem, nhật ký phát lại và danh sách cá nhân với Trakt.</string>
-    <string name="settings_trakt_missing_credentials">Thiếu TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET trong local.properties.</string>
     <string name="settings_trakt_open_login">Mở trang đăng nhập Trakt</string>
     <string name="settings_trakt_save_actions_description">Đồng bộ danh sách muốn xem, tiến độ xem, tiếp tục xem, nhật ký phát lại và danh sách cá nhân với Trakt.</string>
     <string name="settings_trakt_sign_in_description">Đồng bộ danh sách muốn xem, tiến độ xem, tiếp tục xem, nhật ký phát lại và danh sách cá nhân với Trakt.</string>

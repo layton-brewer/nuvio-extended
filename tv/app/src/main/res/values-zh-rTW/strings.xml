@@ -1404,7 +1404,6 @@
     <string name="trakt_code_expires">代碼將在 %1$s 後過期</string>
     <string name="trakt_token_refreshes">Trakt 存取權杖將在 %1$s 後重新整理</string>
     <string name="trakt_login_instruction">按下「登入」以啟動 Trakt 裝置驗證。QR 碼將在此顯示。</string>
-    <string name="trakt_missing_credentials">local.properties 中缺少 TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET。</string>
     <string name="trakt_watch_progress_title">觀看進度</string>
     <string name="trakt_watch_progress_subtitle">選擇哪個進度來源提供繼續播放和繼續觀看功能</string>
     <string name="trakt_watch_progress_dialog_title">觀看進度</string>

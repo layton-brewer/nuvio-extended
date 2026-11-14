@@ -76,7 +76,8 @@ internal fun TraktAccountDialog(
     onStartConnection: () -> Unit,
     onRetryPolling: () -> Unit,
     onDisconnect: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onSaveOwnApp: (String, String) -> Unit = { _, _ -> }
 ) {
     val logo = painterResource(R.drawable.trakt_logo_wordmark)
     if (state.mode == TraktConnectionMode.CONNECTED) {
@@ -117,6 +118,15 @@ internal fun TraktAccountDialog(
             titleTextAlign = TextAlign.Center,
             suppressFirstKeyUp = false
         ) {
+            if (!state.credentialsConfigured) {
+                TraktOwnAppSetup(
+                    logo = logo,
+                    errorMessage = state.errorMessage,
+                    onSave = onSaveOwnApp,
+                    onDismiss = onDismiss
+                )
+                return@NuvioDialog
+            }
             val displayUrl = state.verificationUrl ?: TRAKT_ACTIVATION_URL
             val qrUrl = state.deviceUserCode?.let { "$TRAKT_ACTIVATION_URL/$it" } ?: displayUrl
             TrackingDeviceAuthContent(
@@ -938,3 +948,52 @@ private const val SIMKL_WEBSITE_URL = "https://simkl.com"
 private const val SIMKL_SYNC_GUIDE_URL = "https://api.simkl.org/guides/sync"
 private val TrackingBrandButtonContent = Color(0xFF171717)
 private val TrackingBrandError = Color(0xFFFFDAD6)
+
+
+/** One-time step when the build has no Trakt app: the user pastes their own app's ID and secret. */
+@Composable
+private fun TraktOwnAppSetup(
+    logo: Painter,
+    errorMessage: String?,
+    onSave: (String, String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var clientId by rememberSaveable { mutableStateOf("") }
+    var clientSecret by rememberSaveable { mutableStateOf("") }
+    TrackingProviderWordmark(logo, stringResource(R.string.cd_trakt_logo), null)
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(NuvioTheme.spacing.sm)
+    ) {
+        Text(
+            text = stringResource(R.string.trakt_own_app_title),
+            style = MaterialTheme.typography.titleMedium,
+            color = NuvioTheme.colors.TextPrimary
+        )
+        Text(
+            text = stringResource(R.string.trakt_own_app_steps),
+            style = MaterialTheme.typography.bodyMedium,
+            color = NuvioTheme.colors.TextSecondary
+        )
+        AiTextField(
+            value = clientId,
+            onValueChange = { clientId = it },
+            placeholder = stringResource(R.string.trakt_own_app_client_id)
+        )
+        AiTextField(
+            value = clientSecret,
+            onValueChange = { clientSecret = it },
+            placeholder = stringResource(R.string.trakt_own_app_client_secret),
+            secret = true
+        )
+        errorMessage?.let {
+            Text(text = it, style = MaterialTheme.typography.bodyMedium, color = NuvioTheme.colors.TextSecondary)
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(NuvioTheme.spacing.sm)) {
+            Button(onClick = { onSave(clientId, clientSecret) }) {
+                Text(stringResource(R.string.trakt_own_app_save))
+            }
+            Button(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
+        }
+    }
+}

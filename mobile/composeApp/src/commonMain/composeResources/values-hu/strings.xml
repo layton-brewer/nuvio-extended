@@ -864,7 +864,6 @@
     <string name="settings_trakt_features">FUNKCIÓK</string>
     <string name="settings_trakt_finish_sign_in">Fejezd be a Trakt bejelentkezést a böngésződben</string>
     <string name="settings_trakt_intro_description">Szinkronizáld a megnézendők listáját, a megtekintési előrehaladást, a lejátszás folytatását, a scrobble-öket és a személyes listáidat a Trakttal.</string>
-    <string name="settings_trakt_missing_credentials">Hiányzó Trakt hitelesítési adatok a local.properties fájlban (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
     <string name="settings_trakt_open_login">Trakt bejelentkezés megnyitása</string>
     <string name="settings_trakt_save_actions_description">A mentési műveletek mostantól a Trakt megnézendők listáját és a személyes listákat is célozhatják.</string>
     <string name="settings_trakt_sign_in_description">Jelentkezz be a Trakt fiókodba a listaalapú mentés és a Trakt könyvtár mód engedélyezéséhez.</string>

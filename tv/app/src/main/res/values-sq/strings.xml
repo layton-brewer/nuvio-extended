@@ -1227,7 +1227,6 @@
     <string name="trakt_code_expires">Kodi skadon pas %1$s</string>
     <string name="trakt_token_refreshes">Tokeni i qasjes Trakt rifreskohet pas %1$s</string>
     <string name="trakt_login_instruction">Shtyp Hyr për të nisur autentifikimin e pajisjes Trakt. Këtu do të shfaqet një kod QR.</string>
-    <string name="trakt_missing_credentials">Mungon TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET në local.properties.</string>
     <string name="trakt_watch_progress_title">Progresi i shikimit</string>
     <string name="trakt_watch_progress_subtitle">Zgjidh cili burim progresi furnizon vazhdimin dhe Vazhdo shikimin</string>
     <string name="trakt_watch_progress_dialog_title">Progresi i shikimit</string>

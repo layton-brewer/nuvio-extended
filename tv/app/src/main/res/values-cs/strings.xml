@@ -1194,7 +1194,6 @@
     <string name="trakt_code_expires">Kód vyprší za %1$s</string>
     <string name="trakt_token_refreshes">Přístupový token Trakt se obnoví za %1$s</string>
     <string name="trakt_login_instruction">Stiskněte Přihlásit pro zahájení autentizace zařízení Trakt. Zde se objeví QR kód.</string>
-    <string name="trakt_missing_credentials">Chybí TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET v local.properties.</string>
     <string name="trakt_watch_progress_title">Postup sledování</string>
     <string name="trakt_watch_progress_subtitle">Vyberte, který zdroj postupu pohání pokračování a pokračovat ve sledování</string>
     <string name="trakt_watch_progress_dialog_title">Postup sledování</string>

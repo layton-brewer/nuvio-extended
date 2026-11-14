@@ -1295,7 +1295,6 @@
     <string name="settings_trakt_features">ZNAČAJKE</string>
     <string name="settings_trakt_finish_sign_in">Dovrši odobrenje veze</string>
     <string name="settings_trakt_intro_description">Sinkronizirajte svoj popis za gledanje, napredak gledanja, popis Nastavi gledati, scrobblove i osobne popise s Traktom.</string>
-    <string name="settings_trakt_missing_credentials">Nedostaju TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET u local.properties.</string>
     <string name="settings_trakt_open_login">Otvori Trakt prijavu</string>
     <string name="settings_trakt_save_actions_description">Sinkronizirajte svoj popis za gledanje, napredak gledanja, popis Nastavi gledati, scrobblove i osobne popise s Traktom.</string>
     <string name="settings_trakt_sign_in_description">Sinkronizirajte svoj popis za gledanje, napredak gledanja, popis Nastavi gledati, scrobblove i osobne popise s Traktom.</string>

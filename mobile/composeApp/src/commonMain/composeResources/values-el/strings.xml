@@ -872,7 +872,6 @@
     <string name="settings_trakt_features">ΛΕΙΤΟΥΡΓΙΕΣ</string>
     <string name="settings_trakt_finish_sign_in">Ολοκληρώστε την έγκριση σύνδεσης</string>
     <string name="settings_trakt_intro_description">Παρακολουθήστε τι βλέπετε, αποθηκεύστε σε λίστα παρακολούθησης ή προσαρμοσμένες λίστες και διατηρήστε τη βιβλιοθήκη σας συγχρονισμένη με το Trakt.</string>
-    <string name="settings_trakt_missing_credentials">Λείπουν διαπιστευτήρια Trakt στο local.properties (TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET).</string>
     <string name="settings_trakt_open_login">Άνοιγμα σύνδεσης Trakt</string>
     <string name="settings_trakt_save_actions_description">Συγχρονίστε με το Trakt τη λίστα παρακολούθησης, την πρόοδο παρακολούθησης, τη Συνέχεια παρακολούθησης, τις αυτόματες καταγραφές και τις προσωπικές λίστες σας.</string>
     <string name="settings_trakt_sign_in_description">Συγχρονίστε με το Trakt τη λίστα παρακολούθησης, την πρόοδο παρακολούθησης, τη Συνέχεια παρακολούθησης, τις αυτόματες καταγραφές και τις προσωπικές λίστες σας.</string>

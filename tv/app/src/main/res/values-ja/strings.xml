@@ -1520,7 +1520,6 @@
     <string name="trakt_code_expires">コードの有効期限: %1$s</string>
     <string name="trakt_token_refreshes">Traktアクセストークンの更新: %1$s後</string>
     <string name="trakt_login_instruction">ログインを押してTraktデバイス認証を開始してください。ここにQRコードが表示されます</string>
-    <string name="trakt_missing_credentials">local.propertiesにTRAKT_CLIENT_ID / TRAKT_CLIENT_SECRETがありません</string>
     <string name="trakt_watch_progress_title">視聴進行状況</string>
     <string name="trakt_watch_progress_subtitle">再開と「視聴を続ける」を管理する進行状況ソースを選択</string>
     <string name="trakt_watch_progress_dialog_title">視聴進行状況</string>

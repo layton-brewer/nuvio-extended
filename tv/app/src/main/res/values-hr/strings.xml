@@ -1436,7 +1436,6 @@
     <string name="trakt_code_expires">Kôd istječe za %1$s</string>
     <string name="trakt_token_refreshes">Trakt pristupni token osvježava se za %1$s</string>
     <string name="trakt_login_instruction">Pritisni Prijava za pokretanje Trakt autentifikacije uređaja. Ovdje će se pojaviti QR kôd.</string>
-    <string name="trakt_missing_credentials">Nedostaju TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET u local.properties.</string>
     <string name="trakt_watch_progress_title">Napredak gledanja</string>
     <string name="trakt_watch_progress_subtitle">Odaberi koji izvor napretka pokreće nastavak reprodukcije i Nastavi gledati</string>
     <string name="trakt_watch_progress_dialog_title">Napredak gledanja</string>

@@ -1527,7 +1527,6 @@
     <string name="trakt_code_expires">Kodun süresi %1$s sonra dolacak</string>
     <string name="trakt_token_refreshes">Trakt erişim jetonu %1$s içinde yenilenir</string>
     <string name="trakt_login_instruction">Trakt cihazı kimlik doğrulamasını başlatmak için Giriş\'e basın. Burada bir QR kodu görünecektir.</string>
-    <string name="trakt_missing_credentials">local.properties içinde TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET eksik.</string>
     <string name="trakt_watch_progress_title">İzleme İlerlemesi</string>
     <string name="trakt_watch_progress_subtitle">Devam etme ve izlemeye devam etme için hangi ilerleme kaynağının kullanılacağını seçin</string>
     <string name="trakt_watch_progress_dialog_title">İzleme İlerlemesi</string>

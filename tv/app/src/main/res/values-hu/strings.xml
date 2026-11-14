@@ -1514,7 +1514,6 @@
     <string name="trakt_code_expires">A kód lejár: %1$s múlva</string>
     <string name="trakt_token_refreshes">Trakt token frissítése: %1$s múlva</string>
     <string name="trakt_login_instruction">Nyomd meg a Bejelentkezés gombot a Trakt hitelesítéshez. Egy QR-kód fog megjelenni.</string>
-    <string name="trakt_missing_credentials">Hiányzó TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET a local.properties fájlban.</string>
     <string name="trakt_watch_progress_title">Megtekintési folyamat</string>
     <string name="trakt_watch_progress_subtitle">Válaszd ki, melyik folyamatforrás vezérelje a lejátszás folytatását</string>
     <string name="trakt_watch_progress_dialog_title">Megtekintési folyamat</string>

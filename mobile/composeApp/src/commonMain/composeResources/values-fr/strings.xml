@@ -1325,7 +1325,6 @@
     <string name="settings_trakt_features">FONCTIONNALITÉS</string>
     <string name="settings_trakt_finish_sign_in">Terminer l’approbation de la connexion</string>
     <string name="settings_trakt_intro_description">Synchronisez votre liste de suivi, votre progression de visionnage, la section Continuer à regarder, vos scrobbles et vos listes personnelles avec Trakt.</string>
-    <string name="settings_trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET manquants dans local.properties.</string>
     <string name="settings_trakt_open_login">Ouvrir la connexion à Trakt</string>
     <string name="settings_trakt_save_actions_description">Synchronisez votre liste de suivi, votre progression de visionnage, la section Continuer à regarder, vos scrobbles et vos listes personnelles avec Trakt.</string>
     <string name="settings_trakt_sign_in_description">Synchronisez votre liste de suivi, votre progression de visionnage, la section Continuer à regarder, vos scrobbles et vos listes personnelles avec Trakt.</string>

@@ -1057,7 +1057,6 @@
     <string name="trakt_code_expires">Kode kedaluwarsa dalam %1$s</string>
     <string name="trakt_token_refreshes">Token akses Trakt diperbarui dalam %1$s</string>
     <string name="trakt_login_instruction">Tekan Login untuk memulai autentikasi perangkat Trakt. Kode QR akan muncul di sini.</string>
-    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET tidak ada di local.properties.</string>
     <string name="trakt_watch_progress_title">Progres Tonton</string>
     <string name="trakt_watch_progress_subtitle">Pilih sumber progres mana yang menggerakkan lanjutkan dan continue watching</string>
     <string name="trakt_watch_progress_dialog_title">Progres Tonton</string>

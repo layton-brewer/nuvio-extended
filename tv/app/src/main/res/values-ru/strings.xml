@@ -803,7 +803,6 @@
     <string name="trakt_code_expires">Код истекает через %1$s</string>
     <string name="trakt_token_refreshes">Токен доступа Trakt обновится через %1$s</string>
     <string name="trakt_login_instruction">Нажмите \"Войти\", чтобы начать аутентификацию устройства в Trakt. Здесь появится QR-код.</string>
-    <string name="trakt_missing_credentials">Отсутствуют TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET в local.properties.</string>
     <string name="trakt_watch_progress_title">Прогресс просмотра</string>
     <string name="trakt_watch_progress_subtitle">Выберите источник прогресса для продолжения просмотра</string>
     <string name="trakt_watch_progress_dialog_title">Прогресс просмотра</string>

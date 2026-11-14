@@ -1587,7 +1587,15 @@
     <string name="trakt_code_expires">Code expires in %1$s</string>
     <string name="trakt_token_refreshes">Trakt access token refreshes in %1$s</string>
     <string name="trakt_login_instruction">Press Login to start Trakt device authentication. A QR code will appear here.</string>
-    <string name="trakt_missing_credentials">Missing TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET in local.properties.</string>
+    <string name="trakt_missing_credentials">Set up your Trakt app first (one time).</string>
+    <string name="trakt_own_app_title">Set up Trakt (one time)</string>
+    <string name="trakt_own_app_steps">You sign in with your own Trakt account. First, on a phone or computer, open trakt.tv/oauth/applications/new, give it any name, put urn:ietf:wg:oauth:2.0:oob and nuvio://auth/trakt on separate lines under Redirect URI, and save. Then enter its Client ID and Client Secret here. They stay on this device.</string>
+    <string name="trakt_own_app_client_id">Client ID</string>
+    <string name="trakt_own_app_client_secret">Client Secret</string>
+    <string name="trakt_own_app_save">Save and continue</string>
+    <string name="trakt_own_app_saved">Trakt app saved. Press Login to sign in.</string>
+    <string name="trakt_own_app_incomplete">Enter both the Client ID and the Client Secret.</string>
+    <string name="trakt_own_app_change">Use a different Trakt app</string>
     <string name="trakt_watch_progress_title">Watch Progress</string>
     <string name="trakt_watch_progress_subtitle">Choose which progress source powers resume and continue watching</string>
     <string name="trakt_watch_progress_dialog_title">Watch Progress</string>

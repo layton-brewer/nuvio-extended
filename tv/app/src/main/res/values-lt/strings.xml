@@ -527,7 +527,6 @@
     <string name="trakt_code_expires">Kodas galioja dar %1$s</string>
     <string name="trakt_token_refreshes">„Trakt“ prieigos raktas atnaujinamas po %1$s</string>
     <string name="trakt_login_instruction">Paspauskite „Prisijungti“, kad pradėtumėte „Trakt“ įrenginio autentifikavimą. Čia pasirodys QR kodas.</string>
-    <string name="trakt_missing_credentials">Faile „local.properties“ trūksta TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET parametrų.</string>
     <string name="trakt_watch_progress_title">Žiūrėjimo pažanga</string>
     <string name="trakt_watch_progress_subtitle">Pasirinkite, kuris pažangos šaltinis valdys atkūrimo tęsimą ir „Tęsti žiūrėjimą“</string>
     <string name="trakt_watch_progress_dialog_title">Žiūrėjimo pažanga</string>

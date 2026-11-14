@@ -911,7 +911,6 @@
     <string name="trakt_code_expires">குறியீடு %1$s இல் காலாவதியாகும்</string>
     <string name="trakt_token_refreshes">ட்ராக்ட் அணுகல் டோக்கன் %1$s இல் புதுப்பிக்கப்படும்</string>
     <string name="trakt_login_instruction">உள்நுழைவை தொடங்க உள்நுழைவு பொத்தானை அழுத்தவும். க்யூஆர் குறியீடு இங்கு தோன்றும்.</string>
-    <string name="trakt_missing_credentials">local.properties இல் TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET இல்லை.</string>
     <string name="trakt_watch_progress_title">பார்வை முன்னேற்றம்</string>
     <string name="trakt_watch_progress_subtitle">மீண்டும் தொடங்கு மற்றும் தொடர்ந்து பார்ப்பதற்கு எந்த முன்னேற்ற மூலத்தை பயன்படுத்துவது என்பதை தேர்வு செய்யவும்</string>
     <string name="trakt_watch_progress_dialog_title">பார்வை முன்னேற்றம்</string>

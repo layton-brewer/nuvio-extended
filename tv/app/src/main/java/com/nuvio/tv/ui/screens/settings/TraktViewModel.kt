@@ -73,6 +73,27 @@ class TraktViewModel @Inject constructor(
         observeAuthState()
     }
 
+    /** Saves the user's own Trakt app so they can sign in when the build has none built in. */
+    fun onSaveOwnTraktApp(clientId: String, clientSecret: String) {
+        if (clientId.isBlank() || clientSecret.isBlank()) {
+            _uiState.update { it.copy(errorMessage = context.getString(R.string.trakt_own_app_incomplete)) }
+            return
+        }
+        com.nuvio.tv.core.trakt.TraktAppCredentials.save(clientId, clientSecret)
+        _uiState.update {
+            it.copy(
+                credentialsConfigured = traktAuthService.hasRequiredCredentials(),
+                errorMessage = null,
+                statusMessage = context.getString(R.string.trakt_own_app_saved)
+            )
+        }
+    }
+
+    fun onClearOwnTraktApp() {
+        com.nuvio.tv.core.trakt.TraktAppCredentials.clear()
+        _uiState.update { it.copy(credentialsConfigured = traktAuthService.hasRequiredCredentials(), statusMessage = null) }
+    }
+
     fun onContinueWatchingDaysCapSelected(days: Int) {
         viewModelScope.launch {
             traktSettingsDataStore.setContinueWatchingDaysCap(days)

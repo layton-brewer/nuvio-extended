@@ -1497,7 +1497,6 @@
     <string name="trakt_code_expires">Кодът изтича след %1$s</string>
     <string name="trakt_token_refreshes">Токенът за достъп до Trakt се обновява в %1$s</string>
     <string name="trakt_login_instruction">Натиснете „Вход“, за да стартирате удостоверяването на устройството Trakt. Тук ще се появи QR код.</string>
-    <string name="trakt_missing_credentials">Липсва TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET в local.properties.</string>
     <string name="trakt_watch_progress_title">Наблюдение на напредъка</string>
     <string name="trakt_watch_progress_subtitle">Изберете кои сили на източника на прогрес да се възобновят и да продължите да гледате</string>
     <string name="trakt_watch_progress_dialog_title">Наблюдение на напредъка</string>
