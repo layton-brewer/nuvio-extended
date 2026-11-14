@@ -639,7 +639,7 @@ private fun recommendationsSourceOptions(
 private fun ratingSourceOptions(
     simklConnected: Boolean,
     mdblistConnected: Boolean,
-): List<TrackingPickerOption<TrackingProviderId?>> = listOf(
+): List<TrackingPickerOption<TrackingProviderId?>> = listOf<TrackingPickerOption<TrackingProviderId?>>(
     TrackingPickerOption(
         value = null,
         title = ratingSourceLabel(null),
