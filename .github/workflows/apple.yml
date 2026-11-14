@@ -9,7 +9,8 @@ on:
       - "mobile/composeApp/src/iosFull/**"
       - "tvos/**"
       - "apple/**"
-      - "mobile/composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
       - ".github/workflows/apple.yml"
   workflow_dispatch:
 

@@ -8,7 +8,8 @@ on:
     paths:
       - "windows/**"
       - "apple/macos/**"
-      - "mobile/composeApp/src/commonMain/kotlin/com/nuvio/app/features/downloads/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
       - ".github/workflows/windows.yml"
   workflow_dispatch:
 
