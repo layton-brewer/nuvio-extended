@@ -33,6 +33,8 @@ import nuvio.composeapp.generated.resources.backup_restore_sub
 import nuvio.composeapp.generated.resources.backup_restored
 import nuvio.composeapp.generated.resources.backup_save
 import nuvio.composeapp.generated.resources.backup_save_failed
+import nuvio.composeapp.generated.resources.backup_save_private
+import nuvio.composeapp.generated.resources.backup_save_private_sub
 import nuvio.composeapp.generated.resources.backup_save_sub
 import nuvio.composeapp.generated.resources.backup_saved
 import nuvio.composeapp.generated.resources.backup_title
@@ -106,6 +108,20 @@ internal fun LazyListScope.advancedSettingsContent(
                         isTablet = isTablet,
                         onClick = {
                             val text = runCatching { com.nuvio.app.core.sync.ProfileSettingsSync.exportBackupJson() }.getOrNull()
+                            if (text == null) {
+                                status = Res.string.backup_save_failed
+                            } else {
+                                saveBackup(com.nuvio.app.core.sync.BACKUP_FILE_NAME, text)
+                            }
+                        },
+                    )
+                    SettingsGroupDivider(isTablet = isTablet)
+                    SettingsNavigationRow(
+                        title = stringResource(Res.string.backup_save_private),
+                        description = stringResource(Res.string.backup_save_private_sub),
+                        isTablet = isTablet,
+                        onClick = {
+                            val text = runCatching { com.nuvio.app.core.sync.ProfileSettingsSync.exportBackupJson(includePrivateAddonLinks = true) }.getOrNull()
                             if (text == null) {
                                 status = Res.string.backup_save_failed
                             } else {

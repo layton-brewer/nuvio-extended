@@ -417,7 +417,9 @@
     <string name="compose_nav_home">Home</string>
     <string name="backup_title">Backup and restore</string>
     <string name="backup_save">Save a backup file</string>
-    <string name="backup_save_sub">Saves this profile\'s settings, add-ons and collections. Logins and API keys are not included.</string>
+    <string name="backup_save_sub">Saves this profile\'s settings, add-ons and collections. Logins, API keys and add-on links that contain your own settings are not included.</string>
+    <string name="backup_save_private">Save a backup with private add-on links</string>
+    <string name="backup_save_private_sub">Also includes add-on links that contain your own settings. These often include your debrid or service key, so keep this file somewhere private.</string>
     <string name="backup_restore">Restore from a backup file</string>
     <string name="backup_restore_sub">Replaces this profile\'s settings, add-ons and collections with the ones in the file.</string>
     <string name="backup_saved">Backup saved</string>

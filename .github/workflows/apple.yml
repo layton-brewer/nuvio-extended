@@ -105,6 +105,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to the latest Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -170,6 +172,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to the latest Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -223,6 +227,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to the latest Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
