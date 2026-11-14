@@ -32,6 +32,7 @@ data class SettingsBackupState(
     val isActive: Boolean = false,
     val qrCodeBitmap: Bitmap? = null,
     val serverUrl: String? = null,
+    val pin: String? = null,
     val message: String? = null
 )
 
@@ -56,7 +57,9 @@ class SettingsBackupViewModel @Inject constructor(
         // The server answers on its own worker threads, so blocking there is fine.
         val started = SettingsBackupServer.startOnAvailablePort(
             context = context,
-            exportBackup = { runCatching { runBlocking { settingsSync.exportBackupJson() } }.getOrNull() },
+            exportBackup = { includePrivate ->
+                runCatching { runBlocking { settingsSync.exportBackupJson(includePrivate) } }.getOrNull()
+            },
             importBackup = { text ->
                 val restored = runCatching { runBlocking { settingsSync.importBackupJson(text) } }.getOrDefault(false)
                 if (restored) {
@@ -74,8 +77,10 @@ class SettingsBackupViewModel @Inject constructor(
         val url = "http://$ip:${started.listeningPort}"
         mutableState.value = SettingsBackupState(
             isActive = true,
-            qrCodeBitmap = QrCodeGenerator.generate(url, 512),
-            serverUrl = url
+            // The PIN rides in the fragment, which browsers never send over the network.
+            qrCodeBitmap = QrCodeGenerator.generate("$url/#pin=${started.pin}", 512),
+            serverUrl = url,
+            pin = started.pin
         )
     }
 
@@ -116,7 +121,9 @@ internal fun SettingsBackupCard(viewModel: SettingsBackupViewModel = hiltViewMod
             QrCodeOverlay(
                 qrBitmap = state.qrCodeBitmap,
                 serverUrl = state.serverUrl,
-                instruction = state.message ?: stringResource(R.string.backup_qr),
+                instruction = state.message
+                    ?: state.pin?.let { stringResource(R.string.backup_qr_with_pin, it) }
+                    ?: stringResource(R.string.backup_qr),
                 onClose = viewModel::stop
             )
         }

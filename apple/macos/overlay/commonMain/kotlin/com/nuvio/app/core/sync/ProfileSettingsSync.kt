@@ -64,6 +64,8 @@ import kotlinx.serialization.json.put
 
 private const val PUSH_DEBOUNCE_MS = 500L
 private const val BACKUP_APP = "meowio-mobile"
+/** Set in backups that left personal add-on links out; restoring one keeps this device's own. */
+private const val BACKUP_PRIVATE_LINKS_LEFT_OUT = "privateAddonLinksLeftOut"
 const val BACKUP_FILE_NAME = "meowio-mobile-backup.json"
 
 object ProfileSettingsSync {
@@ -245,20 +247,25 @@ object ProfileSettingsSync {
     /**
      * Everything worth keeping for the active profile, as text for a backup file: the settings
      * that sync, plus add-ons, collections and the home row order. Service logins and API keys
-     * are left out, so the file is safe to keep anywhere.
+     * are left out. Add-on links that carry a configuration (and usually a debrid key) are left out
+     * too unless [includePrivateAddonLinks] is set, so the default file is safe to keep anywhere.
      */
-    fun exportBackupJson(): String {
+    fun exportBackupJson(includePrivateAddonLinks: Boolean = false): String {
         val profileId = ProfileRepository.activeProfileId
+        val keep: (String) -> Boolean = { includePrivateAddonLinks || !BackupAddonLinks.isPrivate(it) }
         return buildJsonObject {
             put("app", BACKUP_APP)
             put("format", 1)
             put("settings", json.encodeToJsonElement(MobileProfileSettingsBlob.serializer(), exportSettingsBlob()))
+            if (!includePrivateAddonLinks) put(BACKUP_PRIVATE_LINKS_LEFT_OUT, true)
             put("addons", kotlinx.serialization.json.JsonArray(
                 com.nuvio.app.features.addons.AddonStorage.loadInstalledAddonUrls(profileId)
+                    .filter(keep)
                     .map { kotlinx.serialization.json.JsonPrimitive(it) },
             ))
             put("addonStates", buildJsonObject {
                 com.nuvio.app.features.addons.AddonStorage.loadAddonEnabledStates(profileId)
+                    .filterKeys(keep)
                     .forEach { (url, enabled) -> put(url, enabled) }
             })
             put("collections", com.nuvio.app.features.collection.CollectionStorage.loadPayload().orEmpty())
@@ -286,12 +293,23 @@ object ProfileSettingsSync {
         (root["addons"] as? kotlinx.serialization.json.JsonArray)
             ?.mapNotNull { (it as? kotlinx.serialization.json.JsonPrimitive)?.content?.takeIf(String::isNotBlank) }
             ?.takeIf { it.isNotEmpty() }
-            ?.let { urls ->
-                com.nuvio.app.features.addons.AddonStorage.saveInstalledAddonUrls(profileId, urls)
-                val states = (root["addonStates"] as? kotlinx.serialization.json.JsonObject)
+            ?.let { backedUpUrls ->
+                // Backups that left personal links out keep the ones already on this device.
+                // Older backups have no marker and replace the list as before.
+                val privateLinksLeftOut = root[BACKUP_PRIVATE_LINKS_LEFT_OUT] != null
+                val currentUrls = com.nuvio.app.features.addons.AddonStorage.loadInstalledAddonUrls(profileId)
+                val currentStates = com.nuvio.app.features.addons.AddonStorage.loadAddonEnabledStates(profileId)
+                val urls = if (privateLinksLeftOut) BackupAddonLinks.mergeKeptPrivate(backedUpUrls, currentUrls) else backedUpUrls
+                val backedUpStates = (root["addonStates"] as? kotlinx.serialization.json.JsonObject)
                     ?.mapNotNull { (url, value) ->
                         (value as? kotlinx.serialization.json.JsonPrimitive)?.content?.toBooleanStrictOrNull()?.let { url to it }
                     }?.toMap().orEmpty()
+                val states = if (privateLinksLeftOut) {
+                    currentStates.filterKeys { it in urls && it !in backedUpUrls } + backedUpStates
+                } else {
+                    backedUpStates
+                }
+                com.nuvio.app.features.addons.AddonStorage.saveInstalledAddonUrls(profileId, urls)
                 com.nuvio.app.features.addons.AddonStorage.saveAddonEnabledStates(profileId, states)
                 com.nuvio.app.features.addons.AddonRepository.onProfileChanged(profileId)
             }

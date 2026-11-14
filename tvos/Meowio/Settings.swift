@@ -143,13 +143,28 @@ final class SettingsStore: ObservableObject {
         var theme: MeowioTheme
         var liveSource: LiveSource
         var liveTabVisible: Bool
+        /// True when personal add-on links were left out; restoring keeps this device's own. Absent in older backups.
+        var privateAddonLinksLeftOut: Bool?
     }
 
-    func exportBackup() -> String {
-        let b = Backup(addons: addons, streamMode: streamMode, autoNext: autoNext, sameRelease: sameRelease,
+    /// True for an add-on link that carries anything beyond a host and /manifest.json (usually a debrid key).
+    static func isPrivateAddonLink(_ link: String) -> Bool {
+        guard let c = URLComponents(string: link.trimmingCharacters(in: .whitespaces)),
+              let host = c.host, !host.isEmpty else { return true }
+        if c.user != nil || c.password != nil || c.query != nil || c.fragment != nil { return true }
+        var path = c.path
+        while path.hasSuffix("/") { path.removeLast() }
+        if path.lowercased().hasSuffix("/manifest.json") { path.removeLast("/manifest.json".count) }
+        return !path.trimmingCharacters(in: CharacterSet(charactersIn: "/")).isEmpty
+    }
+
+    func exportBackup(includePrivateAddonLinks: Bool = false) -> String {
+        let backedUpAddons = includePrivateAddonLinks ? addons : addons.filter { !Self.isPrivateAddonLink($0) }
+        var b = Backup(addons: backedUpAddons, streamMode: streamMode, autoNext: autoNext, sameRelease: sameRelease,
                        preloadNext: preloadNext, failoverEnabled: failoverEnabled, maxSwitches: maxSwitches,
                        startupTimeout: startupTimeout, pinnedSources: pinnedSources, theme: theme,
                        liveSource: liveSource, liveTabVisible: liveTabVisible)
+        if !includePrivateAddonLinks { b.privateAddonLinksLeftOut = true }
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         guard let data = try? encoder.encode(b), let text = String(data: data, encoding: .utf8) else { return "" }
@@ -160,7 +175,12 @@ final class SettingsStore: ObservableObject {
     func restoreBackup(_ text: String) -> Bool {
         guard let data = text.data(using: .utf8), let b = try? JSONDecoder().decode(Backup.self, from: data),
               b.app.hasPrefix("meowio") else { return false }
-        addons = b.addons
+        if b.privateAddonLinksLeftOut == true {
+            let kept = addons.filter { Self.isPrivateAddonLink($0) && !b.addons.contains($0) }
+            addons = b.addons + kept
+        } else {
+            addons = b.addons
+        }
         streamMode = b.streamMode
         autoNext = b.autoNext
         sameRelease = b.sameRelease

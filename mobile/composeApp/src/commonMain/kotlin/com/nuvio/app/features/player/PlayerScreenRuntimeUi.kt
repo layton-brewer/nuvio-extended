@@ -18,6 +18,13 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.zIndex
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
@@ -309,6 +316,75 @@ internal fun PlayerScreenRuntime.RenderPlayerRuntimeUi(
             panelVisible = showPartyPanel && !isInPip,
         )
         RenderPlayerModals(displayedPositionMs = displayedPositionMs)
+    }
+    // The top-right buttons live on their own layer above every overlay and panel host, so
+    // no sibling layer (overlays, panel scrims, modal hosts) can sit on top of them and
+    // swallow the tap. Hidden whenever a panel, dialog or the opening screen is showing.
+    RenderTopToolbar(
+        visible = controlsVisible &&
+            fold == null &&
+            !isInPip &&
+            !playerControlsLocked &&
+            !playerSettingsUiState.useLegacyPlayerLayout &&
+            !isPanelOpen &&
+            !showChaptersPanel &&
+            !showSwitchEngineConfirm &&
+            errorMessage == null &&
+            !(playerSettingsUiState.showLoadingOverlay && !initialLoadCompleted),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(end = partyPanelInset)
+            .zIndex(10f),
+    )
+}
+
+@Composable
+private fun PlayerScreenRuntime.RenderTopToolbar(
+    visible: Boolean,
+    modifier: Modifier,
+) {
+    val partyState by PartyRepository.state.collectAsStateWithLifecycle()
+    val partyAvailable by PartyRepository.available.collectAsStateWithLifecycle()
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = modifier,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = horizontalSafePadding),
+        ) {
+            PlayerToolbar(
+                isLocked = playerControlsLocked,
+                onLockToggle = {
+                    if (playerControlsLocked) unlockPlayerControls() else lockPlayerControls()
+                },
+                onBack = {
+                    flushWatchProgress()
+                    args.onBack()
+                },
+                onPartyClick = if (partyAvailable) {
+                    { openPartyPanel() }
+                } else {
+                    null
+                },
+                partyActive = partyState.party != null,
+                onSwitchEngineClick = if (playerController?.playbackEngine != null) {
+                    {
+                        showSwitchEngineConfirm = true
+                        controlsActivityTick += 1
+                    }
+                } else {
+                    null
+                },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Top))
+                    .padding(horizontal = metrics.horizontalPadding, vertical = metrics.verticalPadding / 4),
+            )
+        }
     }
 }
 

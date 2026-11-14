@@ -15,7 +15,7 @@ on:
 
 env:
   # Builds attach to this release page. Bump together with the version numbers below and the tag in release.yml.
-  MEOWIO_TAG: v0.2.4
+  MEOWIO_TAG: v0.2.5
 
 permissions:
   contents: write
@@ -109,6 +109,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to this version's Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -161,7 +163,7 @@ jobs:
         working-directory: desktop
         run: |
           printf 'NUVIO_SUPABASE_URL=\nNUVIO_SUPABASE_ANON_KEY=\nTRAKT_CLIENT_ID=\nTRAKT_CLIENT_SECRET=\nMDBLIST_CLIENT_ID=\n' > local.properties
-          ./gradlew :composeApp:packageReleaseDmg -Pcompose.desktop.packaging.checkJdkVendor=false -Pnuvio.macos.arch=${{ matrix.arch }} -Pnuvio.desktop.versionName=0.2.4 --no-daemon --no-configuration-cache --max-workers=2
+          ./gradlew :composeApp:packageReleaseDmg -Pcompose.desktop.packaging.checkJdkVendor=false -Pnuvio.macos.arch=${{ matrix.arch }} -Pnuvio.desktop.versionName=0.2.5 --no-daemon --no-configuration-cache --max-workers=2
           find composeApp/build -name "*.dmg"
 
       - name: Collect DMG
@@ -178,6 +180,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to this version's Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -215,7 +219,7 @@ jobs:
           xcodebuild -project Meowio.xcodeproj -scheme Meowio -configuration Release \
             -sdk appletvos -destination 'generic/platform=tvOS' \
             -derivedDataPath build \
-            MARKETING_VERSION=0.2.4 CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            MARKETING_VERSION=0.2.5 CURRENT_PROJECT_VERSION=${{ github.run_number }} \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= build
 
       - name: Package IPA
@@ -234,6 +238,8 @@ jobs:
           retention-days: 14
 
       - name: Attach to this version's Meowio release
+        # Only main publishes. Other branches keep their build as a workflow artifact.
+        if: github.ref == 'refs/heads/main'
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
