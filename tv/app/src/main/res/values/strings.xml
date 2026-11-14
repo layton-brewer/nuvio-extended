@@ -2527,6 +2527,12 @@
     <string name="backup_open">Back up or restore settings</string>
     <string name="backup_open_sub">Save this profile\'s settings, add-ons and collections to your phone or computer, or bring them back.</string>
     <string name="backup_qr">Scan with your phone to save a backup or restore one</string>
+    <string name="backup_qr_with_pin">Scan the code with your phone, or open the address in a browser on the same network. PIN: %1$s</string>
+    <string name="backup_web_pin_label">PIN shown on your TV</string>
+    <string name="backup_web_pin_wrong">That PIN does not match the one on your TV.</string>
+    <string name="backup_web_locked">Too many wrong PINs. Close and reopen Backup on your TV to try again.</string>
+    <string name="backup_web_private_download">Download with private add-on links</string>
+    <string name="backup_web_private_warning">The normal backup leaves out add-on links that contain your own settings, because they often include your debrid or service key. Only use the download below if you keep the file somewhere private.</string>
     <string name="backup_web_intro">Download a backup of this TV\'s settings, add-ons and collections, or choose a backup file to restore. Logins and API keys are not included.</string>
     <string name="backup_web_download">Download backup</string>
     <string name="backup_web_restore">Restore from a file</string>

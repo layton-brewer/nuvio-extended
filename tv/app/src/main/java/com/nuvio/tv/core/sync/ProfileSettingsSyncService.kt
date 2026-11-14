@@ -177,10 +177,13 @@ internal fun shouldExcludePreferenceFromProfileSettingsSync(feature: String, key
     }
 }
 
-@Singleton
 private const val BACKUP_APP = "meowio-tv"
 private const val BACKUP_HOME_ROWS = "home_rows"
+private const val BACKUP_ADDON_FEATURE = "addon_preferences"
+/** Set in backups that left personal add-on links out; restoring one keeps this device's own. */
+private const val BACKUP_PRIVATE_LINKS_LEFT_OUT = "private_addon_links_left_out"
 
+@Singleton
 class ProfileSettingsSyncService @Inject constructor(
     private val authManager: AuthManager,
     private val postgrest: Postgrest,
@@ -500,19 +503,23 @@ class ProfileSettingsSyncService @Inject constructor(
     /**
      * Everything worth keeping for the active profile, as text for a backup file: the settings
      * that sync, plus add-ons, collections and the home row order. Service logins and API keys
-     * are left out, so the file is safe to keep on a phone or computer.
+     * are left out. Add-on links that carry a configuration (and usually a debrid key) are left
+     * out too unless [includePrivateAddonLinks] is set, so the default file is safe to keep.
      */
-    suspend fun exportBackupJson(): String {
+    suspend fun exportBackupJson(includePrivateAddonLinks: Boolean = false): String {
         val profileId = profileManager.activeProfileId.value
         val settings = exportSettingsBlob(profileId)["features"] ?: JsonObject(emptyMap())
+        var privateLinksLeftOut = 0
         val extras = buildJsonObject {
             backupOnlyFeatures.forEach { feature ->
-                val prefs = profileDataStoreFactory.get(profileId, feature).data.first()
-                put(feature, buildJsonObject {
-                    prefs.asMap().forEach { (key, rawValue) ->
-                        encodePreferenceValue(rawValue)?.let { put(key.name, it) }
-                    }
-                })
+                val encoded = encodeFeature(profileId, feature)
+                if (feature == BACKUP_ADDON_FEATURE && !includePrivateAddonLinks) {
+                    val (redacted, removed) = BackupAddonLinks.redact(encoded)
+                    privateLinksLeftOut = removed
+                    put(feature, redacted)
+                } else {
+                    put(feature, encoded)
+                }
             }
             val layout = profileDataStoreFactory.get(profileId, "layout_settings").data.first()
             put(BACKUP_HOME_ROWS, buildJsonObject {
@@ -527,7 +534,17 @@ class ProfileSettingsSyncService @Inject constructor(
             put("format", 1)
             put("features", settings)
             put("extras", extras)
+            if (!includePrivateAddonLinks) put(BACKUP_PRIVATE_LINKS_LEFT_OUT, privateLinksLeftOut)
         }.toString()
+    }
+
+    private suspend fun encodeFeature(profileId: Int, feature: String): JsonObject {
+        val prefs = profileDataStoreFactory.get(profileId, feature).data.first()
+        return buildJsonObject {
+            prefs.asMap().forEach { (key, rawValue) ->
+                encodePreferenceValue(rawValue)?.let { put(key.name, it) }
+            }
+        }
     }
 
     /** Restores a file made by [exportBackupJson] into the active profile. False when it is not one. */
@@ -538,8 +555,15 @@ class ProfileSettingsSyncService @Inject constructor(
         val profileId = profileManager.activeProfileId.value
         importSettingsBlob(profileId, features)
         val extras = root["extras"] as? JsonObject ?: return true
+        // Older backups have no marker and carry every link, so they replace the add-on list as before.
+        val privateLinksLeftOut = root[BACKUP_PRIVATE_LINKS_LEFT_OUT] != null
         backupOnlyFeatures.forEach { feature ->
-            val featureJson = extras[feature] as? JsonObject ?: return@forEach
+            val backedUp = extras[feature] as? JsonObject ?: return@forEach
+            val featureJson = if (feature == BACKUP_ADDON_FEATURE && privateLinksLeftOut) {
+                BackupAddonLinks.mergeKeptPrivate(backedUp, encodeFeature(profileId, feature))
+            } else {
+                backedUp
+            }
             profileDataStoreFactory.get(profileId, feature).edit { prefs ->
                 prefs.clear()
                 featureJson.forEach { (keyName, encoded) -> applyEncodedPreference(prefs, keyName, encoded) }
