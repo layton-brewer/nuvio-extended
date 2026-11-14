@@ -254,12 +254,12 @@ internal val AppIconOption.iconResource: Int
 
 internal val AppIconOption.bannerResource: Int
     get() = when (this) {
-        AppIconOption.ORIGINAL -> R.mipmap.banner
-        AppIconOption.ARCTIC_BLUE -> R.mipmap.banner_arctic_blue
-        AppIconOption.EMERALD -> R.mipmap.banner_emerald
-        AppIconOption.ROSE_GOLD -> R.mipmap.banner_rose_gold
-        AppIconOption.COPPER -> R.mipmap.banner_copper
-        AppIconOption.GRAPHITE -> R.mipmap.banner_graphite
+        AppIconOption.ORIGINAL -> R.drawable.meowio_tv_banner
+        AppIconOption.ARCTIC_BLUE -> R.drawable.meowio_tv_banner_arctic_blue
+        AppIconOption.EMERALD -> R.drawable.meowio_tv_banner_emerald
+        AppIconOption.ROSE_GOLD -> R.drawable.meowio_tv_banner_rose_gold
+        AppIconOption.COPPER -> R.drawable.meowio_tv_banner_copper
+        AppIconOption.GRAPHITE -> R.drawable.meowio_tv_banner_graphite
     }
 
 @Composable
