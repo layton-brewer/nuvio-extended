@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.nuvio.tv.BuildConfig
 import com.nuvio.tv.R
-import com.nuvio.tv.core.trakt.TraktAppCredentials
 import com.nuvio.tv.data.local.AuthSessionNoticeDataStore
 import com.nuvio.tv.data.local.TraktAuthDataStore
 import com.nuvio.tv.data.local.TraktAuthState
@@ -118,11 +117,9 @@ class TraktAuthService @Inject constructor(
         return BuildConfig.TRAKT_REDIRECT_URI.ifBlank { "urn:ietf:wg:oauth:2.0:oob" }
     }
 
-    init {
-        TraktAppCredentials.init(context)
+    fun hasRequiredCredentials(): Boolean {
+        return BuildConfig.TRAKT_CLIENT_ID.isNotBlank() && BuildConfig.TRAKT_CLIENT_SECRET.isNotBlank()
     }
-
-    fun hasRequiredCredentials(): Boolean = TraktAppCredentials.isConfigured
 
     suspend fun getCurrentAuthState(): TraktAuthState = traktAuthDataStore.getCurrentState()
 
@@ -160,7 +157,7 @@ class TraktAuthService @Inject constructor(
         // Retry-After header when the server supplies a short back-off.
         suspend fun requestOnce(): Response<TraktDeviceCodeResponseDto> =
             traktApi.requestDeviceCode(
-                TraktDeviceCodeRequestDto(clientId = TraktAppCredentials.clientId)
+                TraktDeviceCodeRequestDto(clientId = BuildConfig.TRAKT_CLIENT_ID)
             )
 
         var response = try {
@@ -215,8 +212,8 @@ class TraktAuthService @Inject constructor(
             traktApi.requestDeviceToken(
                 TraktDeviceTokenRequestDto(
                     code = deviceCode,
-                    clientId = TraktAppCredentials.clientId,
-                    clientSecret = TraktAppCredentials.clientSecret
+                    clientId = BuildConfig.TRAKT_CLIENT_ID,
+                    clientSecret = BuildConfig.TRAKT_CLIENT_SECRET
                 )
             )
         } catch (e: IOException) {
@@ -278,8 +275,8 @@ class TraktAuthService @Inject constructor(
                 traktApi.refreshToken(
                     TraktRefreshTokenRequestDto(
                         refreshToken = refreshToken,
-                        clientId = TraktAppCredentials.clientId,
-                        clientSecret = TraktAppCredentials.clientSecret,
+                        clientId = BuildConfig.TRAKT_CLIENT_ID,
+                        clientSecret = BuildConfig.TRAKT_CLIENT_SECRET,
                         redirectUri = traktRedirectUri()
                     )
                 )
@@ -316,8 +313,8 @@ class TraktAuthService @Inject constructor(
                     traktApi.revokeToken(
                         TraktRevokeRequestDto(
                             token = accessToken,
-                            clientId = TraktAppCredentials.clientId,
-                            clientSecret = TraktAppCredentials.clientSecret
+                            clientId = BuildConfig.TRAKT_CLIENT_ID,
+                            clientSecret = BuildConfig.TRAKT_CLIENT_SECRET
                         )
                     )
                 }

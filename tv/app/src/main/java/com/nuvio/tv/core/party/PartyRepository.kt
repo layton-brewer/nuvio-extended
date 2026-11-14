@@ -707,7 +707,7 @@ class PartyRepository @Inject constructor(
 
     private companion object {
         const val TAG = "Party"
-        const val DEFAULT_NAME = "Nuvio"
+        const val DEFAULT_NAME = "Meowio"
         val COLOR_PATTERN = Regex("^#[0-9A-Fa-f]{6}$")
         val HEARTBEAT_INTERVAL = 2.minutes
         val PERSIST_DELAY = 1.5.seconds

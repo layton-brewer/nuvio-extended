@@ -100,7 +100,7 @@
     
     <string name="home_no_addons">Žiadne doplnky nie sú nainštalované. Pridajte jeden pre začiatok.</string>
     <string name="home_no_catalog_addons">Žiadne katalógové doplnky. Nainštalujte katalógový doplnok pre zobrazenie obsahu.</string>
-    <string name="auth_notice_nuvio_logged_out">Boli ste odhlásení z Nuvio. Prihláste sa znova.</string>
+    <string name="auth_notice_nuvio_logged_out">Boli ste odhlásení z Meowio. Prihláste sa znova.</string>
     <string name="auth_notice_trakt_logged_out">Boli ste odhlásení z Trakt. Znova sa pripojte.</string>
     <string name="error_generic">Vyskytla sa chyba</string>
 
@@ -365,7 +365,7 @@
     <string name="about_licenses_attributions">Licencie a atribúcie</string>
     <string name="about_licenses_attributions_subtitle">Zdroje dát, poďakovania a Android licencie</string>
     <string name="licenses_attributions_title">Licencie a atribúcie</string>
-    <string name="licenses_attributions_subtitle">Poskytovatelia dát, servisné kredity a Android licencie prehrávania používané Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Poskytovatelia dát, servisné kredity a Android licencie prehrávania používané Meowio TV.</string>
     <string name="licenses_attributions_section_app">LICENCIA APLIKÁCIE</string>
     <string name="licenses_attributions_section_data">DÁT A SLUŽBY</string>
     <string name="licenses_attributions_section_playback">ANDROID LICENCIE PREHRÁVANIA</string>
@@ -1063,24 +1063,25 @@
     <string name="trakt_code_expires">Kód vyprší o %1$s</string>
     <string name="trakt_token_refreshes">Prístupový token Trakt sa obnoví o %1$s</string>
     <string name="trakt_login_instruction">Stlačte Prihlásiť sa pre spustenie autentifikácie Trakt. Tu sa zobrazí QR kód.</string>
+    <string name="trakt_missing_credentials">Chýba TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET v local.properties.</string>
     <string name="trakt_watch_progress_title">Postup sledovania</string>
     <string name="trakt_watch_progress_subtitle">Vyberte, ktorý zdroj postupu sledovania riadi pokračovanie a obnovenie</string>
     <string name="trakt_watch_progress_dialog_title">Postup sledovania</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Vyberte, či má obnovenie a pokračovanie v sledovaní používať Trakt alebo Nuvio Sync, kým Trakt scrobbling zostane aktívny.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Vyberte, či má obnovenie a pokračovanie v sledovaní používať Trakt alebo Meowio Sync, kým Trakt scrobbling zostane aktívny.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Zdroj knižnice</string>
     <string name="trakt_library_source_subtitle">Vyberte, ktorú knižnicu použiť na ukladanie a zobrazovanie vašej kolekcie</string>
     <string name="trakt_library_source_dialog_title">Zdroj knižnice</string>
     <string name="trakt_library_source_dialog_subtitle">Vyberte, kde ukladať a spravovať položky knižnice</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio knižnica</string>
+    <string name="trakt_library_source_nuvio">Meowio knižnica</string>
     <string name="trakt_library_source_trakt_selected">Vybraná Trakt knižnica</string>
-    <string name="trakt_library_source_nuvio_selected">Vybraná Nuvio knižnica</string>
+    <string name="trakt_library_source_nuvio_selected">Vybraná Meowio knižnica</string>
     <string name="trakt_setting_on">Zapnuté</string>
     <string name="trakt_setting_off">Vypnuté</string>
     <string name="trakt_watch_progress_trakt_selected">Zdroj postupu sledovania nastavený na Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Zdroj postupu sledovania nastavený na Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Zdroj postupu sledovania nastavený na Meowio Sync</string>
     <string name="trakt_continue_watching_window">Okno pokračovania v sledovaní</string>
     <string name="trakt_continue_watching_subtitle">História Trakt zohľadnená pre pokračovanie v sledovaní</string>
     <string name="trakt_unaired_next_up">Nevysielané epizódy Ďalej sledovať</string>
@@ -1174,7 +1175,7 @@
     <string name="profile_addons">doplnky</string>
     <string name="profile_plugins">pluginy</string>
     <string name="profile_choose_avatar">Vybrať avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">Vlastné URL avatara je možné nakonfigurovať z webového panela Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">Vlastné URL avatara je možné nakonfigurovať z webového panela Meowio.</string>
     <string name="profile_avatar_none_selected">Žiadny avatar nie je vybraný</string>
     <string name="profile_avatar_focus_hint">Zamerajte avatar pre zobrazenie jeho názvu</string>
     <string name="profile_avatar_category_all">Všetky</string>
@@ -1217,7 +1218,7 @@
     <string name="profile_pin_overlay_set_support">Tento PIN bude vyžadovaný pred otvorením tohto profilu.</string>
     <string name="profile_pin_overlay_confirm_support">Znovu zadajte rovnaké 4 číslice pre dokončenie nastavenia.</string>
     <string name="profile_pin_overlay_mismatch">PINy sa nezhodovali. Zadajte nový PIN znova.</string>
-    <string name="profile_pin_overlay_forgot_hint">Zabudli ste PIN? Resetujte ho zo svojho Nuvio účtu na webovej stránke Nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Zabudli ste PIN? Resetujte ho zo svojho Meowio účtu na webovej stránke Meowio.</string>
     <string name="profile_pin_overlay_back_hint">Stlačte späť pre zrušenie</string>
 
     
@@ -1738,7 +1739,7 @@
     <string name="update_unknown_sources">Povoľte inštalácie z neznámych zdrojov, aby ste mohli pokračovať.</string>
     
     <string name="account_title">Účet</string>
-    <string name="account_sign_in_description">Prihláste sa, aby sa synchronizovala vaša knižnica, postup sledovania, doplnky a pluginy medzi zariadeniami. Synchronizácia knižnice používa Nuvio Sync, keď Trakt nie je pripojený, a postup sledovania môže používať Trakt alebo Nuvio Sync.</string>
+    <string name="account_sign_in_description">Prihláste sa, aby sa synchronizovala vaša knižnica, postup sledovania, doplnky a pluginy medzi zariadeniami. Synchronizácia knižnice používa Meowio Sync, keď Trakt nie je pripojený, a postup sledovania môže používať Trakt alebo Meowio Sync.</string>
     <string name="account_sync_code_title">Synchronizačný kód</string>
     <string name="account_sync_code_description">Synchronizujte medzi zariadeniami bez vytvorenia účtu.</string>
     <string name="account_linked_devices">Prepojené zariadenia (%1$d)</string>
@@ -2993,7 +2994,7 @@
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Pozadie</string>
     <string name="profile_choose_background">Vybrať pozadie profilu</string>
-    <string name="profile_background_member_note">Vlastné URL adresy pozadia je možné nastaviť vo webovom paneli Nuvio.</string>
+    <string name="profile_background_member_note">Vlastné URL adresy pozadia je možné nastaviť vo webovom paneli Meowio.</string>
     <string name="profile_background_normal">Normálne</string>
     <string name="profile_background_custom">Vlastné</string>
     <string name="profile_avatar_category_supporter">Podporovateľ</string>

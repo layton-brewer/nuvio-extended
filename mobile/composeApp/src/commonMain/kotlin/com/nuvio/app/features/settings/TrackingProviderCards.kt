@@ -66,6 +66,7 @@ import com.nuvio.app.core.ui.DialogSurface
 import com.nuvio.app.core.ui.NuvioLoadingIndicator
 import com.nuvio.app.core.ui.NuvioTokens
 import com.nuvio.app.core.ui.nuvio
+import com.nuvio.app.features.mdblist.MdbListTracker
 import com.nuvio.app.features.profiles.ProfileRepository
 import com.nuvio.app.features.simkl.SimklAuthError
 import com.nuvio.app.features.simkl.SimklAuthRepository
@@ -124,7 +125,7 @@ import nuvio.composeapp.generated.resources.settings_trakt_sign_in_description
 import org.jetbrains.compose.resources.stringResource
 
 internal enum class TrackingBrand(val displayName: String) {
-    NUVIO("Nuvio"),
+    NUVIO("Meowio"),
     TRAKT("Trakt"),
     SIMKL("Simkl"),
     MDBLIST("MDBList"),
@@ -163,6 +164,19 @@ internal fun SimklConnectionMode.toTrackingConnectionCardMode(): TrackingConnect
     SimklConnectionMode.CONNECTED -> TrackingConnectionCardMode.CONNECTED
 }
 
+/** True when this build can sign in to [brand], or the user is already signed in to it. */
+internal fun isTrackingProviderOffered(brand: TrackingBrand): Boolean = when (brand) {
+    TrackingBrand.TRAKT -> TraktAuthRepository.hasRequiredCredentials() || TraktAuthRepository.isAuthenticated.value
+    TrackingBrand.SIMKL -> SimklAuthRepository.hasRequiredCredentials() || SimklAuthRepository.isAuthenticated.value
+    TrackingBrand.MDBLIST -> MdbListTracker.auth.hasRequiredCredentials() || MdbListTracker.isAuthenticated.value
+    else -> true
+}
+
+internal fun anyTrackingProviderOffered(): Boolean =
+    isTrackingProviderOffered(TrackingBrand.TRAKT) ||
+        isTrackingProviderOffered(TrackingBrand.SIMKL) ||
+        isTrackingProviderOffered(TrackingBrand.MDBLIST)
+
 @Composable
 internal fun TrackingProviderCards(
     isTablet: Boolean,
@@ -191,19 +205,26 @@ internal fun TrackingProviderCards(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(if (isTablet) 16.dp else 12.dp),
     ) {
-        TraktProviderCard(
-            uiState = traktUiState,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        SimklProviderCard(
-            uiState = simklUiState,
-            isSyncing = syncState.isLoading,
-            syncErrorMessage = syncState.errorMessage,
-            onSyncRequested = onSimklSyncRequested,
-            onInfoRequested = { showSyncInfo = true },
-            modifier = Modifier.fillMaxWidth(),
-        )
-        MdbListProviderCard(Modifier.fillMaxWidth())
+        // A provider whose sign-in keys aren't in this build is hidden instead of showing setup errors.
+        if (isTrackingProviderOffered(TrackingBrand.TRAKT)) {
+            TraktProviderCard(
+                uiState = traktUiState,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+        if (isTrackingProviderOffered(TrackingBrand.SIMKL)) {
+            SimklProviderCard(
+                uiState = simklUiState,
+                isSyncing = syncState.isLoading,
+                syncErrorMessage = syncState.errorMessage,
+                onSyncRequested = onSimklSyncRequested,
+                onInfoRequested = { showSyncInfo = true },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+        if (isTrackingProviderOffered(TrackingBrand.MDBLIST)) {
+            MdbListProviderCard(Modifier.fillMaxWidth())
+        }
     }
 
     if (showSyncInfo) {
@@ -245,7 +266,6 @@ private fun TraktProviderCard(
         onCancelAuthorization = TraktAuthRepository::onCancelAuthorization,
         onDisconnect = TraktAuthRepository::onDisconnectRequested,
         modifier = modifier,
-        setupContent = { TraktOwnAppSetup() },
     )
 }
 
@@ -324,7 +344,6 @@ internal fun TrackingProviderCard(
     onSyncRequested: (() -> Unit)? = null,
     onInfoRequested: (() -> Unit)? = null,
     onDisconnect: () -> Unit,
-    setupContent: (@Composable () -> Unit)? = null,
 ) {
     val tokens = MaterialTheme.nuvio
     val uriHandler = LocalUriHandler.current
@@ -501,14 +520,10 @@ internal fun TrackingProviderCard(
                                 onClick = { actionScope.launch { openUrl(onConnectRequested()) } },
                             )
                             if (!credentialsConfigured) {
-                                if (setupContent != null) {
-                                    setupContent()
-                                } else {
-                                    TrackingBrandMessage(
-                                        text = missingCredentialsMessage,
-                                        isError = true,
-                                    )
-                                }
+                                TrackingBrandMessage(
+                                    text = missingCredentialsMessage,
+                                    isError = true,
+                                )
                             }
                         }
                     }

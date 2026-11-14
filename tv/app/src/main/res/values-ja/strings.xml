@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">アドオンがインストールされていません。追加して始めましょう</string>
     <string name="home_no_catalog_addons">カタログアドオンがインストールされていません。コンテンツを表示するにはカタログアドオンをインストールしてください</string>
-    <string name="auth_notice_nuvio_logged_out">Nuvioからサインアウトされました。再度サインインしてください</string>
+    <string name="auth_notice_nuvio_logged_out">Meowioからサインアウトされました。再度サインインしてください</string>
     <string name="auth_notice_trakt_logged_out">Traktからサインアウトされました。再接続してください</string>
     <string name="error_generic">エラーが発生しました</string>
 
@@ -434,7 +434,7 @@
     <string name="about_licenses_attributions">ライセンス &amp; 帰属</string>
     <string name="about_licenses_attributions_subtitle">データソース、謝辞、Androidライセンス</string>
     <string name="licenses_attributions_title">ライセンス &amp; 帰属</string>
-    <string name="licenses_attributions_subtitle">Nuvio TVが使用するデータプロバイダー、サービス、Android再生ライセンス</string>
+    <string name="licenses_attributions_subtitle">Meowio TVが使用するデータプロバイダー、サービス、Android再生ライセンス</string>
     <string name="licenses_attributions_section_app">アプリライセンス</string>
     <string name="licenses_attributions_section_data">データ &amp; サービス</string>
     <string name="licenses_attributions_section_playback">Android再生ライセンス</string>
@@ -1520,24 +1520,25 @@
     <string name="trakt_code_expires">コードの有効期限: %1$s</string>
     <string name="trakt_token_refreshes">Traktアクセストークンの更新: %1$s後</string>
     <string name="trakt_login_instruction">ログインを押してTraktデバイス認証を開始してください。ここにQRコードが表示されます</string>
+    <string name="trakt_missing_credentials">local.propertiesにTRAKT_CLIENT_ID / TRAKT_CLIENT_SECRETがありません</string>
     <string name="trakt_watch_progress_title">視聴進行状況</string>
     <string name="trakt_watch_progress_subtitle">再開と「視聴を続ける」を管理する進行状況ソースを選択</string>
     <string name="trakt_watch_progress_dialog_title">視聴進行状況</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Traktのスクロブルが有効な間、再開と視聴を続けるにTraktとNuvio Syncのどちらを使用するか選択してください</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Traktのスクロブルが有効な間、再開と視聴を続けるにTraktとMeowio Syncのどちらを使用するか選択してください</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">ライブラリソース</string>
     <string name="trakt_library_source_subtitle">コレクションの保存と表示に使用するライブラリを選択</string>
     <string name="trakt_library_source_dialog_title">ライブラリソース</string>
     <string name="trakt_library_source_dialog_subtitle">ライブラリアイテムの保存・管理先を選択</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvioライブラリ</string>
+    <string name="trakt_library_source_nuvio">Meowioライブラリ</string>
     <string name="trakt_library_source_trakt_selected">Traktライブラリを選択しました</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvioライブラリを選択しました</string>
+    <string name="trakt_library_source_nuvio_selected">Meowioライブラリを選択しました</string>
     <string name="trakt_setting_on">オン</string>
     <string name="trakt_setting_off">オフ</string>
     <string name="trakt_watch_progress_trakt_selected">視聴進行状況ソースをTraktに設定しました</string>
-    <string name="trakt_watch_progress_nuvio_selected">視聴進行状況ソースをNuvio Syncに設定しました</string>
+    <string name="trakt_watch_progress_nuvio_selected">視聴進行状況ソースをMeowio Syncに設定しました</string>
     <string name="trakt_continue_watching_window">視聴継続ウィンドウ</string>
     <string name="trakt_continue_watching_subtitle">「視聴を続ける」に表示するTraktの履歴期間</string>
     <string name="trakt_unaired_next_up">未放送の次のエピソード</string>
@@ -1643,11 +1644,11 @@
     <string name="profile_addons">アドオン</string>
     <string name="profile_plugins">プラグイン</string>
     <string name="profile_choose_avatar">アバターを選択</string>
-    <string name="profile_custom_avatar_web_panel_note">カスタムアバターURLはNuvioウェブパネルから設定できます。</string>
+    <string name="profile_custom_avatar_web_panel_note">カスタムアバターURLはMeowioウェブパネルから設定できます。</string>
     <string name="profile_editor_tab_avatar">アバター</string>
     <string name="profile_editor_tab_background">背景</string>
     <string name="profile_choose_background">プロフィール背景を選択</string>
-    <string name="profile_background_member_note">カスタム背景URLはNuvioウェブパネルから設定できます。</string>
+    <string name="profile_background_member_note">カスタム背景URLはMeowioウェブパネルから設定できます。</string>
     <string name="profile_background_normal">通常</string>
     <string name="profile_background_custom">カスタム</string>
     <string name="profile_avatar_none_selected">アバターが選択されていません</string>
@@ -1715,7 +1716,7 @@
     <string name="profile_pin_overlay_set_support">このプロフィールを開く前にPINの入力が必要になります</string>
     <string name="profile_pin_overlay_confirm_support">設定を完了するには同じ4桁を再入力してください</string>
     <string name="profile_pin_overlay_mismatch">PINが一致しませんでした。もう一度新しいPINを入力してください</string>
-    <string name="profile_pin_overlay_forgot_hint">PINを忘れた場合はNuvioウェブサイトのアカウントページからリセットできます</string>
+    <string name="profile_pin_overlay_forgot_hint">PINを忘れた場合はMeowioウェブサイトのアカウントページからリセットできます</string>
     <string name="profile_pin_overlay_back_hint">戻るボタンでキャンセル</string>
 
     
@@ -2412,7 +2413,7 @@
     <string name="update_unknown_sources">続けるには不明なソースからのインストールを許可してください</string>
     <!-- AccountScreen -->
     <string name="account_title">アカウント</string>
-    <string name="account_sign_in_description">サインインしてデバイス間でライブラリ、視聴進行状況、アドオン、プラグインを同期。ライブラリ同期はTraktが接続されていない場合はNuvio Syncを使用し、視聴進行状況はTraktまたはNuvio Syncのどちらかを使用できます</string>
+    <string name="account_sign_in_description">サインインしてデバイス間でライブラリ、視聴進行状況、アドオン、プラグインを同期。ライブラリ同期はTraktが接続されていない場合はMeowio Syncを使用し、視聴進行状況はTraktまたはMeowio Syncのどちらかを使用できます</string>
     <string name="account_sync_code_title">同期コード</string>
     <string name="account_sync_code_description">アカウントを作成せずにデバイス間で同期</string>
     <string name="account_linked_devices">リンク済みデバイス (%1$d)</string>

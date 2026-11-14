@@ -272,7 +272,7 @@ private fun AiPickCard(pick: AiPick, onClick: () -> Unit) {
 }
 
 @Composable
-internal fun AiTextField(
+private fun AiTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,

@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">Nincsenek telepített bővítmények. A kezdéshez adj hozzá egyet.</string>
     <string name="home_no_catalog_addons">Nincsenek katalógusbővítmények. Telepíts egyet a tartalom megtekintéséhez.</string>
-    <string name="auth_notice_nuvio_logged_out">Kijelentkeztél a Nuvio-ból. Kérlek, jelentkezz be újra.</string>
+    <string name="auth_notice_nuvio_logged_out">Kijelentkeztél a Meowio-ból. Kérlek, jelentkezz be újra.</string>
     <string name="auth_notice_trakt_logged_out">Kijelentkeztél a Trakt-ból. Kérlek, csatlakozz újra.</string>
     <string name="error_generic">Hiba történt</string>
 
@@ -433,7 +433,7 @@
     <string name="about_licenses_attributions">Licencek és forrásmegjelölések</string>
     <string name="about_licenses_attributions_subtitle">Adatforrások, köszönetnyilvánítások és Android licencek</string>
     <string name="licenses_attributions_title">Licencek és forrásmegjelölések</string>
-    <string name="licenses_attributions_subtitle">A Nuvio TV által használt adatszolgáltatók, szolgáltatási köszönetnyilvánítások és Android lejátszási licencek.</string>
+    <string name="licenses_attributions_subtitle">A Meowio TV által használt adatszolgáltatók, szolgáltatási köszönetnyilvánítások és Android lejátszási licencek.</string>
     <string name="licenses_attributions_section_app">ALKALMAZÁS LICENC</string>
     <string name="licenses_attributions_section_data">ADATOK ÉS SZOLGÁLTATÁSOK</string>
     <string name="licenses_attributions_section_playback">ANDROID LEJÁTSZÁSI LICENCEK</string>
@@ -1514,24 +1514,25 @@
     <string name="trakt_code_expires">A kód lejár: %1$s múlva</string>
     <string name="trakt_token_refreshes">Trakt token frissítése: %1$s múlva</string>
     <string name="trakt_login_instruction">Nyomd meg a Bejelentkezés gombot a Trakt hitelesítéshez. Egy QR-kód fog megjelenni.</string>
+    <string name="trakt_missing_credentials">Hiányzó TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET a local.properties fájlban.</string>
     <string name="trakt_watch_progress_title">Megtekintési folyamat</string>
     <string name="trakt_watch_progress_subtitle">Válaszd ki, melyik folyamatforrás vezérelje a lejátszás folytatását</string>
     <string name="trakt_watch_progress_dialog_title">Megtekintési folyamat</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Válaszd ki, hogy a folytatás és a Megtekintés folytatása a Traktot vagy a Nuvio Sync-et használja-e; a Trakt scrobbling közben aktív marad.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Válaszd ki, hogy a folytatás és a Megtekintés folytatása a Traktot vagy a Meowio Sync-et használja-e; a Trakt scrobbling közben aktív marad.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Könyvtár forrása</string>
     <string name="trakt_library_source_subtitle">Válaszd ki, melyik forrásból olvassa a Nuvio a könyvtáradat</string>
     <string name="trakt_library_source_dialog_title">Könyvtár forrása</string>
     <string name="trakt_library_source_dialog_subtitle">Válaszd ki, hol szeretnéd menteni és kezelni a könyvtárelemeidet</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio Könyvtár</string>
+    <string name="trakt_library_source_nuvio">Meowio Könyvtár</string>
     <string name="trakt_library_source_trakt_selected">Trakt könyvtár kiválasztva</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio könyvtár kiválasztva</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio könyvtár kiválasztva</string>
     <string name="trakt_setting_on">Be</string>
     <string name="trakt_setting_off">Ki</string>
     <string name="trakt_watch_progress_trakt_selected">Megtekintési folyamat forrása: Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Megtekintési folyamat forrása: Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Megtekintési folyamat forrása: Meowio Sync</string>
     <string name="trakt_continue_watching_window">Folytatási időablak</string>
     <string name="trakt_continue_watching_subtitle">A Trakt előzmények figyelembe vétele a folytatáshoz</string>
     <string name="trakt_unaired_next_up">Még nem vetített epizódok</string>
@@ -1637,11 +1638,11 @@
     <string name="profile_addons">bővítmények</string>
     <string name="profile_plugins">beépülő modulok</string>
     <string name="profile_choose_avatar">Avatar választása</string>
-    <string name="profile_custom_avatar_web_panel_note">Az egyedi avatar URL-ek a Nuvio webes felületén konfigurálhatók.</string>
+    <string name="profile_custom_avatar_web_panel_note">Az egyedi avatar URL-ek a Meowio webes felületén konfigurálhatók.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Háttér</string>
     <string name="profile_choose_background">Profil hátterének választása</string>
-    <string name="profile_background_member_note">Az egyedi háttér URL-ek a Nuvio webes felületén konfigurálhatók.</string>
+    <string name="profile_background_member_note">Az egyedi háttér URL-ek a Meowio webes felületén konfigurálhatók.</string>
     <string name="profile_background_normal">Normál</string>
     <string name="profile_background_custom">Egyedi</string>
     <string name="profile_avatar_none_selected">Nincs avatar kiválasztva</string>
@@ -1709,7 +1710,7 @@
     <string name="profile_pin_overlay_set_support">Ez a PIN szükséges lesz a profil megnyitása előtt.</string>
     <string name="profile_pin_overlay_confirm_support">Írd be újra ugyanazt a 4 számjegyet a beállítás befejezéséhez.</string>
     <string name="profile_pin_overlay_mismatch">A PIN-kódok nem egyeznek. Add meg újra az új PIN-t.</string>
-    <string name="profile_pin_overlay_forgot_hint">Elfelejtetted a PIN-t? Állítsd alaphelyzetbe a Nuvio fiókodból a weboldalon.</string>
+    <string name="profile_pin_overlay_forgot_hint">Elfelejtetted a PIN-t? Állítsd alaphelyzetbe a Meowio fiókodból a weboldalon.</string>
     <string name="profile_pin_overlay_back_hint">Nyomd meg a vissza gombot a kilépéshez</string>
 
 

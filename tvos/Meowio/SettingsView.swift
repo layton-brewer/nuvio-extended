@@ -32,11 +32,14 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    NavigationLink { TraktSettingsView() } label: {
-                        HStack {
-                            Text("Trakt")
-                            Spacer()
-                            Text(trakt.connected ? (trakt.username ?? "Connected") : "Not connected").foregroundStyle(.secondary)
+                    // Trakt is only offered when this build has Trakt sign-in keys (or you're already signed in).
+                    if TraktStore.configured || trakt.connected {
+                        NavigationLink { TraktSettingsView() } label: {
+                            HStack {
+                                Text("Trakt")
+                                Spacer()
+                                Text(trakt.connected ? (trakt.username ?? "Connected") : "Not connected").foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }

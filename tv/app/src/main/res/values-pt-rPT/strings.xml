@@ -96,7 +96,7 @@
     <string name="web_import_invalid_json">JSON inválido</string>
     <string name="home_no_addons">Nenhum addon instalado. Adiciona um para começar.</string>
     <string name="home_no_catalog_addons">Nenhum addon de catálogo instalado. Instala um addon de catálogo para veres conteúdos.</string>
-    <string name="auth_notice_nuvio_logged_out">A tua sessão no Nuvio foi terminada. Inicia sessão novamente.</string>
+    <string name="auth_notice_nuvio_logged_out">A tua sessão no Meowio foi terminada. Inicia sessão novamente.</string>
     <string name="auth_notice_trakt_logged_out">A tua sessão no Trakt foi terminada. Volta a ligar a conta.</string>
     <string name="error_generic">Ocorreu um erro</string>
     <string name="action_retry">Tentar novamente</string>
@@ -334,7 +334,7 @@
     <string name="about_licenses_attributions">Licenças e atribuição</string>
     <string name="about_licenses_attributions_subtitle">Fontes de dados, agradecimentos e licenças Android</string>
     <string name="licenses_attributions_title">Licenças e atribuição</string>
-    <string name="licenses_attributions_subtitle">Fornecedores de dados, créditos de serviços e licenças de reprodução Android utilizadas pelo Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Fornecedores de dados, créditos de serviços e licenças de reprodução Android utilizadas pelo Meowio TV.</string>
     <string name="licenses_attributions_section_app">LICENÇA DA APP</string>
     <string name="licenses_attributions_section_data">DADOS E SERVIÇOS</string>
     <string name="licenses_attributions_section_playback">LICENÇAS DE REPRODUÇÃO ANDROID</string>
@@ -1094,24 +1094,25 @@
     <string name="trakt_code_expires">O código expira em %1$s</string>
     <string name="trakt_token_refreshes">O token de acesso do Trakt renova-se em %1$s</string>
     <string name="trakt_login_instruction">Carrega em Iniciar sessão para começar a autenticação do dispositivo no Trakt. Vai aparecer aqui um código QR.</string>
+    <string name="trakt_missing_credentials">Falta TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET no ficheiro local.properties.</string>
     <string name="trakt_watch_progress_title">Progresso de visualização</string>
     <string name="trakt_watch_progress_subtitle">Define a fonte de progresso utilizada para retomar e continuar a ver.</string>
     <string name="trakt_watch_progress_dialog_title">Progresso de visualização</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Escolhe se Retomar e Continuar a Ver devem utilizar o Trakt ou o Nuvio Sync enquanto o scrobbling do Trakt permanece ativo.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Escolhe se Retomar e Continuar a Ver devem utilizar o Trakt ou o Meowio Sync enquanto o scrobbling do Trakt permanece ativo.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Fonte da biblioteca</string>
     <string name="trakt_library_source_subtitle">Escolhe que biblioteca utilizar para guardar e ver a tua coleção.</string>
     <string name="trakt_library_source_dialog_title">Fonte da biblioteca</string>
     <string name="trakt_library_source_dialog_subtitle">Escolhe onde guardar e gerir os itens da tua biblioteca.</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Biblioteca Nuvio</string>
+    <string name="trakt_library_source_nuvio">Biblioteca Meowio</string>
     <string name="trakt_library_source_trakt_selected">Biblioteca do Trakt selecionada</string>
-    <string name="trakt_library_source_nuvio_selected">Biblioteca do Nuvio selecionada</string>
+    <string name="trakt_library_source_nuvio_selected">Biblioteca do Meowio selecionada</string>
     <string name="trakt_setting_on">Ligado</string>
     <string name="trakt_setting_off">Desligado</string>
     <string name="trakt_watch_progress_trakt_selected">Fonte de progresso de visualização definida para Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Fonte de progresso de visualização definida para Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Fonte de progresso de visualização definida para Meowio Sync</string>
     <string name="trakt_continue_watching_window">Janela de Continuar a Ver</string>
     <string name="trakt_continue_watching_subtitle">Histórico do Trakt considerado no Continuar a Ver.</string>
     <string name="trakt_unaired_next_up">Próximos episódios não emitidos</string>
@@ -1203,7 +1204,7 @@
     <string name="profile_addons">addons</string>
     <string name="profile_plugins">plugins</string>
     <string name="profile_choose_avatar">Escolher avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">Os URLs de avatares personalizados podem ser configurados a partir do painel web do Nuvio.</string>
+    <string name="profile_custom_avatar_web_panel_note">Os URLs de avatares personalizados podem ser configurados a partir do painel web do Meowio.</string>
     <string name="profile_avatar_none_selected">Nenhum avatar selecionado</string>
     <string name="profile_avatar_focus_hint">Foca num avatar para ver o teu nome</string>
     <string name="profile_avatar_category_all">Tudo</string>
@@ -1246,7 +1247,7 @@
     <string name="profile_pin_overlay_set_support">Este PIN será obrigatório antes de abrir este perfil.</string>
     <string name="profile_pin_overlay_confirm_support">Reintroduz os mesmos 4 dígitos para concluir a configuração.</string>
     <string name="profile_pin_overlay_mismatch">Os PINs não coincidem. Introduz um novo PIN novamente.</string>
-    <string name="profile_pin_overlay_forgot_hint">Esqueceste-te do PIN? Repõe-no a partir da tua conta Nuvio no site do nuvio.</string>
+    <string name="profile_pin_overlay_forgot_hint">Esqueceste-te do PIN? Repõe-no a partir da tua conta Meowio no site do nuvio.</string>
     <string name="profile_pin_overlay_back_hint">Carrega em Voltar para cancelar.</string>
     <!-- Essential addon setup wizard -->
     <string name="essential_addon_setup_title">Configurar addons</string>
@@ -1757,7 +1758,7 @@
     <string name="update_unknown_sources">Permite as instalações de fontes desconhecidas para continuar.</string>
     <!-- AccountScreen -->
     <string name="account_title">Conta</string>
-    <string name="account_sign_in_description">Inicia sessão para sincronizar a tua biblioteca, progresso de visualização, addons e plugins entre dispositivos. A sincronização da biblioteca utiliza o Nuvio Sync quando o Trakt não está ligado, e o progresso de visualização pode utilizar tanto o Trakt como o Nuvio Sync.</string>
+    <string name="account_sign_in_description">Inicia sessão para sincronizar a tua biblioteca, progresso de visualização, addons e plugins entre dispositivos. A sincronização da biblioteca utiliza o Meowio Sync quando o Trakt não está ligado, e o progresso de visualização pode utilizar tanto o Trakt como o Meowio Sync.</string>
     <string name="account_sync_code_title">Código de Sincronização</string>
     <string name="account_sync_code_description">Sincroniza entre dispositivos sem criar uma conta.</string>
     <string name="account_linked_devices">Dispositivos associados (%1$d)</string>

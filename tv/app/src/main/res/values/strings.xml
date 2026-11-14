@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">No addons installed. Add one to get started.</string>
     <string name="home_no_catalog_addons">No catalog addons installed. Install a catalog addon to see content.</string>
-    <string name="auth_notice_nuvio_logged_out">You have been signed out of Nuvio. Please sign in again.</string>
+    <string name="auth_notice_nuvio_logged_out">You have been signed out of Meowio. Please sign in again.</string>
     <string name="auth_notice_trakt_logged_out">You have been signed out of Trakt. Please reconnect.</string>
     <string name="error_generic">An error occurred</string>
 
@@ -437,7 +437,7 @@
     <string name="about_licenses_attributions">Licenses &amp; Attribution</string>
     <string name="about_licenses_attributions_subtitle">Data sources, acknowledgements, and Android licenses</string>
     <string name="licenses_attributions_title">Licenses &amp; Attribution</string>
-    <string name="licenses_attributions_subtitle">Data providers, service credits, and Android playback licenses used by Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Data providers, service credits, and Android playback licenses used by Meowio TV.</string>
     <string name="licenses_attributions_section_app">APP LICENSE</string>
     <string name="licenses_attributions_section_data">DATA &amp; SERVICES</string>
     <string name="licenses_attributions_section_playback">ANDROID PLAYBACK LICENSES</string>
@@ -1307,7 +1307,7 @@
     <string name="mdblist_last_synced">Last synced %1$s</string>
     <string name="mdblist_disconnect_title">Disconnect MDBList?</string>
     <string name="mdblist_disconnect_subtitle">Stop sending watch updates from this profile. Your MDBList history is kept.</string>
-    <string name="mdblist_missing_client">MDBList connection is unavailable in this build.</string>
+    <string name="mdblist_missing_client">MDBList sign-in isn\'t available in this version.</string>
     <string name="mdblist_invalid_response">MDBList returned an incomplete response. Please try again.</string>
     <string name="mdblist_code_expired">This code has expired. Try again to get a new code.</string>
     <string name="mdblist_access_denied">Connection was declined. Try again to connect your account.</string>
@@ -1587,33 +1587,25 @@
     <string name="trakt_code_expires">Code expires in %1$s</string>
     <string name="trakt_token_refreshes">Trakt access token refreshes in %1$s</string>
     <string name="trakt_login_instruction">Press Login to start Trakt device authentication. A QR code will appear here.</string>
-    <string name="trakt_missing_credentials">Set up your Trakt app first (one time).</string>
-    <string name="trakt_own_app_title">Set up Trakt (one time)</string>
-    <string name="trakt_own_app_steps">You sign in with your own Trakt account. First, on a phone or computer, open trakt.tv/oauth/applications/new, give it any name, put urn:ietf:wg:oauth:2.0:oob and nuvio://auth/trakt on separate lines under Redirect URI, and save. Then enter its Client ID and Client Secret here. They stay on this device.</string>
-    <string name="trakt_own_app_client_id">Client ID</string>
-    <string name="trakt_own_app_client_secret">Client Secret</string>
-    <string name="trakt_own_app_save">Save and continue</string>
-    <string name="trakt_own_app_saved">Trakt app saved. Press Login to sign in.</string>
-    <string name="trakt_own_app_incomplete">Enter both the Client ID and the Client Secret.</string>
-    <string name="trakt_own_app_change">Use a different Trakt app</string>
+    <string name="trakt_missing_credentials">Trakt sign-in isn\'t available in this version.</string>
     <string name="trakt_watch_progress_title">Watch Progress</string>
     <string name="trakt_watch_progress_subtitle">Choose which progress source powers resume and continue watching</string>
     <string name="trakt_watch_progress_dialog_title">Watch Progress</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Choose whether resume and continue watching should use Trakt or Nuvio Sync while Trakt scrobbling stays active.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Choose whether resume and continue watching should use Trakt or Meowio Sync while Trakt scrobbling stays active.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Library Source</string>
     <string name="trakt_library_source_subtitle">Choose which source Meowio reads for your Library</string>
     <string name="trakt_library_source_dialog_title">Library Source</string>
     <string name="trakt_library_source_dialog_subtitle">Choose where to save and manage your library items</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio Library</string>
+    <string name="trakt_library_source_nuvio">Meowio Library</string>
     <string name="trakt_library_source_trakt_selected">Trakt library selected</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio library selected</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio library selected</string>
     <string name="trakt_setting_on">On</string>
     <string name="trakt_setting_off">Off</string>
     <string name="trakt_watch_progress_trakt_selected">Watch progress source set to Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Watch progress source set to Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Watch progress source set to Meowio Sync</string>
     <string name="trakt_continue_watching_window">Continue Watching Window</string>
     <string name="trakt_continue_watching_subtitle">Trakt history considered for continue watching</string>
     <string name="trakt_unaired_next_up">Unaired Next Up Episodes</string>
@@ -1719,11 +1711,11 @@
     <string name="profile_addons">addons</string>
     <string name="profile_plugins">plugins</string>
     <string name="profile_choose_avatar">Choose Avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">Custom avatar URLs can be configured from the Nuvio web panel.</string>
+    <string name="profile_custom_avatar_web_panel_note">Custom avatar URLs can be configured from the Meowio web panel.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Background</string>
     <string name="profile_choose_background">Choose Profile Background</string>
-    <string name="profile_background_member_note">Custom background URLs can be configured from the Nuvio web panel.</string>
+    <string name="profile_background_member_note">Custom background URLs can be configured from the Meowio web panel.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="profile_background_custom">Custom</string>
     <string name="profile_avatar_none_selected">No avatar selected</string>
@@ -1791,7 +1783,7 @@
     <string name="profile_pin_overlay_set_support">This PIN will be required before opening this profile.</string>
     <string name="profile_pin_overlay_confirm_support">Re-enter the same 4 digits to finish setup.</string>
     <string name="profile_pin_overlay_mismatch">PINs did not match. Enter a new PIN again.</string>
-    <string name="profile_pin_overlay_forgot_hint">Forgot PIN? Reset it from your Nuvio account on the Nuvio website.</string>
+    <string name="profile_pin_overlay_forgot_hint">Forgot PIN? Reset it from your Meowio account on the Meowio website.</string>
     <string name="profile_pin_overlay_back_hint">Press back to cancel</string>
 
 
@@ -2488,7 +2480,7 @@
     <string name="update_unknown_sources">Allow installs from unknown sources to continue.</string>
     <!-- AccountScreen -->
     <string name="account_title">Account</string>
-    <string name="account_sign_in_description">Sign in to sync your library, watch progress, addons, and plugins across devices. Library sync uses Nuvio Sync when Trakt is not connected, and watch progress can use either Trakt or Nuvio Sync.</string>
+    <string name="account_sign_in_description">Sign in to sync your library, watch progress, addons, and plugins across devices. Library sync uses Meowio Sync when Trakt is not connected, and watch progress can use either Trakt or Meowio Sync.</string>
     <string name="account_sync_code_title">Sync Code</string>
     <string name="account_sync_code_description">Sync across devices without creating an account.</string>
     <string name="account_linked_devices">Linked Devices (%1$d)</string>
@@ -2707,7 +2699,7 @@
     <string name="trakt_error_code_expired">Device code expired. Start again.</string>
     <string name="trakt_error_code_used">Device code already used. Start again.</string>
     <string name="trakt_error_denied">Authorization denied on Trakt.</string>
-    <string name="trakt_error_missing_credentials">Missing TRAKT credentials</string>
+    <string name="trakt_error_missing_credentials">Trakt isn\'t available in this version.</string>
     <string name="trakt_error_network_retry">Network error, please try again</string>
     <string name="trakt_error_network_will_retry">Network error, will retry</string>
     <string name="trakt_error_rate_limited_minutes">Trakt is rate limiting requests. Try again in ~%1$d min</string>
@@ -3234,7 +3226,7 @@
     <string name="simkl_sync_info_library_statuses">Shows placed in Simkl’s On Hold or Dropped lists are hidden from Continue Watching. They remain hidden for as long as they stay in either list.</string>
     <string name="simkl_sync_info_docs">Read the Simkl sync guide</string>
     <string name="error_open_browser_failed">Failed to open browser</string>
-    <string name="simkl_missing_credentials">Missing SIMKL_CLIENT_ID</string>
+    <string name="simkl_missing_credentials">Simkl sign-in isn\'t available in this version.</string>
     <string name="simkl_status_enter_code">Enter the code on Simkl to finish connecting</string>
     <string name="simkl_status_waiting">Waiting for Simkl approval…</string>
     <string name="simkl_status_connected">Connected to Simkl</string>

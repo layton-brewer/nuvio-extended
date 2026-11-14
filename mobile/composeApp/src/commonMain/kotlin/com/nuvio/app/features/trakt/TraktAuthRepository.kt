@@ -113,13 +113,8 @@ object TraktAuthRepository : TrackingAuthProvider {
         return _uiState.value
     }
 
-    fun hasRequiredCredentials(): Boolean = TraktAppCredentials.isConfigured
-
-    /** Stores the user's own Trakt app and refreshes the settings card so they can sign in. */
-    fun saveOwnApp(clientId: String, clientSecret: String) {
-        TraktAppCredentials.save(clientId, clientSecret)
-        publish(errorMessage = null)
-    }
+    fun hasRequiredCredentials(): Boolean =
+        TraktConfig.CLIENT_ID.isNotBlank() && TraktConfig.CLIENT_SECRET.isNotBlank()
 
     fun onConnectRequested(profileId: Int = ProfileRepository.activeProfileId): String? {
         ensureLoaded(profileId)
@@ -198,7 +193,7 @@ object TraktAuthRepository : TrackingAuthProvider {
 
         return mapOf(
             "trakt-api-version" to API_VERSION,
-            "trakt-api-key" to TraktAppCredentials.clientId,
+            "trakt-api-key" to TraktConfig.CLIENT_ID,
             "Authorization" to "Bearer $accessToken",
         )
     }
@@ -298,8 +293,8 @@ object TraktAuthRepository : TrackingAuthProvider {
         val body = json.encodeToString(
             TraktAuthorizationCodeRequest(
                 code = code,
-                clientId = TraktAppCredentials.clientId,
-                clientSecret = TraktAppCredentials.clientSecret,
+                clientId = TraktConfig.CLIENT_ID,
+                clientSecret = TraktConfig.CLIENT_SECRET,
                 redirectUri = TraktConfig.REDIRECT_URI,
             ),
         )
@@ -359,8 +354,8 @@ object TraktAuthRepository : TrackingAuthProvider {
             val body = json.encodeToString(
                 TraktRevokeRequest(
                     token = token,
-                    clientId = TraktAppCredentials.clientId,
-                    clientSecret = TraktAppCredentials.clientSecret,
+                    clientId = TraktConfig.CLIENT_ID,
+                    clientSecret = TraktConfig.CLIENT_SECRET,
                 ),
             )
             runCatching {
@@ -396,8 +391,8 @@ object TraktAuthRepository : TrackingAuthProvider {
         val body = json.encodeToString(
             TraktRefreshTokenRequest(
                 refreshToken = refreshToken,
-                clientId = TraktAppCredentials.clientId,
-                clientSecret = TraktAppCredentials.clientSecret,
+                clientId = TraktConfig.CLIENT_ID,
+                clientSecret = TraktConfig.CLIENT_SECRET,
                 redirectUri = TraktConfig.REDIRECT_URI,
             ),
         )
@@ -523,7 +518,7 @@ object TraktAuthRepository : TrackingAuthProvider {
 
     private fun buildAuthorizationUrl(state: String): String {
         val responseType = "code"
-        val encodedClientId = TraktAppCredentials.clientId.encodeURLParameter()
+        val encodedClientId = TraktConfig.CLIENT_ID.encodeURLParameter()
         val encodedRedirectUri = TraktConfig.REDIRECT_URI.encodeURLParameter()
         val encodedState = state.encodeURLParameter()
         return "$AUTHORIZE_URL?response_type=$responseType&client_id=$encodedClientId&redirect_uri=$encodedRedirectUri&state=$encodedState"

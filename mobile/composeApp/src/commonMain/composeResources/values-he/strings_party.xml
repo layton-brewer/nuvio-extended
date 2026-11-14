@@ -3,13 +3,13 @@
     <string name="party_start_title">צפייה משותפת</string>
     <string name="party_start_description">אפשר להזמין חברים. כל אחד מפעיל מהמקורות שלו וכולם נשארים מסונכרנים.</string>
     <string name="party_start_action">פתיחת מסיבת צפייה</string>
-    <string name="party_sign_in_required">יש להתחבר לחשבון Nuvio כדי להשתמש במסיבות צפייה.</string>
+    <string name="party_sign_in_required">יש להתחבר לחשבון Meowio כדי להשתמש במסיבות צפייה.</string>
     <string name="party_unavailable">מסיבות צפייה אינן זמינות כרגע.</string>
     <string name="party_experimental">מסיבות צפייה הן ניסיוניות וייתכן שלא יפעלו כמצופה.</string>
     <string name="party_code_label">קוד מסיבה</string>
     <string name="party_copy_invite">העתקת הזמנה</string>
     <string name="party_invite_copied">ההזמנה הועתקה</string>
-    <string name="party_invite_message">הצטרפו למסיבת הצפייה שלי ב-Nuvio עם הקוד %1$s\n%2$s</string>
+    <string name="party_invite_message">הצטרפו למסיבת הצפייה שלי ב-Meowio עם הקוד %1$s\n%2$s</string>
     <string name="party_seats">%1$d מתוך %2$d מקומות</string>
     <string name="party_host">מארח</string>
     <string name="party_you">אני</string>

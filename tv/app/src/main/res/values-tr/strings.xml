@@ -100,7 +100,7 @@
     <!-- HomeScreen -->
     <string name="home_no_addons">Yüklü eklenti yok. Başlamak için bir eklenti ekleyin.</string>
     <string name="home_no_catalog_addons">Katalog eklentisi yok. İçerikleri görmek için bir katalog eklentisi yükleyin.</string>
-    <string name="auth_notice_nuvio_logged_out">Nuvio hesabınızdan çıkış yapıldı. Lütfen tekrar giriş yapın.</string>
+    <string name="auth_notice_nuvio_logged_out">Meowio hesabınızdan çıkış yapıldı. Lütfen tekrar giriş yapın.</string>
     <string name="auth_notice_trakt_logged_out">Trakt hesabınızdan çıkış yapıldı. Lütfen yeniden bağlanın.</string>
     <string name="error_generic">Bir hata oluştu</string>
 
@@ -437,7 +437,7 @@
     <string name="about_licenses_attributions">Lisanslar ve Atıflar</string>
     <string name="about_licenses_attributions_subtitle">Veri kaynakları, teşekkürler ve Android lisansları</string>
     <string name="licenses_attributions_title">Lisanslar ve Atıflar</string>
-    <string name="licenses_attributions_subtitle">Nuvio TV tarafından kullanılan veri sağlayıcıları, hizmet kredileri ve Android oynatma lisansları.</string>
+    <string name="licenses_attributions_subtitle">Meowio TV tarafından kullanılan veri sağlayıcıları, hizmet kredileri ve Android oynatma lisansları.</string>
     <string name="licenses_attributions_section_app">UYGULAMA LİSANSI</string>
     <string name="licenses_attributions_section_data">VERİ VE HİZMETLER</string>
     <string name="licenses_attributions_section_playback">ANDROID OYNATMA LİSANSLARI</string>
@@ -1527,24 +1527,25 @@
     <string name="trakt_code_expires">Kodun süresi %1$s sonra dolacak</string>
     <string name="trakt_token_refreshes">Trakt erişim jetonu %1$s içinde yenilenir</string>
     <string name="trakt_login_instruction">Trakt cihazı kimlik doğrulamasını başlatmak için Giriş\'e basın. Burada bir QR kodu görünecektir.</string>
+    <string name="trakt_missing_credentials">local.properties içinde TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET eksik.</string>
     <string name="trakt_watch_progress_title">İzleme İlerlemesi</string>
     <string name="trakt_watch_progress_subtitle">Devam etme ve izlemeye devam etme için hangi ilerleme kaynağının kullanılacağını seçin</string>
     <string name="trakt_watch_progress_dialog_title">İzleme İlerlemesi</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Trakt scrobbling aktifken devam etme ve izlemeye devam etmenin Trakt mı yoksa Nuvio Sync mi kullanacağını seçin.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Trakt scrobbling aktifken devam etme ve izlemeye devam etmenin Trakt mı yoksa Meowio Sync mi kullanacağını seçin.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Kütüphane Kaynağı</string>
     <string name="trakt_library_source_subtitle">Koleksiyonunuzu kaydetmek ve görüntülemek için hangi kütüphanenin kullanılacağını seçin</string>
     <string name="trakt_library_source_dialog_title">Kütüphane Kaynağı</string>
     <string name="trakt_library_source_dialog_subtitle">Kütüphane öğelerinizi nerede kaydedeceğinizi ve yöneteceğinizi seçin</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio Kütüphanesi</string>
+    <string name="trakt_library_source_nuvio">Meowio Kütüphanesi</string>
     <string name="trakt_library_source_trakt_selected">Trakt kütüphanesi seçildi</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio kütüphanesi seçildi</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio kütüphanesi seçildi</string>
     <string name="trakt_setting_on">Açık</string>
     <string name="trakt_setting_off">Kapalı</string>
     <string name="trakt_watch_progress_trakt_selected">İzleme ilerlemesi kaynağı Trakt olarak ayarlandı</string>
-    <string name="trakt_watch_progress_nuvio_selected">İzleme ilerlemesi kaynağı Nuvio Sync olarak ayarlandı</string>
+    <string name="trakt_watch_progress_nuvio_selected">İzleme ilerlemesi kaynağı Meowio Sync olarak ayarlandı</string>
     <string name="trakt_continue_watching_window">İzlemeye Devam Etme Penceresi</string>
     <string name="trakt_continue_watching_subtitle">İzlemeye devam etme için dikkate alınan Trakt geçmişi</string>
     <string name="trakt_unaired_next_up">Yayınlanmamış Sıradaki Bölümler</string>
@@ -1645,11 +1646,11 @@
     <string name="profile_addons">eklentiler</string>
     <string name="profile_plugins">uzantılar</string>
     <string name="profile_choose_avatar">Profil Resmi Seçin</string>
-    <string name="profile_custom_avatar_web_panel_note">Özel avatar URL\'leri Nuvio web panelinden yapılandırılabilir.</string>
+    <string name="profile_custom_avatar_web_panel_note">Özel avatar URL\'leri Meowio web panelinden yapılandırılabilir.</string>
     <string name="profile_editor_tab_avatar">Avatar</string>
     <string name="profile_editor_tab_background">Arka Plan</string>
     <string name="profile_choose_background">Profil Arka Planını Seçin</string>
-    <string name="profile_background_member_note">Özel arka plan URL\'leri Nuvio web panelinden yapılandırılabilir.</string>
+    <string name="profile_background_member_note">Özel arka plan URL\'leri Meowio web panelinden yapılandırılabilir.</string>
     <string name="profile_background_normal">Normal</string>
     <string name="profile_background_custom">Özel</string>
     <string name="profile_avatar_none_selected">Görsel seçilmedi</string>
@@ -1717,7 +1718,7 @@
     <string name="profile_pin_overlay_set_support">Bu PIN, profil açılmadan önce her seferinde istenecek.</string>
     <string name="profile_pin_overlay_confirm_support">Kurulumu tamamlamak için aynı 4 rakamı tekrar girin.</string>
     <string name="profile_pin_overlay_mismatch">PINler eşleşmedi. Tekrar deneyin.</string>
-    <string name="profile_pin_overlay_forgot_hint">PIN mi unuttunuz? Nuvio web sitesinden sıfırlayabilirsiniz.</string>
+    <string name="profile_pin_overlay_forgot_hint">PIN mi unuttunuz? Meowio web sitesinden sıfırlayabilirsiniz.</string>
     <string name="profile_pin_overlay_back_hint">İptal etmek için geri tuşuna basın</string>
 
 
@@ -2400,7 +2401,7 @@
     <string name="update_unknown_sources">Nuvio\'nun indirdiği eklentileri yüklayabilmek adına `Bilinmeyen kaynaklar` veya `Dışarıdan yükleme` iznine ihtiyaç var.</string>
     <!-- AccountScreen -->
     <string name="account_title">Hesap</string>
-    <string name="account_sign_in_description">Kütüphanenizi, izleme ilerlemenizi, eklenti ve uzantılarınızı cihazlar arasında eşleyin. Trakt bağlı değilken Nuvio Sync kullanılır.</string>
+    <string name="account_sign_in_description">Kütüphanenizi, izleme ilerlemenizi, eklenti ve uzantılarınızı cihazlar arasında eşleyin. Trakt bağlı değilken Meowio Sync kullanılır.</string>
     <string name="account_sync_code_title">Eşleştirme Kodu</string>
     <string name="account_sync_code_description">Hesap oluşturmadan cihazlarınızı eşleyin.</string>
     <string name="account_linked_devices">Bağlı Cihazlar (%1$d)</string>

@@ -85,7 +85,6 @@ class NuvioApplication : Application(), SingletonImageLoader.Factory {
     override fun onCreate() {
         // Before super.onCreate(): Hilt creates injected services there, and the budget is read once.
         MemoryBudget.init(this)
-        com.nuvio.tv.core.trakt.TraktAppCredentials.init(this)
         super.onCreate()
         SentryInitializer.start(this, sentrySettingsDataStore)
         PluginRuntimeHooks.onApplicationCreate(this)

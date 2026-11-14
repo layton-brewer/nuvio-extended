@@ -527,14 +527,15 @@
     <string name="trakt_code_expires">Kodas galioja dar %1$s</string>
     <string name="trakt_token_refreshes">„Trakt“ prieigos raktas atnaujinamas po %1$s</string>
     <string name="trakt_login_instruction">Paspauskite „Prisijungti“, kad pradėtumėte „Trakt“ įrenginio autentifikavimą. Čia pasirodys QR kodas.</string>
+    <string name="trakt_missing_credentials">Faile „local.properties“ trūksta TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET parametrų.</string>
     <string name="trakt_watch_progress_title">Žiūrėjimo pažanga</string>
     <string name="trakt_watch_progress_subtitle">Pasirinkite, kuris pažangos šaltinis valdys atkūrimo tęsimą ir „Tęsti žiūrėjimą“</string>
     <string name="trakt_watch_progress_dialog_title">Žiūrėjimo pažanga</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Pasirinkite, ar tęsimui ir „Tęsti žiūrėjimą“ naudoti „Trakt“, ar „Nuvio Sync“. „Trakt“ peržiūrų registravimas (scrobbling) vis tiek išliks aktyvus.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Pasirinkite, ar tęsimui ir „Tęsti žiūrėjimą“ naudoti „Trakt“, ar „Meowio Sync“. „Trakt“ peržiūrų registravimas (scrobbling) vis tiek išliks aktyvus.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_watch_progress_trakt_selected">Žiūrėjimo pažangos šaltinis nustatytas į „Trakt“</string>
-    <string name="trakt_watch_progress_nuvio_selected">Žiūrėjimo pažangos šaltinis nustatytas į „Nuvio Sync“</string>
+    <string name="trakt_watch_progress_nuvio_selected">Žiūrėjimo pažangos šaltinis nustatytas į „Meowio Sync“</string>
     <string name="trakt_continue_watching_window">„Tęsti žiūrėjimą“ langas</string>
     <string name="trakt_continue_watching_subtitle">„Trakt“ istorija, naudojama „Tęsti žiūrėjimą“ skilčiai</string>
     <string name="trakt_unaired_next_up">Neišleistos „Kitas“ serijos</string>
@@ -932,7 +933,7 @@
     <string name="update_unknown_sources">Leisti diegti iš nežinomų šaltinių</string>
     <!-- AccountScreen -->
     <string name="account_title">Paskyra</string>
-    <string name="account_sign_in_description">Prisijunkite, kad sinchronizuotumėte biblioteką, žiūrėjimo pažangą, priedus ir įskiepius tarp įrenginių. Kai „Trakt“ neprijungta, biblioteka sinchronizuojama per „Nuvio Sync“. Žiūrėjimo pažangą galima sinchronizuoti per „Trakt“ arba „Nuvio Sync“.</string>
+    <string name="account_sign_in_description">Prisijunkite, kad sinchronizuotumėte biblioteką, žiūrėjimo pažangą, priedus ir įskiepius tarp įrenginių. Kai „Trakt“ neprijungta, biblioteka sinchronizuojama per „Meowio Sync“. Žiūrėjimo pažangą galima sinchronizuoti per „Trakt“ arba „Meowio Sync“.</string>
     <string name="account_sync_code_title">Sinchronizavimo kodas</string>
     <string name="account_sync_code_description">Sinchronizuokite įrenginius nesukurdami paskyros.</string>
     <string name="account_linked_devices">Susieti įrenginiai (%1$d)</string>
@@ -1069,7 +1070,7 @@
     <string name="web_import_expected_array">Tikėtasi JSON kolekcijų masyvo</string>
     <string name="web_import_empty_array">Tuščias masyvas: kolekcijų nerasta</string>
     <string name="web_import_invalid_json">Netinkamas JSON</string>
-    <string name="auth_notice_nuvio_logged_out">Atsijungėte nuo „Nuvio“. Prisijunkite dar kartą.</string>
+    <string name="auth_notice_nuvio_logged_out">Atsijungėte nuo „Meowio“. Prisijunkite dar kartą.</string>
     <string name="auth_notice_trakt_logged_out">Atsijungėte nuo „Trakt“. Prisijunkite dar kartą.</string>
     <string name="cw_next_up_short">Kitas</string>
     <string name="cw_new_episode">Nauja serija</string>
@@ -1255,7 +1256,7 @@
     <string name="about_licenses_attributions">Licencijos ir šaltiniai</string>
     <string name="about_licenses_attributions_subtitle">Duomenų šaltiniai, padėkos ir „Android“ licencijos</string>
     <string name="licenses_attributions_title">Licencijos ir šaltiniai</string>
-    <string name="licenses_attributions_subtitle">„Nuvio TV“ naudojami duomenų teikėjai, paslaugų šaltiniai ir „Android“ atkūrimo licencijos.</string>
+    <string name="licenses_attributions_subtitle">„Meowio TV“ naudojami duomenų teikėjai, paslaugų šaltiniai ir „Android“ atkūrimo licencijos.</string>
     <string name="licenses_attributions_section_app">PROGRAMOS LICENCIJA</string>
     <string name="licenses_attributions_section_data">DUOMENYS IR PASLAUGOS</string>
     <string name="licenses_attributions_section_playback">„ANDROID“ ATKŪRIMO LICENCIJOS</string>
@@ -1990,9 +1991,9 @@
     <string name="trakt_library_source_dialog_title">Bibliotekos šaltinis</string>
     <string name="trakt_library_source_dialog_subtitle">Pasirinkite, kur išsaugoti ir tvarkyti bibliotekos elementus</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio biblioteka</string>
+    <string name="trakt_library_source_nuvio">Meowio biblioteka</string>
     <string name="trakt_library_source_trakt_selected">Pasirinkta Trakt biblioteka</string>
-    <string name="trakt_library_source_nuvio_selected">Pasirinkta Nuvio biblioteka</string>
+    <string name="trakt_library_source_nuvio_selected">Pasirinkta Meowio biblioteka</string>
     <string name="trakt_setting_on">Įjungta</string>
     <string name="trakt_setting_off">Išjungta</string>
     <string name="trakt_comments_title">Komentarai</string>
@@ -2030,11 +2031,11 @@
     <string name="debug_generate_library_button">Generuoti</string>
     <string name="debug_generating_library">Generuojama\u2026</string>
     <string name="profile_edit_header">Redaguoti profilį</string>
-    <string name="profile_custom_avatar_web_panel_note">Savo avataro URL galite nustatyti Nuvio žiniatinklio skydelyje.</string>
+    <string name="profile_custom_avatar_web_panel_note">Savo avataro URL galite nustatyti Meowio žiniatinklio skydelyje.</string>
     <string name="profile_editor_tab_avatar">Avataras</string>
     <string name="profile_editor_tab_background">Fonas</string>
     <string name="profile_choose_background">Pasirinkite profilio foną</string>
-    <string name="profile_background_member_note">Savo fono URL galite nustatyti Nuvio žiniatinklio skydelyje.</string>
+    <string name="profile_background_member_note">Savo fono URL galite nustatyti Meowio žiniatinklio skydelyje.</string>
     <string name="profile_background_normal">Įprastas</string>
     <string name="profile_background_custom">Pasirinktinis</string>
     <string name="profile_avatar_category_supporter">Rėmėjas</string>
@@ -2091,7 +2092,7 @@
     <string name="profile_pin_overlay_set_support">Šio PIN kodo reikės atidarant profilį.</string>
     <string name="profile_pin_overlay_confirm_support">Dar kartą įveskite tuos pačius 4 skaitmenis.</string>
     <string name="profile_pin_overlay_mismatch">PIN kodai nesutapo. Dar kartą įveskite naują PIN kodą.</string>
-    <string name="profile_pin_overlay_forgot_hint">Pamiršote PIN kodą? Atkurkite jį savo Nuvio paskyroje Nuvio svetainėje.</string>
+    <string name="profile_pin_overlay_forgot_hint">Pamiršote PIN kodą? Atkurkite jį savo Meowio paskyroje Meowio svetainėje.</string>
     <string name="profile_pin_overlay_back_hint">Paspauskite „Atgal“, kad atšauktumėte</string>
     <string name="essential_addon_setup_title">Nustatykite priedus</string>
     <string name="essential_addon_setup_subtitle">Įdiekite vieną priedą, kad galėtumėte žiūrėti. Daugiau priedų vėliau galėsite pridėti skiltyje „Priedai“.</string>

@@ -536,6 +536,7 @@
     <string name="trakt_code_expires">कोड %1$s में समाप्त होगा</string>
     <string name="trakt_token_refreshes">Trakt एक्सेस टोकन %1$s में रिफ्रेश होगा</string>
     <string name="trakt_login_instruction">Trakt डिवाइस ऑथेंटिकेशन शुरू करने के लिए Login दबाएँ। यहाँ एक QR कोड दिखाई देगा।</string>
+    <string name="trakt_missing_credentials">local.properties में TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET नहीं मिला।</string>
     <string name="trakt_continue_watching_window">कंटिन्यू वॉचिंग विंडो</string>
     <string name="trakt_continue_watching_subtitle">कंटिन्यू वॉचिंग के लिए Trakt इतिहास का उपयोग</string>
     <string name="trakt_unaired_next_up">अनएयर्ड नेक्स्ट अप एपिसोड</string>

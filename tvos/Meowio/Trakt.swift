@@ -54,7 +54,7 @@ final class TraktStore: ObservableObject {
 
     func startSignIn() async {
         guard Self.configured else {
-            message = "Add a Trakt app's client ID and secret first."
+            message = "Trakt sign-in isn't available in this version."
             return
         }
         message = nil
@@ -319,9 +319,6 @@ final class TraktStore: ObservableObject {
 struct TraktSettingsView: View {
     @EnvironmentObject var trakt: TraktStore
     @EnvironmentObject var library: LibraryStore
-    @AppStorage("traktClientId") private var clientId = ""
-    @AppStorage("traktClientSecret") private var clientSecret = ""
-
     var body: some View {
         List {
             if trakt.connected {
@@ -348,17 +345,11 @@ struct TraktSettingsView: View {
             } else {
                 Section {
                     Button("Sign in to Trakt") { Task { await trakt.startSignIn() } }
-                        .disabled(!TraktStore.configured)
                 } footer: {
-                    Text(TraktStore.configured ? "You'll get a short code to enter at trakt.tv/activate."
-                         : "Set up your Trakt app first (one time). On a phone or computer, open trakt.tv/oauth/applications/new, give it any name, put urn:ietf:wg:oauth:2.0:oob and nuvio://auth/trakt on separate lines under Redirect URI, and save. Then paste its Client ID and Client Secret below. They stay on this Apple TV, and you sign in with your own Trakt account.")
+                    Text("You'll get a short code to enter at trakt.tv/activate.")
                 }
             }
             if let m = trakt.message { Text(m).foregroundStyle(.orange) }
-            Section(TraktStore.hasBuiltInApp ? "Your own Trakt app (optional)" : "Trakt app") {
-                TextField("Client ID", text: $clientId)
-                SecureField("Client secret", text: $clientSecret)
-            }
         }
         .navigationTitle("Trakt")
     }

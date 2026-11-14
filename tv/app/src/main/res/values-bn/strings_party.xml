@@ -5,7 +5,7 @@
     <string name="party_start_title">একসাথে দেখুন</string>
     <string name="party_start_description">আপনার বন্ধুদের আমন্ত্রণ জানান। প্রত্যেকে তাদের নিজস্ব সোর্স থেকে প্লে করবেন এবং সিঙ্কে থাকবেন।</string>
     <string name="party_start_action">ওয়াচ পার্টি শুরু করুন</string>
-    <string name="party_sign_in_required">ওয়াচ পার্টি ব্যবহার করতে আপনার Nuvio অ্যাকাউন্টে সাইন ইন করুন।</string>
+    <string name="party_sign_in_required">ওয়াচ পার্টি ব্যবহার করতে আপনার Meowio অ্যাকাউন্টে সাইন ইন করুন।</string>
     <string name="party_unavailable">ওয়াচ পার্টি এই মুহূর্তে উপলব্ধ নেই।</string>
     <string name="party_experimental">ওয়াচ পার্টি পরীক্ষামূলক পর্যায়ে রয়েছে এবং প্রত্যাশিতভাবে কাজ নাও করতে পারে।</string>
     <string name="party_code_label">পার্টি কোড</string>
@@ -73,7 +73,7 @@
     <string name="party_share_unavailable">এই স্ট্রিমটি শেয়ার করা যাবে না।</string>
     <string name="party_shared_by">শেয়ার করেছেন %1$s</string>
     <string name="party_invite_scan">যোগ দিতে ফোন দিয়ে স্ক্যান করুন</string>
-    <string name="party_invite_share">অথবা কোডটি শেয়ার করুন। বন্ধুরা যেকোনো Nuvio অ্যাপের ওয়াচ পার্টিতে এটি লিখতে পারবেন।</string>
+    <string name="party_invite_share">অথবা কোডটি শেয়ার করুন। বন্ধুরা যেকোনো Meowio অ্যাপের ওয়াচ পার্টিতে এটি লিখতে পারবেন।</string>
     <string name="party_invite_qr">ওয়াচ পার্টি আমন্ত্রণের QR কোড</string>
     <string name="party_phone_chat_note">চ্যাট করতে আপনার ফোনে এই প্রোফাইল দিয়ে ওয়াচ পার্টি খুলুন।</string>
 </resources>

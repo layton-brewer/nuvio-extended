@@ -37,7 +37,7 @@
     <string name="downloads_error_open_partial_file_failed">பகுதி பதிவிறக்கக் கோப்பைத் திறக்க முடியவில்லை</string>
     <string name="downloads_error_partial_file_not_open">பகுதி பதிவிறக்கக் கோப்பு திறக்கப்படவில்லை</string>
     <string name="downloads_error_write_partial_file_failed">பகுதி பதிவிறக்கக் கோப்பில் எழுத முடியவில்லை</string>
-    <string name="library_local_tab_title">Nuvio நூலகம்</string>
+    <string name="library_local_tab_title">Meowio நூலகம்</string>
     <string name="network_connection_issue">இணைப்புச் சிக்கல்</string>
     <string name="network_empty_response_body">பதில் உள்ளடக்கம் காலியாக உள்ளது</string>
     <string name="network_please_check_connection">உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>

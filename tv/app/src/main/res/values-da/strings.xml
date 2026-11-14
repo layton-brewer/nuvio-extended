@@ -98,7 +98,7 @@
 
     <string name="home_no_addons">Ingen addons installeret. Tilføj en for at komme i gang.</string>
     <string name="home_no_catalog_addons">Ingen katalog-addons installeret. Installer en katalog-addon for at se indhold.</string>
-    <string name="auth_notice_nuvio_logged_out">Du er blevet logget ud af Nuvio. Log venligst ind igen.</string>
+    <string name="auth_notice_nuvio_logged_out">Du er blevet logget ud af Meowio. Log venligst ind igen.</string>
     <string name="auth_notice_trakt_logged_out">Du er blevet logget ud af Trakt. Tilslut venligst igen.</string>
     <string name="error_generic">Der opstod en fejl</string>
 
@@ -347,7 +347,7 @@
     <string name="about_licenses_attributions">Licenser &amp; attributioner</string>
     <string name="about_licenses_attributions_subtitle">Datakilder, anerkendelser og Android-licenser</string>
     <string name="licenses_attributions_title">Licenser &amp; attributioner</string>
-    <string name="licenses_attributions_subtitle">Dataleverandører, servicekreditter og Android-afspilningslicenser brugt af Nuvio TV.</string>
+    <string name="licenses_attributions_subtitle">Dataleverandører, servicekreditter og Android-afspilningslicenser brugt af Meowio TV.</string>
     <string name="licenses_attributions_section_app">APP-LICENS</string>
     <string name="licenses_attributions_section_data">DATA &amp; TJENESTER</string>
     <string name="licenses_attributions_section_playback">ANDROID-AFSPILNINGSLICENSER</string>
@@ -1122,24 +1122,25 @@
     <string name="trakt_code_expires">Koden udløber om %1$s</string>
     <string name="trakt_token_refreshes">Trakt-adgangstoken opdateres om %1$s</string>
     <string name="trakt_login_instruction">Tryk på Login for at starte Trakt-enhedsgodkendelse. En QR-kode vises her.</string>
+    <string name="trakt_missing_credentials">TRAKT_CLIENT_ID / TRAKT_CLIENT_SECRET mangler i local.properties.</string>
     <string name="trakt_watch_progress_title">Se-fremdrift</string>
     <string name="trakt_watch_progress_subtitle">Vælg hvilken fremskridtskilde der styrer genoptag og fortsæt med at se</string>
     <string name="trakt_watch_progress_dialog_title">Se-fremdrift</string>
-    <string name="trakt_watch_progress_dialog_subtitle">Vælg om genoptagelse og fortsæt med at se skal bruge Trakt eller Nuvio Sync, mens Trakt-scrobbling forbliver aktiv.</string>
+    <string name="trakt_watch_progress_dialog_subtitle">Vælg om genoptagelse og fortsæt med at se skal bruge Trakt eller Meowio Sync, mens Trakt-scrobbling forbliver aktiv.</string>
     <string name="trakt_watch_progress_source_trakt">Trakt</string>
-    <string name="trakt_watch_progress_source_nuvio">Nuvio Sync</string>
+    <string name="trakt_watch_progress_source_nuvio">Meowio Sync</string>
     <string name="trakt_library_source_title">Bibliotekskilde</string>
     <string name="trakt_library_source_subtitle">Vælg hvilket bibliotek der bruges til at gemme og se din samling</string>
     <string name="trakt_library_source_dialog_title">Bibliotekskilde</string>
     <string name="trakt_library_source_dialog_subtitle">Vælg, hvor du vil gemme og administrere dine bibliotekets indhold</string>
     <string name="trakt_library_source_trakt">Trakt</string>
-    <string name="trakt_library_source_nuvio">Nuvio-bibliotek</string>
+    <string name="trakt_library_source_nuvio">Meowio-bibliotek</string>
     <string name="trakt_library_source_trakt_selected">Trakt-bibliotek valgt</string>
-    <string name="trakt_library_source_nuvio_selected">Nuvio-bibliotek valgt</string>
+    <string name="trakt_library_source_nuvio_selected">Meowio-bibliotek valgt</string>
     <string name="trakt_setting_on">Til</string>
     <string name="trakt_setting_off">Fra</string>
     <string name="trakt_watch_progress_trakt_selected">Fremskridtskilde indstillet til Trakt</string>
-    <string name="trakt_watch_progress_nuvio_selected">Fremskridtskilde indstillet til Nuvio Sync</string>
+    <string name="trakt_watch_progress_nuvio_selected">Fremskridtskilde indstillet til Meowio Sync</string>
     <string name="trakt_continue_watching_window">Fortsæt med at se-vindue</string>
     <string name="trakt_continue_watching_subtitle">Trakt-historik inkluderet i fortsæt med at se</string>
     <string name="trakt_unaired_next_up">Kommende næste afsnit</string>
@@ -1233,7 +1234,7 @@
     <string name="profile_addons">addons</string>
     <string name="profile_plugins">plugins</string>
     <string name="profile_choose_avatar">Vælg avatar</string>
-    <string name="profile_custom_avatar_web_panel_note">Brugerdefinerede avatar-URL\'er kan konfigureres fra Nuvio-webpanelet.</string>
+    <string name="profile_custom_avatar_web_panel_note">Brugerdefinerede avatar-URL\'er kan konfigureres fra Meowio-webpanelet.</string>
     <string name="profile_avatar_none_selected">Ingen avatar valgt</string>
     <string name="profile_avatar_focus_hint">Fokusér på en avatar for at se dens navn</string>
     <string name="profile_avatar_category_all">Alle</string>
@@ -1276,7 +1277,7 @@
     <string name="profile_pin_overlay_set_support">Denne PIN vil blive krævet, inden denne profil åbnes.</string>
     <string name="profile_pin_overlay_confirm_support">Gentag de samme 4 cifre for at afslutte opsætningen.</string>
     <string name="profile_pin_overlay_mismatch">PIN-koderne stemte ikke overens. Indtast en ny PIN igen.</string>
-    <string name="profile_pin_overlay_forgot_hint">Glemt PIN? Nulstil den fra din Nuvio-konto på Nuvio-webstedet.</string>
+    <string name="profile_pin_overlay_forgot_hint">Glemt PIN? Nulstil den fra din Meowio-konto på Meowio-webstedet.</string>
     <string name="profile_pin_overlay_back_hint">Tryk tilbage for at annullere</string>
 
 
@@ -1815,7 +1816,7 @@
     <string name="update_unknown_sources">Tillad installationer fra ukendte kilder for at fortsætte.</string>
     <!-- AccountScreen -->
     <string name="account_title">Konto</string>
-    <string name="account_sign_in_description">Log ind for at synkronisere dit bibliotek, se-fremskridt, addons og plugins på tværs af enheder. Bibliotekssynkronisering bruger Nuvio Sync, når Trakt ikke er tilsluttet, og se-fremskridt kan bruge enten Trakt eller Nuvio Sync.</string>
+    <string name="account_sign_in_description">Log ind for at synkronisere dit bibliotek, se-fremskridt, addons og plugins på tværs af enheder. Bibliotekssynkronisering bruger Meowio Sync, når Trakt ikke er tilsluttet, og se-fremskridt kan bruge enten Trakt eller Meowio Sync.</string>
     <string name="account_sync_code_title">Synkroniseringskode</string>
     <string name="account_sync_code_description">Synkroniser på tværs af enheder uden at oprette en konto.</string>
     <string name="account_linked_devices">Tilknyttede enheder (%1$d)</string>

@@ -24,7 +24,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "DeviceSessionRegistration"
-private const val CLIENT_NAME = "Nuvio TV"
+private const val CLIENT_NAME = "Meowio TV"
 private const val REGISTRATION_INTERVAL_MS = 15 * 60 * 1000L
 private const val MAX_DEVICE_NAME_LENGTH = 160
 
