@@ -13,6 +13,10 @@ on:
       - ".github/workflows/apple.yml"
   workflow_dispatch:
 
+env:
+  # Builds attach to this release page. Bump together with the version numbers below and the tag in release.yml.
+  MEOWIO_TAG: v0.2.4
+
 permissions:
   contents: write
 
@@ -30,9 +34,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          # Apple builds attach to the current Latest "Meowio vX.Y.Z" release so every
-          # download lives on one page. The target is resolved again at upload time.
-          gh release view --json tagName -q .tagName
+          # Apple builds attach to the "Meowio $MEOWIO_TAG" release so every download lives on one
+          # page. The upload steps wait for that page if the Android build hasn't created it yet.
+          gh release view "$MEOWIO_TAG" --json tagName -q .tagName || echo "$MEOWIO_TAG not published yet; uploads will wait for it"
 
   ios:
     needs: [release]
@@ -104,12 +108,16 @@ jobs:
           path: mobile/build/ios-ipa/Meowio-ios.ipa
           retention-days: 14
 
-      - name: Attach to the latest Meowio release
+      - name: Attach to this version's Meowio release
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh release upload "$(gh release view --json tagName -q .tagName)" mobile/build/ios-ipa/Meowio-ios.ipa --clobber
+        run: |
+          # Wait for this version's release page (the Android build creates it), then attach.
+          for i in $(seq 1 40); do gh release view "$MEOWIO_TAG" >/dev/null 2>&1 && break; sleep 60; done
+          for i in 1 2 3 4; do gh release upload "$MEOWIO_TAG" mobile/build/ios-ipa/Meowio-ios.ipa --clobber && exit 0; sleep 30; done
+          exit 1
 
   macos:
     needs: [release]
@@ -169,13 +177,16 @@ jobs:
           path: out/*.dmg
           retention-days: 14
 
-      - name: Attach to the latest Meowio release
+      - name: Attach to this version's Meowio release
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh release upload "$(gh release view --json tagName -q .tagName)" out/Meowio-macos-${{ matrix.arch }}.dmg --clobber
+          # Wait for this version's release page (the Android build creates it), then attach.
+          for i in $(seq 1 40); do gh release view "$MEOWIO_TAG" >/dev/null 2>&1 && break; sleep 60; done
+          for i in 1 2 3 4; do gh release upload "$MEOWIO_TAG" "out/Meowio-macos-${{ matrix.arch }}.dmg" --clobber && exit 0; sleep 30; done
+          exit 1
 
   tvos:
     needs: [release]
@@ -222,9 +233,13 @@ jobs:
           path: tvos/Meowio-tvos.ipa
           retention-days: 14
 
-      - name: Attach to the latest Meowio release
+      - name: Attach to this version's Meowio release
         working-directory: ${{ github.workspace }}
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh release upload "$(gh release view --json tagName -q .tagName)" tvos/Meowio-tvos.ipa --clobber
+        run: |
+          # Wait for this version's release page (the Android build creates it), then attach.
+          for i in $(seq 1 40); do gh release view "$MEOWIO_TAG" >/dev/null 2>&1 && break; sleep 60; done
+          for i in 1 2 3 4; do gh release upload "$MEOWIO_TAG" tvos/Meowio-tvos.ipa --clobber && exit 0; sleep 30; done
+          exit 1
