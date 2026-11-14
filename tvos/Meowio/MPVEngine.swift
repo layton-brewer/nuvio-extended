@@ -54,6 +54,9 @@ final class MPVEngine: NSObject {
         }, Unmanaged.passUnretained(self).toOpaque())
     }
 
+    /// Starts mpv early so preferences can be set before the first file loads.
+    func prepare() { start() }
+
     func load(url: String, headers: [String: String], start startAt: Double = 0) {
         start()
         guard let mpv else { onFailed?(); return }
@@ -109,6 +112,59 @@ final class MPVEngine: NSObject {
             if type == "audio", let channels, let n = Int(channels), n > 0 { parts.append(n > 2 ? "\(n - 1).1" : (n == 2 ? "Stereo" : "Mono")) }
             let label = parts.isEmpty ? "Track \(id)" : parts.joined(separator: " · ")
             out.append(Track(id: id, type: type, title: label, selected: string("track-list/\(i)/selected") == "yes"))
+        }
+        return out
+    }
+
+    /// Track ids of a type with their language codes, for picking a preferred language.
+    func trackLanguages(_ type: String) -> [(id: Int, lang: String?, external: Bool)] {
+        let count = Int(string("track-list/count") ?? "") ?? 0
+        var out: [(id: Int, lang: String?, external: Bool)] = []
+        for i in 0..<count where string("track-list/\(i)/type") == type {
+            if let id = Int(string("track-list/\(i)/id") ?? "") {
+                out.append((id, string("track-list/\(i)/lang"), string("track-list/\(i)/external") == "yes"))
+            }
+        }
+        return out
+    }
+
+    var selectedSubtitle: Int? { Int(string("sid") ?? "") }
+
+    func selectSubtitle(id: Int) {
+        guard let mpv else { return }
+        mpv_set_property_string(mpv, "sid", String(id))
+    }
+
+    /// Adds a subtitle file from an add-on. "auto" leaves the choice to the normal track selection.
+    func addSubtitle(url: String, title: String, lang: String?, select: Bool) {
+        command(["sub-add", url, select ? "select" : "auto", title, lang ?? ""])
+    }
+
+    /// Preferred languages for the next file. Empty audio language keeps the file's default track.
+    func setPreferences(audioLanguage: String, subtitleLanguage: String, subtitlesOn: Bool) {
+        start()
+        guard let mpv else { return }
+        mpv_set_property_string(mpv, "alang", Languages.codes(for: audioLanguage).joined(separator: ","))
+        mpv_set_property_string(mpv, "slang", Languages.codes(for: subtitleLanguage).joined(separator: ","))
+        mpv_set_property_string(mpv, "sid", subtitlesOn ? "auto" : "no")
+        mpv_set_property_string(mpv, "subs-match-os-language", subtitlesOn && subtitleLanguage.isEmpty ? "yes" : "no")
+    }
+
+    var speed: Double { Double(string("speed") ?? "") ?? 1 }
+
+    func setSpeed(_ value: Double) {
+        guard let mpv else { return }
+        mpv_set_property_string(mpv, "speed", String(format: "%.2f", value))
+    }
+
+    /// Chapters in the file, with their start times, used for Skip Intro.
+    func chapters() -> [(title: String, time: Double)] {
+        let count = Int(string("chapter-list/count") ?? "") ?? 0
+        var out: [(title: String, time: Double)] = []
+        for i in 0..<count {
+            let title = string("chapter-list/\(i)/title") ?? ""
+            let time = Double(string("chapter-list/\(i)/time") ?? "") ?? 0
+            out.append((title, time))
         }
         return out
     }

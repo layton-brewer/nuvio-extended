@@ -3,6 +3,9 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var settings: SettingsStore
     @EnvironmentObject var library: LibraryStore
+    @EnvironmentObject var profiles: ProfileStore
+    @EnvironmentObject var account: AccountStore
+    @EnvironmentObject var trakt: TraktStore
     @State private var newAddon = ""
     @State private var addonNames: [String: String] = [:]
     @StateObject private var updates = UpdateChecker()
@@ -10,6 +13,34 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section("Profile and accounts") {
+                    if let p = profiles.active {
+                        NavigationLink { ProfilesSettingsView() } label: {
+                            HStack(spacing: 20) {
+                                ProfileAvatar(profile: p, size: 50)
+                                Text(p.name)
+                                Spacer()
+                                Text("Profiles").foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    NavigationLink { AccountSettingsView() } label: {
+                        HStack {
+                            Text("Meowio account")
+                            Spacer()
+                            Text(account.signedIn ? (account.email ?? "Signed in") : (AccountStore.available ? "Not signed in" : "Off"))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    NavigationLink { TraktSettingsView() } label: {
+                        HStack {
+                            Text("Trakt")
+                            Spacer()
+                            Text(trakt.connected ? (trakt.username ?? "Connected") : "Not connected").foregroundStyle(.secondary)
+                        }
+                    }
+                }
+
                 Section("Stream add-ons") {
                     ForEach(settings.addons, id: \.self) { base in
                         HStack {
@@ -42,6 +73,33 @@ struct SettingsView: View {
                     Picker("Wait for a source to start", selection: $settings.startupTimeout) {
                         ForEach([10, 15, 20, 30, 45], id: \.self) { Text("\($0) seconds").tag($0) }
                     }
+                }
+
+                Section("Player") {
+                    Toggle("Show Skip Intro on intro and recap chapters", isOn: $settings.skipIntro)
+                    Toggle("Show Next Episode near the end", isOn: $settings.upNextCard)
+                    Picker("Audio language", selection: $settings.audioLanguage) {
+                        Text("File default").tag("")
+                        ForEach(Languages.all, id: \.code) { Text($0.name).tag($0.code) }
+                    }
+                    Toggle("Turn subtitles on", isOn: $settings.subtitlesOn)
+                    Picker("Subtitle language", selection: $settings.subtitleLanguage) {
+                        Text("Apple TV language").tag("")
+                        ForEach(Languages.all, id: \.code) { Text($0.name).tag($0.code) }
+                    }
+                }
+
+                Section {
+                    Picker("Service", selection: $settings.debridService) {
+                        ForEach(DebridService.allCases) { Text($0.title).tag($0) }
+                    }
+                    if settings.debridService != .none {
+                        SecureField("\(settings.debridService.title) API key", text: $settings.debridKey)
+                    }
+                } header: {
+                    Text("Debrid (plays torrent results)")
+                } footer: {
+                    Text("Apple TV can't run torrents itself. With a debrid key, torrent results from your add-ons are turned into direct links, and uncached ones are skipped so playback never waits on a download. The key stays on this device and is never in backups.")
                 }
 
                 if !settings.addons.isEmpty {
@@ -101,7 +159,7 @@ struct SettingsView: View {
                         Text("Could not check for updates.").foregroundStyle(.secondary)
                     }
                     Button("Check for updates") { Task { await updates.check() } }
-                    Text("MKV and other formats play through the built-in mpv engine. CloudStream plugins are Android-only, and TV apps do not offer downloads.")
+                    Text("MKV and other formats play through the built-in mpv engine. TV apps do not offer downloads. Surround sound passes through Apple TV's own audio settings.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }

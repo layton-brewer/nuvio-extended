@@ -471,8 +471,10 @@ final class LiveTVStore: ObservableObject {
     private var loadedKey = ""
     private static let maxRecent = 12
 
+    private let store = ProfileScope.defaults
+
     init() {
-        let d = UserDefaults.standard
+        let d = store
         favorites = Set(d.stringArray(forKey: "liveFavorites") ?? [])
         recent = d.stringArray(forKey: "liveRecent") ?? []
     }
@@ -629,12 +631,12 @@ final class LiveTVStore: ObservableObject {
 
     func toggleFavorite(_ channel: LiveChannel) {
         if favorites.contains(channel.id) { favorites.remove(channel.id) } else { favorites.insert(channel.id) }
-        UserDefaults.standard.set(Array(favorites), forKey: "liveFavorites")
+        store.set(Array(favorites), forKey: "liveFavorites")
     }
 
     func markWatched(_ channel: LiveChannel) {
         recent = Array(([channel.id] + recent.filter { $0 != channel.id }).prefix(Self.maxRecent))
-        UserDefaults.standard.set(recent, forKey: "liveRecent")
+        store.set(recent, forKey: "liveRecent")
     }
 
     /// The group to open first on the built-in channels: the one for the device's country.

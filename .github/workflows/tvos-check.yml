@@ -3,7 +3,7 @@ name: Apple TV compile check
 # Compile-only check for Apple TV work branches. Publishing is done by apple.yml on main.
 on:
   push:
-    branches: ["claude/project-thread-cu44vx", "claude/tvos"]
+    branches: ["claude/project-thread-cu44vx", "claude/tvos", "claude/project-thread-wt32cz"]
     paths:
       - "tvos/**"
       - ".github/workflows/tvos-check.yml"
