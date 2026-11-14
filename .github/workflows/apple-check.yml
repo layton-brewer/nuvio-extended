@@ -3,7 +3,7 @@ name: Apple compile check
 # Fast compile-only checks for Apple work in progress. Publishing is done by apple.yml on main.
 on:
   push:
-    branches: ["claude/project-thread-87zvur", "claude/project-thread-gdrsat"]
+    branches: ["claude/project-thread-87zvur", "claude/project-thread-gdrsat", "claude/project-thread-f2h6wb"]
   workflow_dispatch:
 
 permissions:

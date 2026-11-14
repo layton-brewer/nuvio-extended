@@ -23,3 +23,22 @@ internal expect suspend fun liveTvStreamText(url: String, onChunk: (String) -> U
  * cannot tell.
  */
 internal expect suspend fun liveTvStreamAnswers(url: String, headers: Map<String, String>): Boolean?
+
+/** What the player opens for a Live TV channel. */
+data class LiveTvPlaybackTarget(
+    val url: String,
+    val headers: Map<String, String>,
+)
+
+/**
+ * Where to play [channel] from: the channel itself, or, where the platform can, a relay on the
+ * device that falls back on [backups] and sends Live TV (only Live TV) through the Live TV VPN.
+ */
+internal expect fun liveTvPlaybackTarget(
+    channel: LiveChannel,
+    backups: List<LiveChannel>,
+    vpn: LiveVpnSettings,
+): LiveTvPlaybackTarget
+
+/** True when this platform can run a WireGuard tunnel for the Live TV VPN. */
+internal expect fun liveTvWireGuardAvailable(): Boolean

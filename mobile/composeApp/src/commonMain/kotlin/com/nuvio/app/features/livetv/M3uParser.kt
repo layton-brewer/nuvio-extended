@@ -87,6 +87,8 @@ object M3uParser {
                             logo = attributes["tvg-logo"]?.takeIf(::isHttpUrl),
                             group = (attributes["group-title"] ?: pendingGroup)?.trim()?.takeIf(String::isNotEmpty),
                             guideId = attributes["tvg-id"]?.trim()?.takeIf(String::isNotEmpty),
+                            number = (attributes["tvg-chno"] ?: attributes["channel-number"] ?: attributes["tvg-num"])
+                                ?.trim()?.toIntOrNull()?.takeIf { it > 0 },
                             headers = if (pendingHeaders.isEmpty() && urlHeaders.isEmpty()) {
                                 emptyMap()
                             } else {

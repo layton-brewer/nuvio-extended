@@ -1,7 +1,11 @@
 package com.nuvio.tv.data.repository
 
+import com.meowio.livetv.LiveTvVpnNative
+import com.nuvio.tv.core.livetv.LiveChannel
+import com.nuvio.tv.core.livetv.LiveProxy
 import com.nuvio.tv.core.livetv.LiveTvController
 import com.nuvio.tv.core.livetv.LiveTvLoader
+import com.nuvio.tv.core.livetv.LiveTvRelay
 import com.nuvio.tv.core.profile.ProfileManager
 import com.nuvio.tv.data.local.LiveTvDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -43,6 +47,36 @@ class LiveTvRepository @Inject constructor(
         probe = ::answers
     )
 
+    /** Plays Live TV through the backup-channel relay and, when switched on, the Live TV VPN. */
+    private val relay = LiveTvRelay(
+        baseClient = client,
+        wireGuard = LiveTvRelay.WireGuardStarter { config ->
+            if (!LiveTvVpnNative.available) throw java.io.IOException("WireGuard is not included in this build")
+            val handle = LiveTvVpnNative.start(config)
+            if (handle == 0L) throw java.io.IOException(LiveTvVpnNative.lastError().ifBlank { "the VPN did not connect" })
+            LiveTvRelay.Tunnel(
+                proxy = LiveProxy("127.0.0.1", LiveTvVpnNative.port(handle), "meowio", LiveTvVpnNative.token(handle)),
+                close = { LiveTvVpnNative.stop(handle) }
+            )
+        },
+        log = { android.util.Log.i("LiveTv", it) }
+    )
+
+    /** Whether WireGuard can be used for the Live TV VPN in this build. */
+    val wireGuardAvailable: Boolean get() = LiveTvVpnNative.available
+
+    /**
+     * What the player should open for [channel]: the channel itself, or the relay when there are
+     * backup copies to fall back on or the Live TV VPN is on. The relay adds the channel's own
+     * request headers itself, so none are returned for it.
+     */
+    fun playbackTarget(channel: LiveChannel): Pair<String, Map<String, String>> {
+        val state = controller.state.value
+        val backups = controller.alternatesFor(channel)
+        val url = runCatching { relay.open(channel, backups, state.vpn) }.getOrElse { channel.url }
+        return if (url == channel.url) url to channel.headers else url to emptyMap()
+    }
+
     init {
         controller.start()
         scope.launch {
@@ -54,7 +88,7 @@ class LiveTvRepository @Inject constructor(
     }
 
     /** Opens a channel briefly to see whether its stream is there. */
-    private suspend fun answers(channel: com.nuvio.tv.core.livetv.LiveChannel): Boolean? = withContext(Dispatchers.IO) {
+    private suspend fun answers(channel: LiveChannel): Boolean? = withContext(Dispatchers.IO) {
         try {
             val request = Request.Builder().url(channel.url).apply {
                 channel.headers.forEach { (name, value) -> runCatching { header(name, value) } }

@@ -35,6 +35,12 @@ object LiveTvRepository {
 
     fun ensureLoaded() = controller.start()
 
+    /** What the player should open for [channel], with backup copies and the Live TV VPN applied. */
+    fun playbackTarget(channel: LiveChannel): LiveTvPlaybackTarget =
+        liveTvPlaybackTarget(channel, controller.alternatesFor(channel), controller.state.value.vpn)
+
+    val wireGuardAvailable: Boolean get() = liveTvWireGuardAvailable()
+
     fun onProfileChanged() {
         controller.reset()
         controller.start()

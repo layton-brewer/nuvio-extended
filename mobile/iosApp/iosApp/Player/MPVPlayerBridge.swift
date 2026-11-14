@@ -23,11 +23,17 @@ final class MPVPlayerBridgeImpl: NSObject, NuvioPlayerBridge {
 
     func loadFile(url: String) { ensurePlayerViewController().loadFile(url) }
     func loadFileWithAudio(videoUrl: String, audioUrl: String?, headersJson: String?, subtitlesJson: String?) {
+        var headers = parseRequestHeaders(headersJson)
+        // The Live TV VPN proxy arrives under a private key. It is never sent to a server, and
+        // every playback without it (debrid included) is loaded with no proxy at all.
+        let proxyKey = headers.keys.first { $0.caseInsensitiveCompare("X-Meowio-Live-Proxy") == .orderedSame }
+        let liveTvProxy = proxyKey.flatMap { headers.removeValue(forKey: $0) } ?? ""
         ensurePlayerViewController().loadFile(
             videoUrl,
             audioUrl: audioUrl,
-            requestHeaders: parseRequestHeaders(headersJson),
-            subtitles: parseSubtitles(subtitlesJson)
+            requestHeaders: headers,
+            subtitles: parseSubtitles(subtitlesJson),
+            httpProxy: liveTvProxy
         )
     }
 
@@ -265,6 +271,8 @@ private struct PendingLoadRequest {
     let requestHeaders: [String: String]
     let subtitles: [PluginSubtitle]
     let queuedAtUptime: TimeInterval
+    /** mpv `http-proxy`: the Live TV VPN proxy for Live TV, empty for everything else. */
+    var httpProxy: String = ""
 }
 
 // MARK: - MPV Player View Controller
@@ -634,13 +642,20 @@ final class MPVPlayerViewController: UIViewController {
 
     // MARK: - Playback API
 
-    func loadFile(_ urlString: String, audioUrl: String? = nil, requestHeaders: [String: String] = [:], subtitles: [PluginSubtitle] = []) {
+    func loadFile(
+        _ urlString: String,
+        audioUrl: String? = nil,
+        requestHeaders: [String: String] = [:],
+        subtitles: [PluginSubtitle] = [],
+        httpProxy: String = ""
+    ) {
         let request = PendingLoadRequest(
             urlString: urlString,
             audioUrl: audioUrl,
             requestHeaders: requestHeaders,
             subtitles: subtitles,
-            queuedAtUptime: ProcessInfo.processInfo.systemUptime
+            queuedAtUptime: ProcessInfo.processInfo.systemUptime,
+            httpProxy: httpProxy
         )
 
         if Thread.isMainThread {
@@ -679,6 +694,8 @@ final class MPVPlayerViewController: UIViewController {
         let sanitizedHeaders = sanitizeRequestHeaders(request.requestHeaders)
         activeRequestHeaders = sanitizedHeaders
         applyRequestHeaders(sanitizedHeaders)
+        // Empty unless this is Live TV with the Live TV VPN on.
+        checkError(mpv_set_property_string(mpv, "http-proxy", request.httpProxy))
         isPlayerLoading = true
         isPlayerEnded = false
         isFileLoaded = false

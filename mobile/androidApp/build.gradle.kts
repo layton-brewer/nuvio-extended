@@ -97,6 +97,10 @@ android {
 
     sourceSets.getByName("androidTest").assets.srcDir("../testFixtures")
 
+    // Live TV VPN library, built by native/livetv-vpn/build-android.sh (CI runs it before the
+    // build). Without it the app still builds; the WireGuard option then says it is unavailable.
+    sourceSets.getByName("main").jniLibs.directories.add("../../native/livetv-vpn/build/jniLibs")
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

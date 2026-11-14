@@ -54,6 +54,8 @@ struct PlayRequest: Identifiable {
     var candidates: [StreamItem]
     var headers: [String: String] = [:]
     var isLive = false
+    /// Live TV VPN proxy for this Live TV request, or "" for none. Never set for anything but Live TV.
+    var liveProxy = ""
     /// Where to start, in seconds, for a title the user left part way.
     var startAt: Double = 0
     /// Resolves the request for the episode after this one, when there is one.
@@ -314,8 +316,10 @@ final class PlaybackController: ObservableObject {
         pendingStart = request.isLive ? 0 : (lastSeconds > 5 ? lastSeconds : request.startAt)
         let headers = stream.headers(merging: request.headers)
         let hint = (stream.behaviorHints?.filename ?? url.lastPathComponent).lowercased()
+        // The Live TV VPN only ever applies to a Live TV request, and never to a debrid link.
+        let proxy = request.isLive && LiveVpnGuard.mayRoute(url.absoluteString) ? request.liveProxy : ""
         let mpvOnly = ["mkv", "avi", "webm", "flv", "wmv", "ts", "m2ts", "mpg", "mpeg"].contains((hint as NSString).pathExtension)
-            || stream.behaviorHints?.notWebReady == true
+            || stream.behaviorHints?.notWebReady == true || !proxy.isEmpty
         if mpvOnly || triedMPV.contains(i) {
             player.pause()
             player.replaceCurrentItem(with: nil)
@@ -332,7 +336,7 @@ final class PlaybackController: ObservableObject {
             mpv.onEnded = { [weak self] in self?.ended() }
             mpv.setPreferences(audioLanguage: settings.audioLanguage, subtitleLanguage: settings.subtitleLanguage,
                                subtitlesOn: settings.subtitlesOn)
-            mpv.load(url: url.absoluteString, headers: headers, start: pendingStart)
+            mpv.load(url: url.absoluteString, headers: headers, start: pendingStart, proxy: proxy)
             armTimeout()
             return
         }

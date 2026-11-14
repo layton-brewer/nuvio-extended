@@ -104,3 +104,25 @@ internal actual suspend fun liveTvStreamAnswers(url: String, headers: Map<String
             null
         }
     }
+
+private val liveTvRelay by lazy {
+    // The desktop apps have no WireGuard tunnel; the Live TV VPN uses an HTTP proxy here.
+    LiveTvRelay(
+        baseClient = okhttp3.OkHttpClient.Builder()
+            .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            .build(),
+        wireGuard = null,
+    )
+}
+
+internal actual fun liveTvPlaybackTarget(
+    channel: LiveChannel,
+    backups: List<LiveChannel>,
+    vpn: LiveVpnSettings,
+): LiveTvPlaybackTarget {
+    val url = runCatching { liveTvRelay.open(channel, backups, vpn) }.getOrElse { channel.url }
+    return if (url == channel.url) LiveTvPlaybackTarget(url, channel.headers) else LiveTvPlaybackTarget(url, emptyMap())
+}
+
+internal actual fun liveTvWireGuardAvailable(): Boolean = false

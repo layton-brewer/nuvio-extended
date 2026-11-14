@@ -49,7 +49,15 @@ object XtreamApi {
     fun streamsUrl(source: LiveSource): String = apiUrl(source, "get_live_streams")
 
     fun shortGuideUrl(source: LiveSource, streamId: String): String =
-        apiUrl(source, "get_short_epg") + "&stream_id=${percentEncode(streamId)}&limit=4"
+        apiUrl(source, "get_short_epg") + "&stream_id=${percentEncode(streamId)}&limit=$SHORT_GUIDE_LIMIT"
+
+    /** The provider's whole programme guide as an XMLTV file. */
+    fun guideFileUrl(source: LiveSource): String =
+        "${normalizeServer(source.url)}/xmltv.php?username=${percentEncode(source.username)}" +
+            "&password=${percentEncode(source.password)}"
+
+    /** How many programmes to ask for per channel, enough to fill a few hours of the guide grid. */
+    private const val SHORT_GUIDE_LIMIT = 12
 
     fun streamUrl(source: LiveSource, streamId: String, extension: String = "m3u8"): String =
         "${normalizeServer(source.url)}/live/${percentEncode(source.username)}/" +
@@ -86,6 +94,7 @@ object XtreamApi {
                 group = item.string("category_id")?.let(categories::get),
                 guideId = item.string("epg_channel_id")?.takeIf(String::isNotBlank),
                 xtreamStreamId = streamId,
+                number = item.string("num")?.toIntOrNull()?.takeIf { it > 0 },
             )
         }
     }
@@ -95,6 +104,18 @@ object XtreamApi {
         val root = runCatching { json.parseToJsonElement(body) }.getOrNull() as? JsonObject ?: return false
         val user = root["user_info"] as? JsonObject ?: return false
         return user.string("auth") == "1"
+    }
+
+    /** Subscription end date and connection limits from the login answer. */
+    fun parseAccount(body: String): LiveAccountInfo? {
+        val root = runCatching { json.parseToJsonElement(body) }.getOrNull() as? JsonObject ?: return null
+        val user = root["user_info"] as? JsonObject ?: return null
+        val expires = user.string("exp_date")?.toLongOrNull()?.takeIf { it > 0 }?.times(1000)
+        return LiveAccountInfo(
+            expiresAtMs = expires,
+            maxConnections = user.string("max_connections")?.toIntOrNull(),
+            activeConnections = user.string("active_cons")?.toIntOrNull(),
+        )
     }
 
     fun loginUrl(source: LiveSource): String =
@@ -114,7 +135,17 @@ object XtreamApi {
             val title = runCatching { Base64.Default.decode(rawTitle).decodeToString() }
                 .getOrDefault(rawTitle)
                 .trim()
-            if (title.isEmpty()) null else LiveProgramme(title = title, startMs = start * 1000, stopMs = stop * 1000)
+            val rawDescription = item.string("description").orEmpty()
+            val description = runCatching { Base64.Default.decode(rawDescription).decodeToString() }
+                .getOrDefault(rawDescription)
+                .trim()
+                .take(XmltvParser.MAX_DESCRIPTION)
+                .takeIf(String::isNotEmpty)
+            if (title.isEmpty()) {
+                null
+            } else {
+                LiveProgramme(title = title, startMs = start * 1000, stopMs = stop * 1000, description = description)
+            }
         }.sortedBy { it.startMs }
     }
 

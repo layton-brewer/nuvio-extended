@@ -113,3 +113,42 @@ internal actual suspend fun liveTvStreamAnswers(url: String, headers: Map<String
             null
         }
     }
+
+private val liveTvRelay by lazy {
+    LiveTvRelay(
+        baseClient = okhttp3.OkHttpClient.Builder()
+            .connectTimeout(15, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            .build(),
+        wireGuard = LiveTvRelay.WireGuardStarter { config ->
+            if (!com.meowio.livetv.LiveTvVpnNative.available) {
+                throw IOException("WireGuard is not included in this build")
+            }
+            val handle = com.meowio.livetv.LiveTvVpnNative.start(config)
+            if (handle == 0L) {
+                throw IOException(com.meowio.livetv.LiveTvVpnNative.lastError().ifBlank { "the VPN did not connect" })
+            }
+            LiveTvRelay.Tunnel(
+                proxy = LiveProxy(
+                    "127.0.0.1",
+                    com.meowio.livetv.LiveTvVpnNative.port(handle),
+                    "meowio",
+                    com.meowio.livetv.LiveTvVpnNative.token(handle),
+                ),
+                close = { com.meowio.livetv.LiveTvVpnNative.stop(handle) },
+            )
+        },
+        log = { android.util.Log.i("LiveTv", it) },
+    )
+}
+
+internal actual fun liveTvPlaybackTarget(
+    channel: LiveChannel,
+    backups: List<LiveChannel>,
+    vpn: LiveVpnSettings,
+): LiveTvPlaybackTarget {
+    val url = runCatching { liveTvRelay.open(channel, backups, vpn) }.getOrElse { channel.url }
+    return if (url == channel.url) LiveTvPlaybackTarget(url, channel.headers) else LiveTvPlaybackTarget(url, emptyMap())
+}
+
+internal actual fun liveTvWireGuardAvailable(): Boolean = com.meowio.livetv.LiveTvVpnNative.available
