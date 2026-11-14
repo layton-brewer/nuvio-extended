@@ -81,7 +81,7 @@ jobs:
             :composeApp:packageReleaseExe `
             "-Pnuvio.webview2.dir=$env:WEBVIEW2_ROOT" `
             "-Pcompose.desktop.packaging.checkJdkVendor=false" `
-            "-Pnuvio.desktop.versionName=0.2.3" `
+            "-Pnuvio.desktop.versionName=0.2.4" `
             --no-configuration-cache `
             --no-daemon `
             --stacktrace

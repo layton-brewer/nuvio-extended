@@ -41,17 +41,9 @@ sed -i.bak \
 grep -q 'TargetFormat.Exe' "$gradle" || { echo "EXE target patch did not apply" >&2; exit 1; }
 rm -f "$gradle.bak"
 
-# App icon for Windows (and the in-app logo): the Meowio cat.
-cp "$here/../icon-1024.png" "$icons/nuvio-app-icon-transparent.png"
+# App icons for Mac and Windows (and the in-app logo): the 3D Meowio cat. The overlay copy above also
+# replaced every app-icon-<theme>-transparent.{png,ico,icns} and app_icon_* drawable, so the window icon,
+# the icon picker and the runtime Mac/Windows icon updaters all use the cat too.
+cp "$here/meowio-1024.png" "$icons/nuvio-app-icon-transparent.png"
 cp "$here/../../windows/meowio.ico" "$icons/nuvio-app-icon-transparent.ico"
-
-# App icon: build an .icns from the Meowio cat icon (macOS tools only; skipped for Linux compile checks).
-command -v sips >/dev/null 2>&1 || exit 0
-set_dir="$(mktemp -d)/Meowio.iconset"
-mkdir -p "$set_dir"
-src="$here/../icon-1024.png"
-for s in 16 32 128 256 512; do
-  sips -z $s $s "$src" --out "$set_dir/icon_${s}x${s}.png" >/dev/null
-  sips -z $((s*2)) $((s*2)) "$src" --out "$set_dir/icon_${s}x${s}@2x.png" >/dev/null
-done
-iconutil -c icns "$set_dir" -o "$icons/nuvio-app-icon-transparent.icns"
+cp "$here/meowio.icns" "$icons/nuvio-app-icon-transparent.icns"
