@@ -107,7 +107,6 @@ class StreamScreenViewModel @Inject constructor(
     private val serverPlayback: ServerPlayback,
     party: com.nuvio.tv.core.party.PartyRepository,
     profileManager: com.nuvio.tv.core.profile.ProfileManager,
-    private val tvDownloadManager: com.nuvio.tv.core.downloads.TvDownloadManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private var autoPlayHandledForSession = false
@@ -1331,40 +1330,6 @@ class StreamScreenViewModel @Inject constructor(
         }
         // Nothing resolved: let the normal path report why and show the list.
         return resolveStreamForPlayback(first)
-    }
-
-    /** Saves a source for offline viewing. False when it is not a plain file link. */
-    suspend fun downloadStream(stream: Stream): Boolean {
-        val info = runCatching { resolveStreamForPlayback(stream, saveLastLink = false) }.getOrNull()
-            ?: return false
-        if (info.isTorrent || info.isExternal || info.ytId != null) return false
-        val url = info.url ?: return false
-        val episodeLabel = if (info.season != null && info.episode != null) {
-            "S${info.season} E${info.episode}" + info.episodeTitle?.takeIf { it.isNotBlank() }?.let { "  $it" }.orEmpty()
-        } else {
-            info.year.orEmpty()
-        }
-        return tvDownloadManager.enqueue(
-            com.nuvio.tv.core.downloads.TvDownloadRequest(
-                profileId = info.profileId,
-                title = info.contentName?.takeIf { it.isNotBlank() } ?: info.title,
-                detail = listOf(episodeLabel, info.streamName).filter { it.isNotBlank() }.joinToString("  ·  "),
-                url = url,
-                headers = info.headers.orEmpty(),
-                suggestedFileName = info.filename,
-                contentId = info.contentId,
-                contentType = info.contentType,
-                contentName = info.contentName,
-                videoId = info.videoId,
-                season = info.season,
-                episode = info.episode,
-                episodeTitle = info.episodeTitle,
-                poster = info.poster,
-                backdrop = info.backdrop,
-                logo = info.logo,
-                year = info.year
-            )
-        )
     }
 
     suspend fun resolveStreamForPlayback(stream: Stream, saveLastLink: Boolean = true): StreamPlaybackInfo? {

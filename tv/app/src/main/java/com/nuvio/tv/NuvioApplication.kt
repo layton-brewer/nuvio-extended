@@ -95,6 +95,18 @@ class NuvioApplication : Application(), SingletonImageLoader.Factory {
         val tag = getSharedPreferences("app_locale", Context.MODE_PRIVATE)
             .getString("locale_tag", null)
         LocaleCache.localeTag = tag ?: ""
+        removeLegacyDownloads()
+    }
+
+    /** TV builds no longer offer downloads; free the space older versions used for them. */
+    private fun removeLegacyDownloads() {
+        Thread {
+            runCatching {
+                getExternalFilesDir("downloads")?.deleteRecursively()
+                java.io.File(filesDir, "downloads").deleteRecursively()
+                java.io.File(filesDir, "tv_downloads.json").delete()
+            }
+        }.apply { name = "legacy-downloads-cleanup"; isDaemon = true }.start()
     }
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)

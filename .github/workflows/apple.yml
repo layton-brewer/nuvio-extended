@@ -12,17 +12,28 @@ on:
       - "mobile/composeApp/src/commonMain/**"
       - "mobile/composeApp/src/fullCommonMain/**"
       - ".github/workflows/apple.yml"
+  # Pull requests build everything as a compile check; only main attaches files to the release.
+  pull_request:
+    paths:
+      - "mobile/iosApp/**"
+      - "mobile/composeApp/src/iosMain/**"
+      - "mobile/composeApp/src/iosFull/**"
+      - "tvos/**"
+      - "apple/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
+      - ".github/workflows/apple.yml"
   workflow_dispatch:
 
 env:
   # Builds attach to this release page. Bump together with the version numbers below and the tag in release.yml.
-  MEOWIO_TAG: v0.2.5
+  MEOWIO_TAG: v0.2.6
 
 permissions:
   contents: write
 
 concurrency:
-  group: apple
+  group: apple-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -86,6 +97,12 @@ jobs:
               echo "NUVIO_SUPABASE_ANON_KEY=$NUVIO_SUPABASE_ANON_KEY"
             } >> local.properties
           fi
+
+      - name: Stamp Meowio version
+        # The IPA carries the Meowio version so the in-app update check compares against Meowio releases.
+        run: |
+          sed -i '' -E "s/^MARKETING_VERSION=.*/MARKETING_VERSION=${MEOWIO_TAG#v}/" iosApp/Configuration/Version.xcconfig
+          cat iosApp/Configuration/Version.xcconfig
 
       - name: Fetch MPVKit
         run: |
@@ -162,9 +179,13 @@ jobs:
 
       - name: Build DMG
         working-directory: desktop
+        env:
+          # Same optional account server as the phone and iPhone builds; empty when the secrets are not set.
+          NUVIO_SUPABASE_URL: ${{ secrets.NUVIO_SUPABASE_URL }}
+          NUVIO_SUPABASE_ANON_KEY: ${{ secrets.NUVIO_SUPABASE_ANON_KEY }}
         run: |
-          printf 'NUVIO_SUPABASE_URL=\nNUVIO_SUPABASE_ANON_KEY=\nTRAKT_CLIENT_ID=\nTRAKT_CLIENT_SECRET=\nMDBLIST_CLIENT_ID=\n' > local.properties
-          ./gradlew :composeApp:packageReleaseDmg -Pcompose.desktop.packaging.checkJdkVendor=false -Pnuvio.macos.arch=${{ matrix.arch }} -Pnuvio.desktop.versionName=0.2.5 --no-daemon --no-configuration-cache --max-workers=2
+          printf 'NUVIO_SUPABASE_URL=%s\nNUVIO_SUPABASE_ANON_KEY=%s\nTRAKT_CLIENT_ID=\nTRAKT_CLIENT_SECRET=\nMDBLIST_CLIENT_ID=\n' "$NUVIO_SUPABASE_URL" "$NUVIO_SUPABASE_ANON_KEY" > local.properties
+          ./gradlew :composeApp:packageReleaseDmg -Pcompose.desktop.packaging.checkJdkVendor=false -Pnuvio.macos.arch=${{ matrix.arch }} -Pnuvio.desktop.versionName=0.2.6 --no-daemon --no-configuration-cache --max-workers=2
           find composeApp/build -name "*.dmg"
 
       - name: Collect DMG
@@ -220,7 +241,7 @@ jobs:
           xcodebuild -project Meowio.xcodeproj -scheme Meowio -configuration Release \
             -sdk appletvos -destination 'generic/platform=tvOS' \
             -derivedDataPath build \
-            MARKETING_VERSION=0.2.5 CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            MARKETING_VERSION=0.2.6 CURRENT_PROJECT_VERSION=${{ github.run_number }} \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= build
 
       - name: Package IPA

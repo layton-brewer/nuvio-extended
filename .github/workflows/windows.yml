@@ -11,11 +11,19 @@ on:
       - "mobile/composeApp/src/commonMain/**"
       - "mobile/composeApp/src/fullCommonMain/**"
       - ".github/workflows/windows.yml"
+  # Pull requests build the EXE as a compile check; only main attaches it to the release.
+  pull_request:
+    paths:
+      - "windows/**"
+      - "apple/macos/**"
+      - "mobile/composeApp/src/commonMain/**"
+      - "mobile/composeApp/src/fullCommonMain/**"
+      - ".github/workflows/windows.yml"
   workflow_dispatch:
 
 env:
   # Builds attach to this release page. Bump together with the version numbers below and the tag in release.yml.
-  MEOWIO_TAG: v0.2.5
+  MEOWIO_TAG: v0.2.6
 
 permissions:
   contents: write
@@ -80,13 +88,17 @@ jobs:
       - name: Build EXE
         working-directory: desktop
         shell: pwsh
+        env:
+          # Same optional account server as the phone and iPhone builds; empty when the secrets are not set.
+          NUVIO_SUPABASE_URL: ${{ secrets.NUVIO_SUPABASE_URL }}
+          NUVIO_SUPABASE_ANON_KEY: ${{ secrets.NUVIO_SUPABASE_ANON_KEY }}
         run: |
-          "NUVIO_SUPABASE_URL=`nNUVIO_SUPABASE_ANON_KEY=`nTRAKT_CLIENT_ID=`nTRAKT_CLIENT_SECRET=`nMDBLIST_CLIENT_ID=`n" | Set-Content local.properties -NoNewline
+          "NUVIO_SUPABASE_URL=$env:NUVIO_SUPABASE_URL`nNUVIO_SUPABASE_ANON_KEY=$env:NUVIO_SUPABASE_ANON_KEY`nTRAKT_CLIENT_ID=`nTRAKT_CLIENT_SECRET=`nMDBLIST_CLIENT_ID=`n" | Set-Content local.properties -NoNewline
           & .\gradlew.bat `
             :composeApp:packageReleaseExe `
             "-Pnuvio.webview2.dir=$env:WEBVIEW2_ROOT" `
             "-Pcompose.desktop.packaging.checkJdkVendor=false" `
-            "-Pnuvio.desktop.versionName=0.2.5" `
+            "-Pnuvio.desktop.versionName=0.2.6" `
             --no-configuration-cache `
             --no-daemon `
             --stacktrace

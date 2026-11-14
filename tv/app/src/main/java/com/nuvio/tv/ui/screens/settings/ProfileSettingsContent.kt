@@ -56,13 +56,6 @@ internal fun ProfileSettingsContent(
                 onClick = { showAssistant = true }
             )
             if (showAssistant) AiAssistantDialog(onDismiss = { showAssistant = false })
-            var showDownloads by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(false) }
-            SettingsActionRow(
-                title = stringResource(R.string.downloads_title),
-                subtitle = stringResource(R.string.downloads_open_sub),
-                onClick = { showDownloads = true }
-            )
-            if (showDownloads) DownloadsDialog(onDismiss = { showDownloads = false })
         }
     }
 }
